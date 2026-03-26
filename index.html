@@ -1,1 +1,326 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRISME QUIMPER | Excellence Oratoire</title>
+    <style>
+        /* DIRECTION ARTISTIQUE : Classique, Élégant, Institutionnel */
+        :root {
+            --color-bg-light: #F9F8F6; /* Blanc cassé très léger, type papier vieilli */
+            --color-text-dark: #1A1A1A; /* Noir presque pur pour le contraste */
+            --color-accent: #8B1E28; /* Un rouge bordeaux très sombre, élégant */
+            --color-gold: #C5A059; /* Touche d'or mat pour souligner le prestige */
+            
+            /* Typographie : Combinaison de Serif (Times-like) pour l'élégance et Sans-Serif pour la lisibilité moderne */
+            --font-serif: "Times New Roman", Times, Baskerville, Georgia, serif;
+            --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            background-color: var(--color-bg-light);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            background-color: rgba(249, 248, 246, 0.95);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: var(--color-text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--color-accent);
+        }
+
+        nav a {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--color-text-dark);
+            text-decoration: none;
+            margin-left: 2rem;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-accent);
+        }
+
+        /* --- SECTION HERO (Accueil) --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            background: linear-gradient(rgba(249, 248, 246, 0.8), rgba(249, 248, 246, 1)), url('https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80') center/cover; /* Image d'architecture classique en fond léger */
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: normal;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            color: var(--color-text-dark);
+        }
+
+        .hero p {
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--color-text-dark);
+            color: var(--color-text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            transition: all 0.4s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--color-text-dark);
+            color: var(--color-bg-light);
+        }
+
+        /* --- SECTIONS GÉNÉRALES --- */
+        section {
+            padding: 6rem 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--color-gold);
+            margin: 1.5rem auto 0;
+        }
+
+        /* --- SECTION À PROPOS (Texte + Image) --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .about-text p.intro {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--color-accent);
+        }
+
+        .about-image {
+            background-color: #ddd;
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1505664173615-04f189e81c81?auto=format&fit=crop&q=80') center/cover;
+            border-radius: 4px;
+        }
+
+        /* --- SECTION LES PÔLES --- */
+        .poles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .pole-card {
+            padding: 3rem 2rem;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pole-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            border-bottom: 3px solid var(--color-gold);
+        }
+
+        .pole-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        .pole-card p {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* --- FOOTER (Contact) --- */
+        footer {
+            background-color: var(--color-text-dark);
+            color: var(--color-bg-light);
+            text-align: center;
+            padding: 5rem 5%;
+        }
+
+        footer h2 {
+            font-size: 2rem;
+            font-weight: normal;
+            margin-bottom: 2rem;
+            color: var(--color-gold);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: var(--color-bg-light);
+            text-decoration: none;
+            font-family: var(--font-sans);
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            border-color: var(--color-gold);
+        }
+
+        .legal {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            opacity: 0.5;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-image { height: 300px; order: -1; }
+            nav { display: none; /* Menu burger nécessaire pour mobile dans une version plus avancée */ }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Prisme<span>.</span></a>
+        <nav>
+            <a href="#vision">Notre Vision</a>
+            <a href="#poles">Les Directions</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>L'Éloquence de Haute Précision</h1>
+            <p>"Maîtriser le verbe pour porter sa conviction."</p>
+            <a href="#vision" class="btn">Découvrir l'Institution</a>
+        </section>
+
+        <section id="vision">
+            <h2 class="section-title">L'Art de la Rhétorique à Quimper</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="intro">PRISME QUIMPER est une association dédiée à l'excellence des compétences oratoires, de l'argumentation et du leadership par la parole.</p>
+                    <p>Conformément à nos statuts fondateurs, nous visons à la formation technique rigoureuse de nos membres. Le discours n'est pas inné, il se structure, se travaille et se maîtrise.</p>
+                    <p>Au-delà de l'apprentissage technique, notre vocation est de constituer un véritable pont institutionnel entre le talent étudiant et les réseaux professionnels, juridiques et économiques du Finistère.</p>
+                </div>
+                <div class="about-image"></div>
+            </div>
+        </section>
+
+        <section id="poles">
+            <h2 class="section-title">Structure & Excellence</h2>
+            <div class="poles-grid">
+                <div class="pole-card">
+                    <h3>Pôle Culture</h3>
+                    <p>Garant du contenu intellectuel, de la veille rhétorique et de l'exigence de nos leçons magistrales.</p>
+                </div>
+                <div class="pole-card">
+                    <h3>Pôle Événementiel</h3>
+                    <p>En charge de l'organisation logistique de nos galas, rencontres techniques et concours de plaidoiries.</p>
+                </div>
+                <div class="pole-card">
+                    <h3>Pôle Communication</h3>
+                    <p>Responsable de l'image de marque de l'institution et du rayonnement de nos orateurs.</p>
+                </div>
+                <div class="pole-card">
+                    <h3>Pôle Partenariats</h3>
+                    <p>Dédié à la recherche de mécénat et au développement de notre réseau avec le monde professionnel.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <h2>Entrer en relation</h2>
+        <div class="contact-links">
+            <a href="mailto:contact@prisme-quimper.fr">Admissions & Informations</a>
+            <a href="mailto:partenariats@prisme-quimper.fr">Mécénat & Entreprises</a>
+            <a href="mailto:communication@prisme-quimper.fr">Presse & Médias</a>
+        </div>
+        <p style="font-style: italic;">Bureau de PRISME QUIMPER, 29000 Quimper</p>
+        <p class="legal">© 2026 Association PRISME QUIMPER. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>
