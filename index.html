@@ -11,489 +11,293 @@ layout: null
         /* DIRECTION ARTISTIQUE : Héritage Moderne, Luxe, Institutionnel (Calibré sur le Logo Définitif) */
         :root {
             /* Palette de Couleurs Exactes */
-            --color-bg-dark: #1A2639; /* Le bleu denim profond de l'anneau extérieur */
-            --color-bg-inner: #0F1A2C; /* Le bleu nuit de l'intérieur du cercle */
-            --color-bg-light-cream: #FDF9F2; /* Blanc cassé du ruban */
-            --color-text-base: #E8E5DF; /* Crème clair pour le texte sur fond sombre */
-            --color-text-dark-subtle: #1A2639; /* Reprise du bleu denim pour les textes sur fond clair */
-            --color-accent-gold-mat: #B89754; /* L'or des anneaux (antique et élégant) */
-            --color-accent-gold-bright: #E5C37A; /* L'or brillant de la facette centrale du prisme */
-            --color-border-subtle: rgba(184, 151, 84, 0.2); /* Bordure or transparente */
+            --color-bg-dark: #1A2639; 
+            --color-bg-inner: #0F1A2C; 
+            --color-bg-light-cream: #FDF9F2; 
+            --color-text-base: #E8E5DF; 
+            --color-text-dark-subtle: #1A2639; 
+            --color-accent-gold-mat: #B89754; 
+            --color-accent-gold-bright: #E5C37A; 
+            --color-border-subtle: rgba(184, 151, 84, 0.2); 
             
             /* Typographie : Haute Précision */
             --font-serif-precis: "Baskerville", "Georgia", "Times New Roman", Times, serif;
             --font-sans-luxury: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-serif-precis);
             background: linear-gradient(135deg, var(--color-bg-inner) 0%, var(--color-bg-dark) 60%, #0a101a 100%); 
-            color: var(--color-text-base);
-            line-height: 1.8;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            color: var(--color-text-base); line-height: 1.8;
+            -webkit-font-smoothing: antialiased; overflow-x: hidden; scroll-behavior: smooth;
         }
 
         /* --- NAVIGATION --- */
         header {
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(15, 26, 44, 0.95);
-            z-index: 1000;
-            border-bottom: 1px solid var(--color-border-subtle);
-            backdrop-filter: blur(5px);
+            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%;
+            background-color: rgba(15, 26, 44, 0.95); z-index: 1000;
+            border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(5px);
+            transition: padding 0.3s ease; /* Animation fluide au scroll possible */
         }
 
         .logo-text {
-            font-size: 1.6rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: var(--color-text-base);
-            text-decoration: none;
-            text-transform: uppercase;
+            font-size: 1.6rem; font-weight: bold; letter-spacing: 2px;
+            color: var(--color-text-base); text-decoration: none; text-transform: uppercase;
         }
+        .logo-text span { color: var(--color-accent-gold-bright); }
 
-        .logo-text span {
-            color: var(--color-accent-gold-bright);
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-        }
-
+        nav { display: flex; align-items: center; }
         nav a {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--color-text-base);
-            text-decoration: none;
-            margin-left: 1.8rem;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
+            font-family: var(--font-sans-luxury); font-size: 0.8rem; letter-spacing: 1px;
+            color: var(--color-text-base); text-decoration: none; margin-left: 1.8rem;
+            text-transform: uppercase; transition: color 0.3s ease;
         }
+        nav a:hover, nav a.active { color: var(--color-accent-gold-bright); }
 
-        nav a:hover, nav a.active {
-            color: var(--color-accent-gold-bright);
-        }
-
-        /* Le Logo Écusson (Placement en haut à droite) */
         .header-logo-container {
-            margin-left: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
+            margin-left: 2.5rem; display: flex; align-items: center; justify-content: center;
+            width: 45px; height: 45px; border-radius: 50%; transition: all 0.4s ease;
         }
-
         .header-logo-container:hover {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 10px rgba(229, 195, 122, 0.4));
+            transform: scale(1.1) rotate(5deg); /* Légère rotation dynamique */
+            filter: drop-shadow(0 0 15px rgba(229, 195, 122, 0.5));
         }
+        .header-logo-container svg { width: 100%; height: 100%; }
 
-        .header-logo-container svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* --- SECTION HERO (Accueil) --- */
+        /* --- SECTION HERO (Accueil) - AVEC PARALLAXE --- */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 5%;
-            background: linear-gradient(rgba(15, 26, 44, 0.85), rgba(15, 26, 44, 0.95)), url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80') center/cover;
-            position: relative;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 5%; position: relative;
+            /* L'EFFET PARALLAXE : background-attachment: fixed */
+            background: linear-gradient(rgba(15, 26, 44, 0.85), rgba(15, 26, 44, 0.95)), url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80') center/cover no-repeat;
+            background-attachment: fixed; 
         }
 
         .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(rgba(184, 151, 84, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.4;
+            background-size: 20px 20px; opacity: 0.4;
         }
 
         .hero h1 {
-            font-size: 4rem;
-            font-weight: normal;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            color: var(--color-text-base);
-            position: relative;
+            font-size: 4rem; font-weight: normal; margin-bottom: 1.5rem; letter-spacing: 2px;
+            color: var(--color-text-base); position: relative;
         }
 
         .hero p {
-            font-style: italic;
-            font-size: 1.6rem;
-            color: var(--color-accent-gold-mat);
-            max-width: 700px;
-            margin-bottom: 3.5rem;
-            position: relative;
+            font-style: italic; font-size: 1.6rem; color: var(--color-accent-gold-mat);
+            max-width: 700px; margin-bottom: 3.5rem; position: relative;
         }
 
+        /* BOUTON LUXE (Effet Slide-in) */
         .btn {
-            font-family: var(--font-sans-luxury);
-            display: inline-block;
-            padding: 1rem 3rem;
-            border: 1px solid var(--color-accent-gold-bright);
-            color: var(--color-accent-gold-bright);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            transition: all 0.4s ease;
-            position: relative;
-            background-color: transparent;
-            cursor: pointer;
+            font-family: var(--font-sans-luxury); display: inline-block; padding: 1rem 3rem;
+            border: 1px solid var(--color-accent-gold-bright); color: var(--color-accent-gold-bright);
+            text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;
+            position: relative; background-color: transparent; cursor: pointer; overflow: hidden;
+            transition: color 0.4s ease; z-index: 1;
         }
-
-        .btn:hover {
-            background-color: var(--color-accent-gold-bright);
-            color: var(--color-bg-inner);
-            box-shadow: 0 0 20px rgba(229, 195, 122, 0.3);
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background-color: var(--color-accent-gold-bright); transition: left 0.4s ease; z-index: -1;
         }
+        .btn:hover { color: var(--color-bg-inner); box-shadow: 0 0 20px rgba(229, 195, 122, 0.3); }
+        .btn:hover::before { left: 0; }
 
         /* --- SECTIONS GÉNÉRALES --- */
         section {
-            padding: 7rem 10%;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 7rem 10%; max-width: 1400px; margin: 0 auto;
             border-bottom: 1px solid var(--color-border-subtle);
         }
 
         .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            font-weight: normal;
-            margin-bottom: 4.5rem;
-            color: var(--color-accent-gold-mat);
-            position: relative;
+            text-align: center; font-size: 2.8rem; font-weight: normal; margin-bottom: 4.5rem;
+            color: var(--color-accent-gold-mat); position: relative;
         }
-
         .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 2px;
-            background-color: var(--color-accent-gold-mat);
-            margin: 1.5rem auto 0;
+            content: ''; display: block; width: 80px; height: 2px;
+            background-color: var(--color-accent-gold-mat); margin: 1.5rem auto 0;
         }
 
-        /* Sections sur fond crème (Institutionnel) */
         section.institutionnel {
-            background-color: var(--color-bg-light-cream);
-            color: var(--color-text-dark-subtle);
+            background-color: var(--color-bg-light-cream); color: var(--color-text-dark-subtle);
             border-bottom: 1px solid rgba(0,0,0,0.1);
         }
+        section.institutionnel .section-title { color: var(--color-text-dark-subtle); }
+        section.institutionnel .section-title::after { background-color: var(--color-text-dark-subtle); }
 
-        section.institutionnel .section-title {
-            color: var(--color-text-dark-subtle);
-        }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .fade-in.is-visible { opacity: 1; transform: translateY(0); }
 
-        section.institutionnel .section-title::after {
-            background-color: var(--color-text-dark-subtle);
-        }
-
-        /* Effet d'affichage progressif */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-        }
-
-        .fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- SECTION HÉRITAGE (Vision) --- */
-        .heritage-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-        }
-
-        .heritage-text p {
-            font-size: 1.15rem;
-            margin-bottom: 1.8rem;
-            text-align: justify;
-            opacity: 0.9;
-        }
-
+        /* --- SECTION HÉRITAGE (Vision) - AVEC LETTRINE & KEN BURNS --- */
+        .heritage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        
+        .heritage-text p { font-size: 1.15rem; margin-bottom: 1.8rem; text-align: justify; opacity: 0.9; }
+        
+        /* LA LETTRINE */
         .heritage-text p.intro {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--color-bg-light-cream);
+            font-size: 1.3rem; font-weight: bold; color: var(--color-bg-light-cream);
+        }
+        .heritage-text p.intro::first-letter {
+            font-family: var(--font-serif-precis); float: left; font-size: 4rem;
+            line-height: 0.8; margin-right: 0.5rem; color: var(--color-accent-gold-mat);
+            padding-top: 0.3rem; /* Ajustement optique */
         }
 
+        /* EFFET KEN BURNS SUR L'IMAGE */
+        .heritage-image-container {
+            height: 550px; border: 1px solid var(--color-accent-gold-mat);
+            border-radius: 4px; overflow: hidden; /* Cache le débordement du zoom */
+        }
         .heritage-image {
-            height: 550px;
+            width: 100%; height: 100%;
             background: url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80&w=600') center/cover;
-            border: 1px solid var(--color-accent-gold-mat);
-            border-radius: 4px;
-            position: relative;
+            transition: transform 10s ease; /* Transition très lente pour l'élégance */
+        }
+        .heritage-image-container:hover .heritage-image {
+            transform: scale(1.1); /* Zoom discret */
         }
 
         /* --- SECTION MEMBRES DU BUREAU --- */
-        .bureau-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-        }
-
+        .bureau-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; }
+        
         .member-card {
-            padding: 3rem 2rem;
-            text-align: center;
-            background-color: #fff;
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 4px;
+            padding: 3rem 2rem; text-align: center; background-color: #fff;
+            border: 1px solid rgba(0,0,0,0.05); border-radius: 4px;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
-
         .member-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(26, 38, 57, 0.1);
+            transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 30px rgba(26, 38, 57, 0.1);
             border-bottom: 3px solid var(--color-accent-gold-mat);
         }
 
         .member-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            background-color: #eee;
-            border: 2px solid var(--color-bg-light-cream);
+            width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 1.5rem;
+            background-color: #eee; border: 2px solid var(--color-bg-light-cream);
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             background: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png') center/cover;
+            transition: filter 0.3s ease;
         }
+        .member-card:hover .member-photo { filter: contrast(1.1) brightness(0.9); }
 
-        .member-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-            color: var(--color-text-dark-subtle);
-        }
-
+        .member-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--color-text-dark-subtle); }
         .member-card p.role {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--color-accent-gold-mat);
-            font-weight: bold;
-            margin-bottom: 1rem;
+            font-family: var(--font-sans-luxury); font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--color-accent-gold-mat); font-weight: bold; margin-bottom: 1rem;
         }
 
         /* --- SECTION LES PÔLES --- */
-        .poles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-        }
-
+        .poles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; }
+        
         .pole-card {
-            padding: 4rem 2.5rem;
-            text-align: center;
-            background-color: rgba(15, 26, 44, 0.6);
-            border: 1px solid var(--color-border-subtle);
-            border-radius: 4px;
+            padding: 4rem 2.5rem; text-align: center; background-color: rgba(15, 26, 44, 0.6);
+            border: 1px solid var(--color-border-subtle); border-radius: 4px;
             transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         .pole-card::after {
-            content: '';
-            position: absolute;
-            bottom: -50%; right: -50%;
-            width: 150%; height: 150%;
+            content: ''; position: absolute; bottom: -50%; right: -50%; width: 150%; height: 150%;
             background: radial-gradient(circle, rgba(184, 151, 84, 0.05) 0%, transparent 70%);
-            opacity: 0.5;
-            transition: opacity 0.4s ease;
+            opacity: 0.5; transition: opacity 0.4s ease;
         }
-
         .pole-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(-15px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             border-color: var(--color-accent-gold-mat);
         }
+        .pole-card:hover::after { opacity: 1; }
 
-        .pole-card:hover::after {
-            opacity: 1;
-        }
-
-        .pole-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            color: var(--color-bg-light-cream);
-        }
-
+        .pole-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--color-bg-light-cream); }
         .pole-card p {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.95rem;
-            color: var(--color-text-base);
-            opacity: 0.8;
-            line-height: 1.7;
+            font-family: var(--font-sans-luxury); font-size: 0.95rem; color: var(--color-text-base);
+            opacity: 0.8; line-height: 1.7;
         }
+
+        /* --- SECTION AGENDA (Événements) - NOUVEAU --- */
+        .agenda-list {
+            display: flex; flex-direction: column; gap: 1.5rem; max-width: 900px; margin: 0 auto;
+        }
+        .agenda-item {
+            display: grid; grid-template-columns: 2fr 5fr 2fr; align-items: center;
+            padding: 2rem 0; border-bottom: 1px solid var(--color-border-subtle);
+            transition: background-color 0.3s ease, padding-left 0.3s ease; cursor: default;
+        }
+        .agenda-item:hover {
+            background-color: rgba(184, 151, 84, 0.03); padding-left: 1rem;
+        }
+        .agenda-date {
+            font-family: var(--font-sans-luxury); font-size: 1rem; color: var(--color-accent-gold-mat);
+            text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
+        }
+        .agenda-info h4 { font-size: 1.4rem; color: var(--color-bg-light-cream); margin-bottom: 0.3rem; }
+        .agenda-info p { font-family: var(--font-sans-luxury); font-size: 0.85rem; opacity: 0.7; }
+        .agenda-action { text-align: right; }
+        
+        /* Petit bouton agenda */
+        .btn-small {
+            font-family: var(--font-sans-luxury); font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--color-accent-gold-bright); text-decoration: none;
+            border-bottom: 1px solid transparent; transition: border-color 0.3s ease; padding-bottom: 2px;
+        }
+        .agenda-item:hover .btn-small { border-color: var(--color-accent-gold-bright); }
 
         /* --- SECTION PARTENAIRES --- */
         .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 3rem;
-            align-items: center;
-            justify-items: center;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 3rem; align-items: center; justify-items: center;
         }
-
         .partner-logo {
-            width: 120px;
-            height: auto;
-            filter: grayscale(100%);
-            opacity: 0.6;
-            transition: all 0.4s ease;
+            width: 120px; height: auto; filter: grayscale(100%); opacity: 0.6; transition: all 0.4s ease;
         }
-
-        .partner-logo:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.1);
-        }
+        .partner-logo:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
 
         /* --- SECTION ESPACE ADHÉRENT (Connexion) --- */
-        .connexion-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .connexion-grid { display: flex; justify-content: center; align-items: center; }
+        
         .login-card {
-            padding: 5rem;
-            background-color: rgba(15, 26, 44, 0.8);
-            border: 2px solid var(--color-accent-gold-mat);
-            border-radius: 4px;
-            box-shadow: 0 0 30px rgba(184, 151, 84, 0.15);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
+            padding: 5rem; background-color: rgba(15, 26, 44, 0.8);
+            border: 2px solid var(--color-accent-gold-mat); border-radius: 4px;
+            box-shadow: 0 0 30px rgba(184, 151, 84, 0.15); width: 100%; max-width: 600px; text-align: center;
         }
-
-        .login-card h3 {
-            font-size: 2rem;
-            color: var(--color-accent-gold-mat);
-            margin-bottom: 3rem;
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
+        .login-card h3 { font-size: 2rem; color: var(--color-accent-gold-mat); margin-bottom: 3rem; }
+        
+        .form-group { margin-bottom: 2rem; text-align: left; }
         .form-group label {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--color-text-base);
-            display: block;
-            margin-bottom: 0.5rem;
+            font-family: var(--font-sans-luxury); font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--color-text-base); display: block; margin-bottom: 0.5rem;
         }
-
         .input-field {
-            width: 100%;
-            padding: 1rem;
-            background-color: transparent;
-            border: 1px solid var(--color-border-subtle);
-            color: var(--color-text-base);
-            font-family: var(--font-sans-luxury);
-            border-radius: 2px;
+            width: 100%; padding: 1rem; background-color: transparent; border: 1px solid var(--color-border-subtle);
+            color: var(--color-text-base); font-family: var(--font-sans-luxury); border-radius: 2px;
             transition: border-color 0.3s ease;
         }
+        .input-field:focus { outline: none; border-color: var(--color-accent-gold-bright); }
+        .login-notice { font-family: var(--font-sans-luxury); font-size: 0.8rem; color: var(--color-text-base); opacity: 0.6; margin-top: 2rem; }
 
-        .input-field:focus {
-            outline: none;
-            border-color: var(--color-accent-gold-bright);
-        }
-
-        .login-notice {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.8rem;
-            color: var(--color-text-base);
-            opacity: 0.6;
-            margin-top: 2rem;
-        }
-
-        /* --- FOOTER (Contact) --- */
+        /* --- FOOTER --- */
         footer {
-            background-color: var(--color-bg-inner);
-            color: var(--color-bg-light-cream);
-            text-align: center;
-            padding: 6rem 5%;
-            border-top: 1px solid var(--color-border-subtle);
+            background-color: var(--color-bg-inner); color: var(--color-bg-light-cream);
+            text-align: center; padding: 6rem 5%; border-top: 1px solid var(--color-border-subtle);
         }
-
-        footer h2 {
-            font-size: 2.2rem;
-            font-weight: normal;
-            margin-bottom: 2.5rem;
-            color: var(--color-accent-gold-mat);
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            margin-bottom: 3.5rem;
-            flex-wrap: wrap;
-        }
-
+        footer h2 { font-size: 2.2rem; font-weight: normal; margin-bottom: 2.5rem; color: var(--color-accent-gold-mat); }
+        .contact-links { display: flex; justify-content: center; gap: 4rem; margin-bottom: 3.5rem; flex-wrap: wrap; }
         .contact-links a {
-            color: var(--color-text-base);
-            text-decoration: none;
-            font-family: var(--font-sans-luxury);
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            border-bottom: 1px solid rgba(184, 151, 84, 0);
-            transition: all 0.3s ease;
+            color: var(--color-text-base); text-decoration: none; font-family: var(--font-sans-luxury);
+            letter-spacing: 1px; font-size: 0.9rem; border-bottom: 1px solid rgba(184, 151, 84, 0); transition: all 0.3s ease;
         }
-
-        .contact-links a:hover {
-            color: var(--color-accent-gold-bright);
-            border-color: rgba(184, 151, 84, 0.6);
-        }
-
-        .legal {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.8rem;
-            opacity: 0.5;
-            margin-top: 2.5rem;
-        }
+        .contact-links a:hover { color: var(--color-accent-gold-bright); border-color: rgba(184, 151, 84, 0.6); }
+        .legal { font-family: var(--font-sans-luxury); font-size: 0.8rem; opacity: 0.5; margin-top: 2.5rem; }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .hero h1 { font-size: 2.8rem; }
             .section-title { font-size: 2rem; }
             .heritage-grid { grid-template-columns: 1fr; }
-            .heritage-image { height: 350px; order: -1; }
+            .heritage-image-container { height: 350px; order: -1; }
+            .agenda-item { grid-template-columns: 1fr; gap: 1rem; text-align: center; }
+            .agenda-action { text-align: center; }
             .login-card { padding: 3rem; }
             nav { display: none; }
         }
@@ -507,6 +311,7 @@ layout: null
             <a href="#vision" class="active">Vision</a>
             <a href="#bureau">Bureau</a>
             <a href="#poles">Directions</a>
+            <a href="#agenda">Agenda</a>
             <a href="#partenaires">Partenaires</a>
             <a href="#connexion">Adhérents</a>
             <div class="header-logo-container">
@@ -514,15 +319,11 @@ layout: null
                     <circle cx="50" cy="50" r="48" fill="#1A2639" stroke="#B89754" stroke-width="1.5"/>
                     <circle cx="50" cy="50" r="38" fill="none" stroke="#B89754" stroke-width="1"/>
                     <circle cx="50" cy="50" r="37.5" fill="#0F1A2C" />
-                    
                     <path d="M50 25 L65 50 L50 65 L35 50 Z" fill="#E5C37A"/>
                     <path d="M50 25 L35 50 L50 50 Z" fill="#B89754"/>
                     <path d="M50 50 L65 50 L50 65 Z" fill="#8C703A"/>
-                    
                     <path d="M45 15 C46 12, 48 12, 49 15 C50 18, 49 22, 48 24 C46 25, 45 23, 45 20 L42 22" fill="#E5C37A"/>
-                    
                     <text x="50" y="78" text-anchor="middle" font-family="Baskerville, serif" font-size="11" fill="#E5C37A" letter-spacing="1.5">PRISME</text>
-                    
                     <path d="M15 85 Q50 95 85 85 Q85 95 50 100 Q15 95 15 85 Z" fill="#FDF9F2" stroke="#1A2639" stroke-width="0.5"/>
                 </svg>
             </div>
@@ -544,7 +345,9 @@ layout: null
                     <p>Notre engagement se fonde sur la transmission d'une formation technique rigoureuse. L'art de la rhétorique n'est pas inné, il s'architecture et s'enseigne avec discipline.</p>
                     <p>Au-delà de l'apprentissage technique, PRISME constitue le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.</p>
                 </div>
-                <div class="heritage-image"></div>
+                <div class="heritage-image-container">
+                    <div class="heritage-image"></div>
+                </div>
             </div>
         </section>
 
@@ -596,6 +399,42 @@ layout: null
                 <div class="pole-card">
                     <h3>Pôle Partenariats</h3>
                     <p>Dédié au mécénat et au développement de notre réseau professionnel d'élite.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="agenda" class="fade-in">
+            <h2 class="section-title">L'Agenda Officiel</h2>
+            <div class="agenda-list">
+                <div class="agenda-item">
+                    <div class="agenda-date">Octobre 2026</div>
+                    <div class="agenda-info">
+                        <h4>Masterclass Inaugurale</h4>
+                        <p>Pôle Universitaire Pierre-Jakez Hélias — Séance dédiée à l'art de l'exorde.</p>
+                    </div>
+                    <div class="agenda-action">
+                        <a href="#connexion" class="btn-small">Membres Uniquement</a>
+                    </div>
+                </div>
+                <div class="agenda-item">
+                    <div class="agenda-date">Novembre 2026</div>
+                    <div class="agenda-info">
+                        <h4>Les Joutes de l'Héritage</h4>
+                        <p>Tribunal de Quimper — Concours interne de plaidoiries juridiques.</p>
+                    </div>
+                    <div class="agenda-action">
+                        <a href="#contact" class="btn-small">Demande de Presse</a>
+                    </div>
+                </div>
+                <div class="agenda-item">
+                    <div class="agenda-date">Mai 2027</div>
+                    <div class="agenda-info">
+                        <h4>Le Gala PRISME</h4>
+                        <p>Lieu confidentiel — Remise des distinctions oratoires annuelles.</p>
+                    </div>
+                    <div class="agenda-action">
+                        <a href="mailto:partenariats@prisme-quimper.fr" class="btn-small">Devenir Mécène</a>
+                    </div>
                 </div>
             </div>
         </section>
