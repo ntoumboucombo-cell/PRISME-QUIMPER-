@@ -6,18 +6,23 @@ layout: null
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRISME QUIMPER | Excellence Oratoire</title>
+    <title>PRISME QUIMPER | Excellence Oratoire & Portail Institutionnel</title>
     <style>
-        /* DIRECTION ARTISTIQUE : Classique, Élégant, Institutionnel */
+        /* DIRECTION ARTISTIQUE : Héritage Moderne, Luxe, Institutionnel (Calibré sur le Logo Définitif) */
         :root {
-            --color-bg-light: #F9F8F6; /* Blanc cassé très léger, type papier vieilli */
-            --color-text-dark: #1A1A1A; /* Noir presque pur pour le contraste */
-            --color-accent: #8B1E28; /* Un rouge bordeaux très sombre, élégant */
-            --color-gold: #C5A059; /* Touche d'or mat pour souligner le prestige */
+            /* Palette de Couleurs Exactes */
+            --color-bg-dark: #1A2639; /* Le bleu denim profond de l'anneau extérieur */
+            --color-bg-inner: #0F1A2C; /* Le bleu nuit de l'intérieur du cercle */
+            --color-bg-light-cream: #FDF9F2; /* Blanc cassé du ruban */
+            --color-text-base: #E8E5DF; /* Crème clair pour le texte sur fond sombre */
+            --color-text-dark-subtle: #1A2639; /* Reprise du bleu denim pour les textes sur fond clair */
+            --color-accent-gold-mat: #B89754; /* L'or des anneaux (antique et élégant) */
+            --color-accent-gold-bright: #E5C37A; /* L'or brillant de la facette centrale du prisme */
+            --color-border-subtle: rgba(184, 151, 84, 0.2); /* Bordure or transparente */
             
-            /* Typographie : Combinaison de Serif (Times-like) pour l'élégance et Sans-Serif pour la lisibilité moderne */
-            --font-serif: "Times New Roman", Times, Baskerville, Georgia, serif;
-            --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            /* Typographie : Haute Précision */
+            --font-serif-precis: "Baskerville", "Georgia", "Times New Roman", Times, serif;
+            --font-sans-luxury: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
         * {
@@ -27,245 +32,500 @@ layout: null
         }
 
         body {
-            font-family: var(--font-serif);
-            background-color: var(--color-bg-light);
-            color: var(--color-text-dark);
-            line-height: 1.6;
+            font-family: var(--font-serif-precis);
+            background: linear-gradient(135deg, var(--color-bg-inner) 0%, var(--color-bg-dark) 60%, #0a101a 100%); 
+            color: var(--color-text-base);
+            line-height: 1.8;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* --- NAVIGATION --- */
         header {
-            padding: 2rem 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            position: sticky;
+            position: fixed;
             top: 0;
-            background-color: rgba(249, 248, 246, 0.95);
+            width: 100%;
+            background-color: rgba(15, 26, 44, 0.95);
             z-index: 1000;
+            border-bottom: 1px solid var(--color-border-subtle);
+            backdrop-filter: blur(5px);
         }
 
-        .logo {
-            font-size: 1.8rem;
+        .logo-text {
+            font-size: 1.6rem;
             font-weight: bold;
-            letter-spacing: 3px;
-            color: var(--color-text-dark);
+            letter-spacing: 2px;
+            color: var(--color-text-base);
             text-decoration: none;
             text-transform: uppercase;
         }
 
-        .logo span {
-            color: var(--color-accent);
+        .logo-text span {
+            color: var(--color-accent-gold-bright);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
         }
 
         nav a {
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
+            font-family: var(--font-sans-luxury);
+            font-size: 0.8rem;
             letter-spacing: 1px;
-            color: var(--color-text-dark);
+            color: var(--color-text-base);
             text-decoration: none;
-            margin-left: 2rem;
+            margin-left: 1.8rem;
             text-transform: uppercase;
             transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: var(--color-accent);
+        nav a:hover, nav a.active {
+            color: var(--color-accent-gold-bright);
+        }
+
+        /* Le Logo Écusson (Placement en haut à droite) */
+        .header-logo-container {
+            margin-left: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .header-logo-container:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(229, 195, 122, 0.4));
+        }
+
+        .header-logo-container svg {
+            width: 100%;
+            height: 100%;
         }
 
         /* --- SECTION HERO (Accueil) --- */
         .hero {
-            height: 80vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 0 5%;
-            background: linear-gradient(rgba(249, 248, 246, 0.8), rgba(249, 248, 246, 1)), url('https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80') center/cover; /* Image d'architecture classique en fond léger */
+            background: linear-gradient(rgba(15, 26, 44, 0.85), rgba(15, 26, 44, 0.95)), url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80') center/cover;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(184, 151, 84, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.4;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: normal;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             letter-spacing: 2px;
-            color: var(--color-text-dark);
+            color: var(--color-text-base);
+            position: relative;
         }
 
         .hero p {
             font-style: italic;
-            font-size: 1.5rem;
-            color: var(--color-accent);
-            max-width: 600px;
-            margin-bottom: 3rem;
+            font-size: 1.6rem;
+            color: var(--color-accent-gold-mat);
+            max-width: 700px;
+            margin-bottom: 3.5rem;
+            position: relative;
         }
 
         .btn {
-            font-family: var(--font-sans);
+            font-family: var(--font-sans-luxury);
             display: inline-block;
-            padding: 1rem 2.5rem;
-            border: 1px solid var(--color-text-dark);
-            color: var(--color-text-dark);
+            padding: 1rem 3rem;
+            border: 1px solid var(--color-accent-gold-bright);
+            color: var(--color-accent-gold-bright);
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 0.85rem;
             transition: all 0.4s ease;
+            position: relative;
+            background-color: transparent;
+            cursor: pointer;
         }
 
         .btn:hover {
-            background-color: var(--color-text-dark);
-            color: var(--color-bg-light);
+            background-color: var(--color-accent-gold-bright);
+            color: var(--color-bg-inner);
+            box-shadow: 0 0 20px rgba(229, 195, 122, 0.3);
         }
 
         /* --- SECTIONS GÉNÉRALES --- */
         section {
-            padding: 6rem 10%;
+            padding: 7rem 10%;
             max-width: 1400px;
             margin: 0 auto;
+            border-bottom: 1px solid var(--color-border-subtle);
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: normal;
-            margin-bottom: 4rem;
+            margin-bottom: 4.5rem;
+            color: var(--color-accent-gold-mat);
             position: relative;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 80px;
             height: 2px;
-            background-color: var(--color-gold);
+            background-color: var(--color-accent-gold-mat);
             margin: 1.5rem auto 0;
         }
 
-        /* --- SECTION À PROPOS (Texte + Image) --- */
-        .about-grid {
+        /* Sections sur fond crème (Institutionnel) */
+        section.institutionnel {
+            background-color: var(--color-bg-light-cream);
+            color: var(--color-text-dark-subtle);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        section.institutionnel .section-title {
+            color: var(--color-text-dark-subtle);
+        }
+
+        section.institutionnel .section-title::after {
+            background-color: var(--color-text-dark-subtle);
+        }
+
+        /* Effet d'affichage progressif */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- SECTION HÉRITAGE (Vision) --- */
+        .heritage-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 5rem;
             align-items: center;
         }
 
-        .about-text p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+        .heritage-text p {
+            font-size: 1.15rem;
+            margin-bottom: 1.8rem;
             text-align: justify;
+            opacity: 0.9;
         }
 
-        .about-text p.intro {
-            font-size: 1.3rem;
+        .heritage-text p.intro {
+            font-size: 1.4rem;
             font-weight: bold;
-            color: var(--color-accent);
+            color: var(--color-bg-light-cream);
         }
 
-        .about-image {
-            background-color: #ddd;
-            height: 500px;
-            background: url('https://images.unsplash.com/photo-1505664173615-04f189e81c81?auto=format&fit=crop&q=80') center/cover;
+        .heritage-image {
+            height: 550px;
+            background: url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80&w=600') center/cover;
+            border: 1px solid var(--color-accent-gold-mat);
             border-radius: 4px;
+            position: relative;
+        }
+
+        /* --- SECTION MEMBRES DU BUREAU --- */
+        .bureau-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .member-card {
+            padding: 3rem 2rem;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 4px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(26, 38, 57, 0.1);
+            border-bottom: 3px solid var(--color-accent-gold-mat);
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background-color: #eee;
+            border: 2px solid var(--color-bg-light-cream);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            background: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png') center/cover;
+        }
+
+        .member-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-dark-subtle);
+        }
+
+        .member-card p.role {
+            font-family: var(--font-sans-luxury);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent-gold-mat);
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
 
         /* --- SECTION LES PÔLES --- */
         .poles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
         }
 
         .pole-card {
-            padding: 3rem 2rem;
+            padding: 4rem 2.5rem;
             text-align: center;
-            background-color: #fff;
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: rgba(15, 26, 44, 0.6);
+            border: 1px solid var(--color-border-subtle);
+            border-radius: 4px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pole-card::after {
+            content: '';
+            position: absolute;
+            bottom: -50%; right: -50%;
+            width: 150%; height: 150%;
+            background: radial-gradient(circle, rgba(184, 151, 84, 0.05) 0%, transparent 70%);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
         }
 
         .pole-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-            border-bottom: 3px solid var(--color-gold);
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: var(--color-accent-gold-mat);
+        }
+
+        .pole-card:hover::after {
+            opacity: 1;
         }
 
         .pole-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 1rem;
-            color: var(--color-accent);
+            color: var(--color-bg-light-cream);
         }
 
         .pole-card p {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            color: #555;
+            font-family: var(--font-sans-luxury);
+            font-size: 0.95rem;
+            color: var(--color-text-base);
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+
+        /* --- SECTION PARTENAIRES --- */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 3rem;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: auto;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.4s ease;
+        }
+
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* --- SECTION ESPACE ADHÉRENT (Connexion) --- */
+        .connexion-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            padding: 5rem;
+            background-color: rgba(15, 26, 44, 0.8);
+            border: 2px solid var(--color-accent-gold-mat);
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(184, 151, 84, 0.15);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .login-card h3 {
+            font-size: 2rem;
+            color: var(--color-accent-gold-mat);
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-family: var(--font-sans-luxury);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-base);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            background-color: transparent;
+            border: 1px solid var(--color-border-subtle);
+            color: var(--color-text-base);
+            font-family: var(--font-sans-luxury);
+            border-radius: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--color-accent-gold-bright);
+        }
+
+        .login-notice {
+            font-family: var(--font-sans-luxury);
+            font-size: 0.8rem;
+            color: var(--color-text-base);
+            opacity: 0.6;
+            margin-top: 2rem;
         }
 
         /* --- FOOTER (Contact) --- */
         footer {
-            background-color: var(--color-text-dark);
-            color: var(--color-bg-light);
+            background-color: var(--color-bg-inner);
+            color: var(--color-bg-light-cream);
             text-align: center;
-            padding: 5rem 5%;
+            padding: 6rem 5%;
+            border-top: 1px solid var(--color-border-subtle);
         }
 
         footer h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: normal;
-            margin-bottom: 2rem;
-            color: var(--color-gold);
+            margin-bottom: 2.5rem;
+            color: var(--color-accent-gold-mat);
         }
 
         .contact-links {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            margin-bottom: 3rem;
+            gap: 4rem;
+            margin-bottom: 3.5rem;
             flex-wrap: wrap;
         }
 
         .contact-links a {
-            color: var(--color-bg-light);
+            color: var(--color-text-base);
             text-decoration: none;
-            font-family: var(--font-sans);
+            font-family: var(--font-sans-luxury);
             letter-spacing: 1px;
             font-size: 0.9rem;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s ease;
+            border-bottom: 1px solid rgba(184, 151, 84, 0);
+            transition: all 0.3s ease;
         }
 
         .contact-links a:hover {
-            border-color: var(--color-gold);
+            color: var(--color-accent-gold-bright);
+            border-color: rgba(184, 151, 84, 0.6);
         }
 
         .legal {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
+            font-family: var(--font-sans-luxury);
+            font-size: 0.8rem;
             opacity: 0.5;
-            margin-top: 2rem;
+            margin-top: 2.5rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .about-grid { grid-template-columns: 1fr; }
-            .about-image { height: 300px; order: -1; }
-            nav { display: none; /* Menu burger nécessaire pour mobile dans une version plus avancée */ }
+            .hero h1 { font-size: 2.8rem; }
+            .section-title { font-size: 2rem; }
+            .heritage-grid { grid-template-columns: 1fr; }
+            .heritage-image { height: 350px; order: -1; }
+            .login-card { padding: 3rem; }
+            nav { display: none; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">Prisme<span>.</span></a>
+        <a href="#" class="logo-text">Prisme<span>.</span></a>
         <nav>
-            <a href="#vision">Notre Vision</a>
-            <a href="#poles">Les Directions</a>
-            <a href="#contact">Contact</a>
+            <a href="#vision" class="active">Vision</a>
+            <a href="#bureau">Bureau</a>
+            <a href="#poles">Directions</a>
+            <a href="#partenaires">Partenaires</a>
+            <a href="#connexion">Adhérents</a>
+            <div class="header-logo-container">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="48" fill="#1A2639" stroke="#B89754" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="38" fill="none" stroke="#B89754" stroke-width="1"/>
+                    <circle cx="50" cy="50" r="37.5" fill="#0F1A2C" />
+                    
+                    <path d="M50 25 L65 50 L50 65 L35 50 Z" fill="#E5C37A"/>
+                    <path d="M50 25 L35 50 L50 50 Z" fill="#B89754"/>
+                    <path d="M50 50 L65 50 L50 65 Z" fill="#8C703A"/>
+                    
+                    <path d="M45 15 C46 12, 48 12, 49 15 C50 18, 49 22, 48 24 C46 25, 45 23, 45 20 L42 22" fill="#E5C37A"/>
+                    
+                    <text x="50" y="78" text-anchor="middle" font-family="Baskerville, serif" font-size="11" fill="#E5C37A" letter-spacing="1.5">PRISME</text>
+                    
+                    <path d="M15 85 Q50 95 85 85 Q85 95 50 100 Q15 95 15 85 Z" fill="#FDF9F2" stroke="#1A2639" stroke-width="0.5"/>
+                </svg>
+            </div>
         </nav>
     </header>
 
@@ -273,54 +533,156 @@ layout: null
         <section class="hero">
             <h1>L'Éloquence de Haute Précision</h1>
             <p>"Maîtriser le verbe pour porter sa conviction."</p>
-            <a href="#vision" class="btn">Découvrir l'Institution</a>
+            <a href="#connexion" class="btn">Accéder au Portail</a>
         </section>
 
-        <section id="vision">
-            <h2 class="section-title">L'Art de la Rhétorique à Quimper</h2>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p class="intro">PRISME QUIMPER est une association dédiée à l'excellence des compétences oratoires, de l'argumentation et du leadership par la parole.</p>
-                    <p>Conformément à nos statuts fondateurs, nous visons à la formation technique rigoureuse de nos membres. Le discours n'est pas inné, il se structure, se travaille et se maîtrise.</p>
-                    <p>Au-delà de l'apprentissage technique, notre vocation est de constituer un véritable pont institutionnel entre le talent étudiant et les réseaux professionnels, juridiques et économiques du Finistère.</p>
+        <section id="vision" class="fade-in">
+            <h2 class="section-title">Notre Héritage Oratoire</h2>
+            <div class="heritage-grid">
+                <div class="heritage-text">
+                    <p class="intro">Inspirée par l'excellence héraldique de Quimper, PRISME est une institution dédiée à la maîtrise oratoire et au leadership par la parole.</p>
+                    <p>Notre engagement se fonde sur la transmission d'une formation technique rigoureuse. L'art de la rhétorique n'est pas inné, il s'architecture et s'enseigne avec discipline.</p>
+                    <p>Au-delà de l'apprentissage technique, PRISME constitue le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.</p>
                 </div>
-                <div class="about-image"></div>
+                <div class="heritage-image"></div>
             </div>
         </section>
 
-        <section id="poles">
+        <section id="bureau" class="institutionnel fade-in">
+            <h2 class="section-title">Le Conseil d'Administration</h2>
+            <div class="bureau-grid">
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>Président</h3>
+                    <p class="role">Direction Générale</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Représentation légale de l'institution.</p>
+                </div>
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>Vice-Président</h3>
+                    <p class="role">Suppléance & Stratégie</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Coordination des grandes orientations.</p>
+                </div>
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>Secrétaire Général</h3>
+                    <p class="role">Administration</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Tenue des registres et archives.</p>
+                </div>
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>Trésorier Général</h3>
+                    <p class="role">Finances & Gestion</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Suivi comptable et budgétaire.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="poles" class="fade-in">
             <h2 class="section-title">Structure & Excellence</h2>
             <div class="poles-grid">
                 <div class="pole-card">
                     <h3>Pôle Culture</h3>
-                    <p>Garant du contenu intellectuel, de la veille rhétorique et de l'exigence de nos leçons magistrales.</p>
+                    <p>Garant de l'exigence intellectuelle, de la veille rhétorique et de l'excellence académique.</p>
                 </div>
                 <div class="pole-card">
                     <h3>Pôle Événementiel</h3>
-                    <p>En charge de l'organisation logistique de nos galas, rencontres techniques et concours de plaidoiries.</p>
+                    <p>En charge de l'organisation logistique héraldique de nos galas et concours de plaidoiries.</p>
                 </div>
                 <div class="pole-card">
                     <h3>Pôle Communication</h3>
-                    <p>Responsable de l'image de marque de l'institution et du rayonnement de nos orateurs.</p>
+                    <p>Responsable du rayonnement de l'image de l'institution et de la promotion de nos orateurs.</p>
                 </div>
                 <div class="pole-card">
                     <h3>Pôle Partenariats</h3>
-                    <p>Dédié à la recherche de mécénat et au développement de notre réseau avec le monde professionnel.</p>
+                    <p>Dédié au mécénat et au développement de notre réseau professionnel d'élite.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="partenaires" class="institutionnel fade-in">
+            <h2 class="section-title">Le Cercle d'Excellence</h2>
+            <div class="partners-grid">
+                <img src="https://via.placeholder.com/150x80/ffffff/B89754?text=Cercle+des+Avocats" alt="Partenaire 1" class="partner-logo">
+                <img src="https://via.placeholder.com/150x80/ffffff/B89754?text=Ville+de+Quimper" alt="Partenaire 2" class="partner-logo">
+                <img src="https://via.placeholder.com/150x80/ffffff/B89754?text=UBO+Jakez+Helias" alt="Partenaire 3" class="partner-logo">
+                <img src="https://via.placeholder.com/150x80/ffffff/B89754?text=Banque+Partenaire" alt="Partenaire 4" class="partner-logo">
+            </div>
+        </section>
+
+        <section id="connexion" class="fade-in">
+            <h2 class="section-title">Portail Adhérent</h2>
+            <div class="connexion-grid">
+                <div class="login-card">
+                    <h3>Accès Privilégié</h3>
+                    <p style="font-style: italic; color: var(--color-text-base); margin-bottom: 2rem;">Accédez à votre Calendrier Officiel, au Drive de l'Héritage (ressources) et au Cahier de Suivi.</p>
+                    
+                    <form action="#" method="get" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="email">E-mail Adhérent</label>
+                            <input type="email" id="email" class="input-field" placeholder="votrenom@domaine.fr" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn">Se Connecter au Portail</button>
+                    </form>
+                    
+                    <p class="login-notice">L'accès au Portail est strictement réservé aux membres de PRISME QUIMPER après validation de leur adhésion par le Bureau. L'authentification finale s'effectue via les invitations Google partagées.</p>
                 </div>
             </div>
         </section>
     </main>
 
     <footer id="contact">
-        <h2>Entrer en relation</h2>
+        <h2>L'Institution en Lumière</h2>
         <div class="contact-links">
-            <a href="mailto:contact@prisme-quimper.fr">Admissions & Informations</a>
-            <a href="mailto:partenariats@prisme-quimper.fr">Mécénat & Entreprises</a>
-            <a href="mailto:communication@prisme-quimper.fr">Presse & Médias</a>
+            <a href="mailto:contact@prisme-quimper.fr">Admissions & Excellence</a>
+            <a href="mailto:partenariats@prisme-quimper.fr">Mécénat & Héritage</a>
+            <a href="mailto:communication@prisme-quimper.fr">Médias & Rayonnement</a>
         </div>
         <p style="font-style: italic;">Bureau de PRISME QUIMPER, 29000 Quimper</p>
-        <p class="legal">© 2026 Association PRISME QUIMPER. Tous droits réservés.</p>
+        <p class="legal">© 2026 Association PRISME QUIMPER - Héritage d'Excellence Oratoire.</p>
     </footer>
 
+    <script>
+        const sections = document.querySelectorAll('main > section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    if (entry.target.id !== '') {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            if (!section.classList.contains('hero')) { 
+                observer.observe(section);
+            }
+        });
+
+        function handleLogin(event) {
+            event.preventDefault(); 
+            alert("VÉRIFICATION EN COURS...\nPRISME QUIMPER validera votre accès via Google Invitations (Calendar/Drive).\n\nPour la démonstration technique, nous vous redirigeons vers l'espace public.");
+            window.location.hash = '#connexion';
+        }
+    </script>
 </body>
 </html>
