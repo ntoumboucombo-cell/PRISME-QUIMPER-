@@ -1,18 +1,3 @@
-# Informations générales
 title: PRISME QUIMPER
-description: L'excellence oratoire et l'art de la rhétorique à Quimper. Formation, concours, réseau institutionnel.
-baseurl: "" # Laissez vide si c'est la racine du domaine
-url: "https://votre-nom-d-utilisateur.github.io" # Remplacez par votre URL finale GitHub Pages
-
-# Configuration thématique (un thème sobre et propre)
-theme: minima
-
-# Personnalisation
-author: PRISME QUIMPER
-logo: /assets/logo.png # C'est ici que vous mettrez votre logo plus tard
-
-# Liens sociaux (à compléter par votre Pôle Comm)
-minima:
-  social_links:
-    - { platform: linkedin, user_url: "https://www.linkedin.com/company/votre-page" }
-    - { platform: instagram, user_url: "https://www.instagram.com/votre-compte" }
+description: L'excellence oratoire et l'art de la rhétorique à Quimper.
+url: "https://votre-nom-d-utilisateur.github.io"
