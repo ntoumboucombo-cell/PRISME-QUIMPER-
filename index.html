@@ -7,6 +7,14 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRISME QUIMPER | Excellence Oratoire & Portail Institutionnel</title>
+    
+    <meta property="og:title" content="PRISME QUIMPER | L'Institution d'Excellence Oratoire">
+    <meta property="og:description" content="Découvrez PRISME QUIMPER, le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.">
+    <meta property="og:image" content="https://ntoumboucombo-cell.github.io/PRISME-QUIMPER-/logo.jpg">
+    <meta property="og:url" content="https://ntoumboucombo-cell.github.io/PRISME-QUIMPER-/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <style>
         /* DIRECTION ARTISTIQUE : Héritage Moderne, Luxe, Institutionnel (Calibré sur le Logo Définitif) */
         :root {
@@ -61,8 +69,6 @@ layout: null
             margin-left: 2.5rem; display: flex; align-items: center; justify-content: center;
             width: 50px; height: 50px; border-radius: 50%;
             transition: all 0.4s ease;
-            
-            /* C'est ici que j'appelle ta photo logo.jpg */
             background: url('logo.jpg') center/contain no-repeat;
             border: 1px solid var(--color-border-subtle);
         }
@@ -73,8 +79,7 @@ layout: null
 
         /* --- MENU BURGER MOBILE --- */
         .burger-menu {
-            display: none; /* Caché par défaut */
-            cursor: pointer; background: transparent; border: none; z-index: 1001;
+            display: none; cursor: pointer; background: transparent; border: none; z-index: 1001;
         }
         .burger-bar {
             width: 25px; height: 2px; background-color: var(--color-text-base);
@@ -86,8 +91,7 @@ layout: null
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: rgba(15, 26, 44, 0.98); backdrop-filter: blur(10px);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: all 0.5s ease;
-            z-index: 1000;
+            opacity: 0; visibility: hidden; transition: all 0.5s ease; z-index: 1000;
         }
         .mobile-nav.is-open { opacity: 1; visibility: visible; }
         .mobile-nav a {
@@ -131,7 +135,7 @@ layout: null
             border: 1px solid var(--color-accent-gold-bright); color: var(--color-accent-gold-bright);
             text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;
             position: relative; background-color: transparent; cursor: pointer; overflow: hidden;
-            transition: color 0.4s ease; z-index: 1;
+            transition: color 0.4s ease; z-index: 1; text-align: center;
         }
         .btn::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
@@ -179,10 +183,8 @@ layout: null
             padding-top: 0.3rem;
         }
 
-        /* Container avec effet Ken Burns au survol */
         .heritage-image-container {
-            height: 450px; 
-            border-radius: 4px; overflow: hidden;
+            height: 450px; border-radius: 4px; overflow: hidden;
             display: flex; justify-content: center; align-items: center;
         }
         .heritage-image {
@@ -190,9 +192,7 @@ layout: null
             background: url('logo.jpg') center/contain no-repeat;
             transition: transform 10s ease; 
         }
-        .heritage-image-container:hover .heritage-image {
-            transform: scale(1.05); 
-        }
+        .heritage-image-container:hover .heritage-image { transform: scale(1.05); }
 
         /* --- SECTION MEMBRES DU BUREAU --- */
         .bureau-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; }
@@ -257,9 +257,7 @@ layout: null
             padding: 2rem 0; border-bottom: 1px solid var(--color-border-subtle);
             transition: background-color 0.3s ease, padding-left 0.3s ease; cursor: default;
         }
-        .agenda-item:hover {
-            background-color: rgba(184, 151, 84, 0.03); padding-left: 1rem;
-        }
+        .agenda-item:hover { background-color: rgba(184, 151, 84, 0.03); padding-left: 1rem; }
         .agenda-date {
             font-family: var(--font-sans-luxury); font-size: 1rem; color: var(--color-accent-gold-mat);
             text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
@@ -345,10 +343,9 @@ layout: null
             .agenda-action { text-align: center; }
             .login-card { padding: 3rem; }
             
-            /* GESTION DU MENU MOBILE */
-            nav { display: none; } /* Cache le menu normal */
-            .header-logo-container { margin-left: 1rem; width: 40px; height: 40px; } /* Adapte le logo */
-            .burger-menu { display: block; } /* Affiche le burger */
+            nav { display: none; }
+            .header-logo-container { margin-left: 1rem; width: 40px; height: 40px; }
+            .burger-menu { display: block; }
         }
     </style>
 </head>
@@ -364,7 +361,8 @@ layout: null
             <a href="#agenda">Agenda</a>
             <a href="#partenaires">Partenaires</a>
             <a href="#connexion">Adhérents</a>
-            <div class="header-logo-container"></div> </nav>
+            <div class="header-logo-container"></div>
+        </nav>
 
         <button class="burger-menu" id="burger">
             <span class="burger-bar"></span>
@@ -386,7 +384,11 @@ layout: null
         <section class="hero">
             <h1>L'Éloquence de Haute Précision</h1>
             <p>"Maîtriser le verbe pour porter sa conviction."</p>
-            <a href="#connexion" class="btn">Accéder au Portail</a>
+            
+            <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <a href="#connexion" class="btn">Accéder au Portail</a>
+                <a href="mailto:contact.prismequimper@gmail.com?subject=Dossier de Candidature - Adhésion" class="btn" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat);">Rejoindre l'Institution</a>
+            </div>
         </section>
 
         <section id="vision" class="fade-in">
@@ -503,7 +505,7 @@ layout: null
                         <p>Lieu confidentiel — Remise des distinctions oratoires annuelles.</p>
                     </div>
                     <div class="agenda-action">
-                        <a href="mailto:partenariats@prisme-quimper.fr" class="btn-small">Devenir Mécène</a>
+                        <a href="mailto:contact.prismequimper@gmail.com?subject=Proposition de Mécénat" class="btn-small">Devenir Mécène</a>
                     </div>
                 </div>
             </div>
@@ -548,9 +550,9 @@ layout: null
         <h2>L'Institution en Lumière</h2>
         
         <div class="contact-links">
-            <a href="mailto:contact@prisme-quimper.fr">Admissions & Excellence</a>
-            <a href="mailto:partenariats@prisme-quimper.fr">Mécénat & Héritage</a>
-            <a href="mailto:communication@prisme-quimper.fr">Médias & Rayonnement</a>
+            <a href="mailto:contact.prismequimper@gmail.com?subject=Demande d'Admission">Admissions & Excellence</a>
+            <a href="mailto:contact.prismequimper@gmail.com?subject=Proposition de Mécénat">Mécénat & Héritage</a>
+            <a href="mailto:contact.prismequimper@gmail.com?subject=Contact Presse">Médias & Rayonnement</a>
         </div>
 
         <div class="social-links">
@@ -561,78 +563,4 @@ layout: null
             </a>
             <a href="https://www.instagram.com/prisme_quimper/" target="_blank">
                 <svg class="social-icon" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-            </a>
-        </div>
-
-        <p style="font-style: italic;">Bureau de PRISME QUIMPER, 29000 Quimper</p>
-        <p class="legal">
-            <a href="statuts.pdf" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px; margin-right: 15px; transition: border-color 0.3s ease;" onmouseover="this.style.borderColor='#E5C37A'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'">Consulter les Statuts de l'Association</a> 
-            <br><br>
-            © 2026 Association PRISME QUIMPER - Héritage d'Excellence Oratoire.
-        </p>
-    </footer>
-
-    <script>
-        // 1. GESTION DU MENU MOBILE (Burger)
-        const burger = document.getElementById('burger');
-        const mobileNav = document.getElementById('mobile-nav');
-        const mobileLinks = document.querySelectorAll('.mobile-nav a');
-
-        // Ouvre/Ferme le menu
-        burger.addEventListener('click', () => {
-            burger.classList.toggle('is-open');
-            mobileNav.classList.toggle('is-open');
-            // Empêche le défilement du corps quand le menu est ouvert
-            document.body.classList.toggle('overflow-hidden');
-        });
-
-        // Ferme le menu quand on clique sur un lien
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                burger.classList.remove('is-open');
-                mobileNav.classList.remove('is-open');
-                document.body.classList.remove('overflow-hidden');
-            });
-        });
-
-        // 2. EFFETS DE DÉFILEMENT (Active Links & Fade-In)
-        const sections = document.querySelectorAll('main > section');
-        const navLinks = document.querySelectorAll('nav a');
-        
-        const observerOptions = {
-            threshold: 0.1, rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    
-                    if (entry.target.id !== '') {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === '#' + entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                }
-            });
-        }, observerOptions);
-        
-        sections.forEach(section => {
-            if (!section.classList.contains('hero')) { 
-                observer.observe(section);
-            }
-        });
-
-        function handleLogin(event) {
-            event.preventDefault(); 
-            alert("VÉRIFICATION EN COURS...\nPRISME QUIMPER validera votre accès via Google Invitations (Calendar/Drive).\n\nPour la démonstration technique, nous vous redirigeons vers l'espace public.");
-            window.location.hash = '#connexion';
-        }
-    </script>
-</body>
-</html>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.
