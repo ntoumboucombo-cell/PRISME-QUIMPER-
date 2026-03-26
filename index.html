@@ -40,7 +40,7 @@ layout: null
             position: fixed; top: 0; width: 100%;
             background-color: rgba(15, 26, 44, 0.95); z-index: 1000;
             border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(5px);
-            transition: padding 0.3s ease; /* Animation fluide au scroll possible */
+            transition: padding 0.3s ease; 
         }
 
         .logo-text {
@@ -62,7 +62,7 @@ layout: null
             width: 45px; height: 45px; border-radius: 50%; transition: all 0.4s ease;
         }
         .header-logo-container:hover {
-            transform: scale(1.1) rotate(5deg); /* Légère rotation dynamique */
+            transform: scale(1.1) rotate(5deg); 
             filter: drop-shadow(0 0 15px rgba(229, 195, 122, 0.5));
         }
         .header-logo-container svg { width: 100%; height: 100%; }
@@ -71,7 +71,6 @@ layout: null
         .hero {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 0 5%; position: relative;
-            /* L'EFFET PARALLAXE : background-attachment: fixed */
             background: linear-gradient(rgba(15, 26, 44, 0.85), rgba(15, 26, 44, 0.95)), url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80') center/cover no-repeat;
             background-attachment: fixed; 
         }
@@ -92,7 +91,7 @@ layout: null
             max-width: 700px; margin-bottom: 3.5rem; position: relative;
         }
 
-        /* BOUTON LUXE (Effet Slide-in) */
+        /* BOUTON LUXE */
         .btn {
             font-family: var(--font-sans-luxury); display: inline-block; padding: 1rem 3rem;
             border: 1px solid var(--color-accent-gold-bright); color: var(--color-accent-gold-bright);
@@ -132,33 +131,34 @@ layout: null
         .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* --- SECTION HÉRITAGE (Vision) - AVEC LETTRINE & KEN BURNS --- */
+        /* --- SECTION L'ESPRIT PRISME --- */
         .heritage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
         
         .heritage-text p { font-size: 1.15rem; margin-bottom: 1.8rem; text-align: justify; opacity: 0.9; }
         
-        /* LA LETTRINE */
         .heritage-text p.intro {
             font-size: 1.3rem; font-weight: bold; color: var(--color-bg-light-cream);
         }
         .heritage-text p.intro::first-letter {
             font-family: var(--font-serif-precis); float: left; font-size: 4rem;
             line-height: 0.8; margin-right: 0.5rem; color: var(--color-accent-gold-mat);
-            padding-top: 0.3rem; /* Ajustement optique */
+            padding-top: 0.3rem;
         }
 
-        /* EFFET KEN BURNS SUR L'IMAGE */
+        /* L'IMAGE DU LOGO EN HAUTE QUALITÉ */
         .heritage-image-container {
-            height: 550px; border: 1px solid var(--color-accent-gold-mat);
-            border-radius: 4px; overflow: hidden; /* Cache le débordement du zoom */
+            height: 450px; 
+            border-radius: 4px; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
         .heritage-image {
             width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1577713309623-863a36484196?auto=format&fit=crop&q=80&w=600') center/cover;
-            transition: transform 10s ease; /* Transition très lente pour l'élégance */
+            /* 'contain' permet au logo de s'afficher en entier sans être coupé ! */
+            background: url('logo.jpg') center/contain no-repeat;
+            transition: transform 10s ease; 
         }
         .heritage-image-container:hover .heritage-image {
-            transform: scale(1.1); /* Zoom discret */
+            transform: scale(1.05); 
         }
 
         /* --- SECTION MEMBRES DU BUREAU --- */
@@ -183,7 +183,7 @@ layout: null
         }
         .member-card:hover .member-photo { filter: contrast(1.1) brightness(0.9); }
 
-        .member-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--color-text-dark-subtle); }
+        .member-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--color-text-dark-subtle); }
         .member-card p.role {
             font-family: var(--font-sans-luxury); font-size: 0.9rem; text-transform: uppercase;
             letter-spacing: 2px; color: var(--color-accent-gold-mat); font-weight: bold; margin-bottom: 1rem;
@@ -215,7 +215,7 @@ layout: null
             opacity: 0.8; line-height: 1.7;
         }
 
-        /* --- SECTION AGENDA (Événements) - NOUVEAU --- */
+        /* --- SECTION AGENDA (Événements) --- */
         .agenda-list {
             display: flex; flex-direction: column; gap: 1.5rem; max-width: 900px; margin: 0 auto;
         }
@@ -235,7 +235,6 @@ layout: null
         .agenda-info p { font-family: var(--font-sans-luxury); font-size: 0.85rem; opacity: 0.7; }
         .agenda-action { text-align: right; }
         
-        /* Petit bouton agenda */
         .btn-small {
             font-family: var(--font-sans-luxury); font-size: 0.75rem; text-transform: uppercase;
             letter-spacing: 1px; color: var(--color-accent-gold-bright); text-decoration: none;
@@ -306,7 +305,7 @@ layout: null
 <body>
 
     <header>
-        <a href="#" class="logo-text">Prisme<span>.</span></a>
+        <a href="#" class="logo-text">PRISME QUIMPER<span>.</span></a>
         <nav>
             <a href="#vision" class="active">Vision</a>
             <a href="#bureau">Bureau</a>
@@ -338,12 +337,12 @@ layout: null
         </section>
 
         <section id="vision" class="fade-in">
-            <h2 class="section-title">Notre Héritage Oratoire</h2>
+            <h2 class="section-title">L'Esprit PRISME</h2>
             <div class="heritage-grid">
                 <div class="heritage-text">
-                    <p class="intro">Inspirée par l'excellence héraldique de Quimper, PRISME est une institution dédiée à la maîtrise oratoire et au leadership par la parole.</p>
-                    <p>Notre engagement se fonde sur la transmission d'une formation technique rigoureuse. L'art de la rhétorique n'est pas inné, il s'architecture et s'enseigne avec discipline.</p>
-                    <p>Au-delà de l'apprentissage technique, PRISME constitue le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.</p>
+                    <p class="intro">Inspirée par l'excellence héraldique de Quimper, PRISME QUIMPER est une institution dédiée à la maîtrise oratoire et au leadership par la parole.</p>
+                    <p>Notre engagement se fonde sur la transmission d'une formation pédagogique. L'art de la rhétorique n'est pas inné, il s'architecture et s'enseigne avec passion.</p>
+                    <p>Au-delà de l'apprentissage, PRISME QUIMPER constitue le pont reliant le talent oratoire aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.</p>
                 </div>
                 <div class="heritage-image-container">
                     <div class="heritage-image"></div>
@@ -356,27 +355,45 @@ layout: null
             <div class="bureau-grid">
                 <div class="member-card">
                     <div class="member-photo"></div>
-                    <h3>Président</h3>
-                    <p class="role">Direction Générale</p>
-                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Représentation légale de l'institution.</p>
+                    <h3>Nayel TOUMBOU COMBO</h3>
+                    <p class="role">Président</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction Générale & Représentation légale de l'institution.</p>
                 </div>
                 <div class="member-card">
                     <div class="member-photo"></div>
-                    <h3>Vice-Président</h3>
-                    <p class="role">Suppléance & Stratégie</p>
-                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Coordination des grandes orientations.</p>
+                    <h3>Norah HELIAS</h3>
+                    <p class="role">Co-Présidente</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction Conjointe & Stratégie.</p>
                 </div>
                 <div class="member-card">
                     <div class="member-photo"></div>
-                    <h3>Secrétaire Général</h3>
-                    <p class="role">Administration</p>
-                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Tenue des registres et archives.</p>
+                    <h3>Enzo SAVI DE CHANDOND</h3>
+                    <p class="role">Vice-Président</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Suppléance & Coordination des grandes orientations.</p>
                 </div>
                 <div class="member-card">
                     <div class="member-photo"></div>
-                    <h3>Trésorier Général</h3>
-                    <p class="role">Finances & Gestion</p>
-                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Suivi comptable et budgétaire.</p>
+                    <h3>Romane BILIEN</h3>
+                    <p class="role">Secrétaire Générale</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Administration, tenue des registres et archives.</p>
+                </div>
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>Romain BROBAND</h3>
+                    <p class="role">Secrétaire Adjoint</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Soutien administratif et gestion des membres.</p>
+                </div>
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>À pourvoir</h3>
+                    <p class="role">Trésorier Général</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Finances, suivi comptable et budgétaire.</p>
+                </div>
+                <div class="member-card">
+                    <div class="member-photo"></div>
+                    <h3>Evan STRUILLOU</h3>
+                    <p class="role">Trésorier Adjoint</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Soutien financier et gestion des cotisations.</p>
                 </div>
             </div>
         </section>
@@ -386,11 +403,11 @@ layout: null
             <div class="poles-grid">
                 <div class="pole-card">
                     <h3>Pôle Culture</h3>
-                    <p>Garant de l'exigence intellectuelle, de la veille rhétorique et de l'excellence académique.</p>
+                    <p>Organisation des concours d'éloquence, des conférences, des colloques et des formations académiques.</p>
                 </div>
                 <div class="pole-card">
                     <h3>Pôle Événementiel</h3>
-                    <p>En charge de l'organisation logistique héraldique de nos galas et concours de plaidoiries.</p>
+                    <p>En charge de l'organisation logistique de nos galas, soirées et événements de prestige.</p>
                 </div>
                 <div class="pole-card">
                     <h3>Pôle Communication</h3>
@@ -398,7 +415,7 @@ layout: null
                 </div>
                 <div class="pole-card">
                     <h3>Pôle Partenariats</h3>
-                    <p>Dédié au mécénat et au développement de notre réseau professionnel d'élite.</p>
+                    <p>Dédié à la gestion des partenariats et au développement de notre réseau professionnel.</p>
                 </div>
             </div>
         </section>
@@ -440,7 +457,7 @@ layout: null
         </section>
 
         <section id="partenaires" class="institutionnel fade-in">
-            <h2 class="section-title">Le Cercle d'Excellence</h2>
+            <h2 class="section-title">Nos partenaires d'excellence</h2>
             <div class="partners-grid">
                 <img src="https://via.placeholder.com/150x80/ffffff/B89754?text=Cercle+des+Avocats" alt="Partenaire 1" class="partner-logo">
                 <img src="https://via.placeholder.com/150x80/ffffff/B89754?text=Ville+de+Quimper" alt="Partenaire 2" class="partner-logo">
@@ -525,3 +542,4 @@ layout: null
     </script>
 </body>
 </html>
+    
