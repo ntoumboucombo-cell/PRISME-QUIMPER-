@@ -63,6 +63,7 @@
             margin-left: 2.5rem; display: flex; align-items: center; justify-content: center;
             width: 50px; height: 50px; border-radius: 50%;
             transition: all 0.4s ease;
+            /* ON NE CHANGE RIEN AU LOGO : logo.jpg */
             background: url('logo.jpg') center/contain no-repeat;
             border: 1px solid var(--color-border-subtle);
         }
@@ -180,7 +181,8 @@
         }
         .heritage-image {
             width: 100%; height: 100%;
-            background: url('logo.svg') center/contain no-repeat;
+            /* ON NE CHANGE RIEN AU LOGO : logo.jpg */
+            background: url('logo.jpg') center/contain no-repeat;
             transition: transform 10s ease; 
         }
         .heritage-image-container:hover .heritage-image { transform: scale(1.05); }
@@ -202,6 +204,7 @@
             width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 1.5rem;
             background-color: #eee; border: 2px solid var(--color-bg-light-cream);
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            /* Avatar par défaut */
             background: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png') center/cover;
             transition: filter 0.3s ease;
         }
@@ -399,48 +402,56 @@
         <section id="bureau" class="institutionnel fade-in">
             <h2 class="section-title">Le Conseil d'Administration</h2>
             <div class="bureau-grid">
+                
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo" style="background-image: url('nayel.jpg');"></div>
                     <h3>Nayel TOUMBOU COMBO</h3>
                     <p class="role">Président</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction Générale & Représentation légale de l'institution.</p>
                 </div>
+
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo" style="background-image: url('norah.jpg');"></div>
                     <h3>Norah HELIAS</h3>
                     <p class="role">Co-Présidente</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction  Générale & Représentation légale de l'institution .</p>
                 </div>
+
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo" style="background-image: url('enzo.jpg');"></div>
                     <h3>Enzo SAVI DE CHANDOND</h3>
                     <p class="role">Vice-Président</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Suppléance & Coordination des grandes orientations.</p>
                 </div>
+
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo" style="background-image: url('romane.jpg');"></div>
                     <h3>Romane BILIEN</h3>
                     <p class="role">Secrétaire Générale</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Administration, tenue des registres et archives.</p>
                 </div>
+
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo" style="background-image: url('romain.jpg');"></div>
                     <h3>Romain BROBAND</h3>
                     <p class="role">Secrétaire Adjoint</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Soutien administratif et gestion des membres.</p>
                 </div>
+
                 <div class="member-card">
                     <div class="member-photo"></div>
                     <h3>À pourvoir</h3>
                     <p class="role">Trésorier Général</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Finances, suivi comptable et budgétaire.</p>
                 </div>
+
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo" style="background-image: url('evan.jpg');"></div>
                     <h3>Evan STRUILLOU</h3>
                     <p class="role">Trésorier Adjoint</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Soutien financier et gestion des cotisations.</p>
                 </div>
+
             </div>
         </section>
 
