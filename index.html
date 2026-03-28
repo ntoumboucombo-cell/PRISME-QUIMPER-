@@ -63,7 +63,6 @@
             margin-left: 2.5rem; display: flex; align-items: center; justify-content: center;
             width: 50px; height: 50px; border-radius: 50%;
             transition: all 0.4s ease;
-            /* ON NE CHANGE RIEN AU LOGO : logo.jpg */
             background: url('logo.jpg') center/contain no-repeat;
             border: 1px solid var(--color-border-subtle);
         }
@@ -117,9 +116,20 @@
             color: var(--color-text-base); position: relative;
         }
 
-        .hero p {
+        /* NOUVEAUTÉ : Effet Machine à Écrire */
+        #typewriter {
             font-style: italic; font-size: 1.6rem; color: var(--color-accent-gold-mat);
             max-width: 700px; margin-bottom: 3.5rem; position: relative;
+            min-height: 2.8rem; /* Évite que la page saute pendant que ça tape */
+        }
+        #typewriter::after {
+            content: '|';
+            color: var(--color-accent-gold-bright);
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .btn {
@@ -181,7 +191,6 @@
         }
         .heritage-image {
             width: 100%; height: 100%;
-            /* ON NE CHANGE RIEN AU LOGO : logo.jpg */
             background: url('logo.jpg') center/contain no-repeat;
             transition: transform 10s ease; 
         }
@@ -200,15 +209,31 @@
             border-bottom: 3px solid var(--color-accent-gold-mat);
         }
 
+        /* NOUVEAUTÉ : Carte de Visite Interactive (Photo Bureau) */
         .member-photo {
             width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 1.5rem;
             background-color: #eee; border: 2px solid var(--color-bg-light-cream);
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            /* Avatar par défaut */
             background: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png') center/cover;
             transition: filter 0.3s ease;
+            position: relative; /* Indispensable pour l'effet */
+            overflow: hidden; /* Coupe ce qui dépasse du rond */
         }
-        .member-card:hover .member-photo { filter: contrast(1.1) brightness(0.9); }
+        
+        .member-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 26, 44, 0.85); /* Fond bleu institutionnel semi-transparent */
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+        .member-card:hover .member-overlay { opacity: 1; } /* Apparaît au survol */
+
+        .member-overlay-icon {
+            width: 32px; height: 32px; fill: var(--color-accent-gold-bright);
+            transform: translateY(15px); transition: transform 0.3s ease;
+        }
+        .member-card:hover .member-overlay-icon { transform: translateY(0); } /* Remonte au survol */
 
         .member-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--color-text-dark-subtle); }
         .member-card p.role {
@@ -377,7 +402,7 @@
     <main>
         <section class="hero">
             <h1>L'Éloquence de Haute Précision</h1>
-            <p>"Maîtriser le verbe pour porter sa conviction."</p>
+            <p id="typewriter"></p>
             
             <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap;">
                 <a href="#connexion" class="btn">Accéder au Portail</a>
@@ -404,49 +429,91 @@
             <div class="bureau-grid">
                 
                 <div class="member-card">
-                    <div class="member-photo" style="background-image: url('nayel.jpg');"></div>
+                    <div class="member-photo" style="background-image: url('nayel.jpg');">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>Nayel TOUMBOU COMBO</h3>
                     <p class="role">Président</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction Générale & Représentation légale de l'institution.</p>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-photo" style="background-image: url('norah.jpg');"></div>
+                    <div class="member-photo" style="background-image: url('norah.jpg');">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>Norah HELIAS</h3>
                     <p class="role">Co-Présidente</p>
-                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction  Générale & Représentation légale de l'institution .</p>
+                    <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Direction Générale & Représentation légale de l'institution.</p>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-photo" style="background-image: url('enzo.jpg');"></div>
+                    <div class="member-photo" style="background-image: url('enzo.jpg');">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>Enzo SAVI DE CHANDOND</h3>
                     <p class="role">Vice-Président</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Suppléance & Coordination des grandes orientations.</p>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-photo" style="background-image: url('romane.jpg');"></div>
+                    <div class="member-photo" style="background-image: url('romane.jpg');">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>Romane BILIEN</h3>
                     <p class="role">Secrétaire Générale</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Administration, tenue des registres et archives.</p>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-photo" style="background-image: url('romain.jpg');"></div>
+                    <div class="member-photo" style="background-image: url('romain.jpg');">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>Romain BROBAND</h3>
                     <p class="role">Secrétaire Adjoint</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Soutien administratif et gestion des membres.</p>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-photo"></div>
+                    <div class="member-photo">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>À pourvoir</h3>
                     <p class="role">Trésorier Général</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Finances, suivi comptable et budgétaire.</p>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-photo" style="background-image: url('evan.jpg');"></div>
+                    <div class="member-photo" style="background-image: url('evan.jpg');">
+                        <div class="member-overlay">
+                            <a href="#" target="_blank" aria-label="Profil LinkedIn">
+                                <svg class="member-overlay-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
                     <h3>Evan STRUILLOU</h3>
                     <p class="role">Trésorier Adjoint</p>
                     <p style="font-family: var(--font-sans-luxury); font-size: 0.9rem; color: #555;">Soutien financier et gestion des cotisations.</p>
@@ -553,7 +620,7 @@
         
         <div class="contact-links">
             <a href="mailto:contact.prismequimper@gmail.com?subject=Demande d'Admission">Adhésion & Excellence</a>
-            <a href="mailto:contact.prismequimper@gmail.com?subject=Proposition de Mécénat">partenaire & Héritage</a>
+            <a href="mailto:contact.prismequimper@gmail.com?subject=Proposition de Mécénat">Partenaires & Héritage</a>
             <a href="mailto:contact.prismequimper@gmail.com?subject=Contact Presse">Médias & Rayonnement</a>
         </div>
 
@@ -579,10 +646,24 @@
     </footer>
 
     <script>
-        // Sécurisation globale du JavaScript pour éviter les plantages
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. GESTION DU MENU MOBILE (Burger)
+            // NOUVEAUTÉ : Effet Machine à écrire pour l'accroche
+            const textToType = '"Maîtriser le verbe pour porter sa conviction."';
+            const typeWriterElement = document.getElementById('typewriter');
+            let charIndex = 0;
+            
+            function type() {
+                if (charIndex < textToType.length) {
+                    typeWriterElement.innerHTML += textToType.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, 60); // Vitesse de frappe
+                }
+            }
+            // Démarrage de l'animation après un petit délai de 0.5s
+            setTimeout(type, 500);
+
+            // GESTION DU MENU MOBILE (Burger)
             const burger = document.getElementById('burger');
             const mobileNav = document.getElementById('mobile-nav');
             const mobileLinks = document.querySelectorAll('.mobile-nav a');
@@ -603,7 +684,7 @@
                 });
             }
 
-            // 2. EFFETS DE DÉFILEMENT (Active Links & Fade-In)
+            // EFFETS DE DÉFILEMENT (Active Links & Fade-In)
             const sections = document.querySelectorAll('main > section');
             const navLinks = document.querySelectorAll('nav a');
             
@@ -637,7 +718,7 @@
             }
         });
 
-        // 3. FONCTION DE CONNEXION (Déportée hors du DOMContentLoaded pour être accessible par le formulaire)
+        // FONCTION DE CONNEXION
         function handleLogin(event) {
             event.preventDefault(); 
             alert("VÉRIFICATION EN COURS...\nPRISME QUIMPER validera votre accès via Google Invitations (Calendar/Drive).\n\nPour la démonstration technique, nous vous redirigeons vers l'espace public.");
