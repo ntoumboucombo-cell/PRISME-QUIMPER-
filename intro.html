@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRISME QUIMPER | Initialisation</title>
+    <style>
+        /* BASE & FOND COSMIQUE */
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #02060D; /* Bleu nuit très profond */
+            overflow: hidden; font-family: "Montserrat", sans-serif;
+        }
+
+        /* LE CANVAS POUR LES PARTICULES */
+        #particle-canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: 1;
+        }
+
+        /* L'ÉCRAN DE FLASH BLANC/DORÉ */
+        #flash-overlay {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, #FFFFFF 0%, #E5C37A 50%, #02060D 100%);
+            z-index: 2; opacity: 0; pointer-events: none;
+        }
+
+        /* LE CONTENEUR DU LOGO */
+        #logo-container {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3; opacity: 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        #prisme-logo {
+            width: 280px; height: auto;
+            /* L'effet de lumière autour du logo, comme dans la vidéo */
+            filter: drop-shadow(0 0 0px rgba(229, 195, 122, 0)); 
+            transform: scale(0.5);
+        }
+
+        /* LE TEXTE SOUS LE LOGO */
+        .startup-text {
+            color: #E8E5DF; font-size: 1.2rem; letter-spacing: 4px;
+            text-transform: uppercase; margin-top: 2rem; opacity: 0;
+        }
+
+        .startup-subtext {
+            color: #B89754; font-size: 0.8rem; letter-spacing: 2px;
+            font-style: italic; margin-top: 0.5rem; opacity: 0;
+        }
+
+        /* LE BOUTON POUR ENTRER SUR LE VRAI SITE */
+        #enter-btn {
+            margin-top: 3rem; padding: 1rem 3rem;
+            background: transparent; border: 1px solid #E5C37A;
+            color: #E5C37A; font-size: 0.9rem; letter-spacing: 2px;
+            text-transform: uppercase; cursor: pointer; opacity: 0;
+            transition: all 0.4s ease; text-decoration: none;
+            pointer-events: none; /* Désactivé tant qu'il n'est pas visible */
+        }
+        #enter-btn:hover {
+            background: #E5C37A; color: #02060D;
+            box-shadow: 0 0 20px rgba(229, 195, 122, 0.5);
+        }
+
+        /* --- LES ANIMATIONS CSS (DÉCLENCHÉES PAR JAVASCRIPT) --- */
+        
+        .flash-anim {
+            animation: flashBurst 1.5s cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
+        }
+        
+        .logo-reveal {
+            animation: logoPop 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .text-reveal {
+            animation: textFadeIn 2s ease-out 1.5s forwards;
+        }
+        
+        .subtext-reveal {
+            animation: textFadeIn 2s ease-out 2.5s forwards;
+        }
+
+        .btn-reveal {
+            animation: textFadeIn 2s ease-out 3.5s forwards;
+            pointer-events: auto !important; /* On active le bouton */
+        }
+
+        @keyframes flashBurst {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes logoPop {
+            0% { transform: scale(0.2); opacity: 0; filter: drop-shadow(0 0 100px #FFFFFF); }
+            15% { opacity: 1; filter: drop-shadow(0 0 80px #E5C37A); }
+            100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 25px rgba(229, 195, 122, 0.6)); }
+        }
+
+        @keyframes textFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div id="flash-overlay"></div>
+
+    <div id="logo-container">
+        <img src="logo.PNG" alt="PRISME QUIMPER" id="prisme-logo">
+        <div class="startup-text" id="text1">PRISME QUIMPER</div>
+        <div class="startup-subtext" id="text2">L'Institution d'Excellence Oratoire</div>
+        <a href="index.html" id="enter-btn">Accéder au Portail</a>
+    </div>
+
+    <script>
+        // LE MOTEUR COSMIQUE "SUPER SOLIDE" EN PUR JAVASCRIPT
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let animationPhase = 'swirl'; // 'swirl' (aspiration) puis 'drift' (poussière cosmique)
+        
+        // Les couleurs de Prisme Quimper (Or, Crème, Blanc, Bleu profond)
+        const colors = ['#E5C37A', '#B89754', '#FDF9F2', '#4A658A'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.angle = Math.random() * Math.PI * 2;
+                // Rayon de départ aléatoire (assez loin du centre)
+                this.radius = Math.random() * (width > height ? width : height);
+                this.size = Math.random() * 2.5 + 0.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.speed = Math.random() * 0.05 + 0.02; // Vitesse de rotation
+                this.inwardSpeed = Math.random() * 15 + 5; // Vitesse d'aspiration
+                this.driftX = (Math.random() - 0.5) * 1; // Pour la phase 2
+                this.driftY = (Math.random() - 0.5) * 1; // Pour la phase 2
+            }
+            update() {
+                if (animationPhase === 'swirl') {
+                    // Phase 1 : Tourbillon vers le centre (comme dans la vidéo)
+                    this.angle += this.speed;
+                    this.radius -= this.inwardSpeed;
+                    
+                    // Si la particule atteint le centre, on la remet loin
+                    if (this.radius < 5) this.radius = Math.random() * width;
+                    
+                    this.x = width / 2 + Math.cos(this.angle) * this.radius;
+                    this.y = height / 2 + Math.sin(this.angle) * this.radius;
+                } else {
+                    // Phase 2 : Poussière cosmique paisible après l'explosion
+                    this.x += this.driftX;
+                    this.y += this.driftY;
+                    // Fait réapparaître les particules de l'autre côté de l'écran si elles sortent
+                    if(this.x < 0) this.x = width;
+                    if(this.x > width) this.x = 0;
+                    if(this.y < 0) this.y = height;
+                    if(this.y > height) this.y = 0;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // Créer 300 particules
+        for (let i = 0; i < 300; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            // Effet de traînée lumineuse (on ne nettoie pas tout l'écran, on met un fond noir semi-transparent)
+            ctx.fillStyle = 'rgba(2, 6, 13, 0.2)'; 
+            ctx.fillRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // DÉCLENCHEMENT DE LA CINÉMATIQUE
+        function startCinematic() {
+            animate(); // Lance les particules qui tourbillonnent
+
+            // Après 2.5 secondes de tourbillon, on lance l'explosion !
+            setTimeout(() => {
+                // 1. Le Flash lumineux
+                document.getElementById('flash-overlay').classList.add('flash-anim');
+                
+                // 2. Le comportement des particules change (poussière d'étoile apaisée)
+                animationPhase = 'drift';
+                particles.forEach(p => {
+                    p.x = Math.random() * width;
+                    p.y = Math.random() * height;
+                });
+
+                // 3. Révélation du logo et des textes avec les animations CSS
+                document.getElementById('prisme-logo').classList.add('logo-reveal');
+                document.getElementById('text1').classList.add('text-reveal');
+                document.getElementById('text2').classList.add('subtext-reveal');
+                document.getElementById('enter-btn').classList.add('btn-reveal');
+
+            }, 2500); // 2500 millisecondes = 2.5 secondes
+        }
+
+        // On démarre l'intro dès que la page est chargée
+        window.onload = startCinematic;
+
+    </script>
+</body>
+</html>
