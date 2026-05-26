@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRISME QUIMPER | Excellence Oratoire & Portail Institutionnel</title>
     
-    <meta property="og:title" content="PRISME QUIMPER | L'Institution d'Excellence Oratoire">
+    <meta property="og:title" content="PRISME QUIMPER | L'Association d'Excellence Oratoire">
     <meta property="og:description" content="Découvrez PRISME QUIMPER, le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.">
     <meta property="og:image" content="https://ntoumboucombo-cell.github.io/PRISME-QUIMPER-/logo.PNG">
     <meta property="og:url" content="https://ntoumboucombo-cell.github.io/PRISME-QUIMPER-/">
@@ -134,6 +134,50 @@
         }
         .btn:hover { color: var(--color-bg-inner); box-shadow: 0 0 20px rgba(229, 195, 122, 0.3); }
         .btn:hover::before { left: 0; }
+
+        /* --- MODALE D'ADHÉSION --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 26, 44, 0.95); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s ease;
+        }
+        .modal-overlay.is-open { opacity: 1; visibility: visible; }
+        .modal-content {
+            background-color: var(--color-bg-inner); border: 1px solid var(--color-accent-gold-mat);
+            padding: 3rem; width: 90%; max-width: 700px; max-height: 90vh; overflow-y: auto;
+            position: relative; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        /* Style de la scrollbar pour la modale */
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-track { background: var(--color-bg-inner); }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--color-accent-gold-mat); border-radius: 4px; }
+
+        .close-modal {
+            position: absolute; top: 15px; right: 20px; font-size: 2.5rem;
+            background: none; border: none; color: var(--color-text-base);
+            cursor: pointer; transition: color 0.3s; line-height: 1;
+        }
+        .close-modal:hover { color: var(--color-accent-gold-bright); }
+
+        .modal-form-group { margin-bottom: 1.5rem; text-align: left; }
+        .modal-form-row { display: flex; gap: 1rem; }
+        .modal-form-row .modal-form-group { flex: 1; }
+        
+        .modal-form-group label {
+            font-family: var(--font-sans-luxury); font-size: 0.8rem; text-transform: uppercase;
+            color: var(--color-accent-gold-bright); display: block; margin-bottom: 0.5rem; letter-spacing: 1px;
+        }
+        .modal-input {
+            width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--color-border-subtle); color: var(--color-text-base);
+            font-family: var(--font-sans-luxury); border-radius: 2px; transition: border-color 0.3s;
+        }
+        .modal-input:focus { outline: none; border-color: var(--color-accent-gold-bright); }
+        
+        .modal-radio-group { display: flex; gap: 1.5rem; font-family: var(--font-sans-luxury); font-size: 0.85rem; align-items: center; margin-bottom: 0.5rem;}
+        .modal-checkbox-group { display: flex; align-items: flex-start; gap: 0.8rem; font-family: var(--font-sans-luxury); font-size: 0.8rem; margin-bottom: 0.8rem; line-height: 1.5;}
+        .modal-checkbox-group input[type="checkbox"], .modal-radio-group input[type="radio"] { accent-color: var(--color-accent-gold-mat); margin-top: 3px; cursor: pointer; }
 
         /* --- SECTIONS GÉNÉRALES --- */
         section {
@@ -350,6 +394,8 @@
             .agenda-item { grid-template-columns: 1fr; gap: 1rem; text-align: center; }
             .agenda-action { text-align: center; }
             .login-card { padding: 3rem; }
+            .modal-content { padding: 2rem; }
+            .modal-form-row { flex-direction: column; gap: 0; }
             
             nav { display: none; }
             .header-logo-container { margin-left: 1rem; width: 40px; height: 40px; }
@@ -395,7 +441,7 @@
             
             <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap;">
                 <a href="#connexion" class="btn">Accéder au Portail</a>
-                <a href="mailto:contact.prismequimper@gmail.com?subject=Dossier de Candidature - Adhésion" class="btn" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat);">Rejoindre l'Institution</a>
+                <a href="#" class="btn open-adhesion-modal" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat);">Rejoindre l'Association</a>
             </div>
         </section>
 
@@ -603,11 +649,101 @@
         </section>
     </main>
 
+    <div id="adhesion-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2 style="font-family: var(--font-serif-precis); color: var(--color-accent-gold-mat); font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: normal;">Rejoindre l'Association</h2>
+            <p style="font-family: var(--font-sans-luxury); font-size: 0.85rem; color: var(--color-text-base); opacity: 0.8; margin-bottom: 2.5rem;">Veuillez remplir le formulaire ci-dessous pour soumettre votre candidature à PRISME QUIMPER.</p>
+            
+            <form id="adhesion-form" onsubmit="submitAdhesion(event)">
+                
+                <div class="modal-form-group">
+                    <label>Civilité *</label>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="civilite" value="Mme" required> Mme</label>
+                        <label><input type="radio" name="civilite" value="M."> M.</label>
+                        <label><input type="radio" name="civilite" value="Autre"> Autre</label>
+                    </div>
+                </div>
+
+                <div class="modal-form-row">
+                    <div class="modal-form-group">
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" class="modal-input" required>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="prenom">Prénom *</label>
+                        <input type="text" id="prenom" class="modal-input" required>
+                    </div>
+                </div>
+
+                <div class="modal-form-row">
+                    <div class="modal-form-group">
+                        <label for="ddn">Date de naissance *</label>
+                        <input type="date" id="ddn" class="modal-input" required>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="telephone">Téléphone *</label>
+                        <input type="tel" id="telephone" class="modal-input" required>
+                    </div>
+                </div>
+
+                <div class="modal-form-group">
+                    <label for="email-adhesion">Adresse e-mail *</label>
+                    <input type="email" id="email-adhesion" class="modal-input" required>
+                </div>
+
+                <div class="modal-form-group">
+                    <label for="ecole">Votre Établissement / École *</label>
+                    <input type="text" id="ecole" class="modal-input" placeholder="Ex: UBO, IUT, etc." required>
+                </div>
+
+                <div class="modal-form-group">
+                    <label>Type d'adhésion souhaitée *</label>
+                    <div class="modal-checkbox-group">
+                        <input type="radio" name="profil" id="profil-adherent" value="Adhérent" required>
+                        <label for="profil-adherent" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin-bottom:0;"><strong>Membre Adhérent :</strong> Je souhaite participer aux événements, soutenir l'asso et recevoir la newsletter.</label>
+                    </div>
+                    <div class="modal-checkbox-group">
+                        <input type="radio" name="profil" id="profil-actif" value="Actif">
+                        <label for="profil-actif" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin-bottom:0;"><strong>Membre Actif (Bénévole) :</strong> Je souhaite m'investir concrètement et intégrer un pôle de l'association.</label>
+                    </div>
+                </div>
+
+                <div class="modal-form-group">
+                    <label>Si membre actif, quel pôle vous intéresse ?</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole1"><label for="pole1" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Communication</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole2"><label for="pole2" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Événementiel</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole3"><label for="pole3" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Partenariats</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole4"><label for="pole4" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Secrétariat Général</label></div>
+                    </div>
+                </div>
+
+                <div class="modal-form-group">
+                    <label for="motivation">Votre motivation en quelques mots</label>
+                    <textarea id="motivation" class="modal-input" rows="3" style="resize: vertical;"></textarea>
+                </div>
+
+                <div class="modal-form-group">
+                    <div class="modal-checkbox-group" style="margin-top: 1.5rem;">
+                        <input type="checkbox" id="rgpd" required>
+                        <label for="rgpd" style="color:var(--color-text-base); text-transform:none; font-size:0.75rem; margin-bottom:0; opacity: 0.7;">* En soumettant ce formulaire, j'accepte de me conformer aux statuts et au règlement intérieur de PRISME QUIMPER. J'accepte que mes données soient traitées pour la gestion de mon adhésion.</label>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button type="submit" class="btn" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat); width: 100%;">Soumettre ma candidature</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <footer id="contact">
         <h2>L'Institution en Lumière</h2>
         
         <div class="contact-links">
-            <a href="mailto:contact.prismequimper@gmail.com?subject=Demande d'Admission">Adhésion & Excellence</a>
+            <a href="#" class="open-adhesion-modal">Adhésion & Excellence</a>
             <a href="mailto:contact.prismequimper@gmail.com?subject=Proposition de Mécénat">Partenaires & Héritage</a>
             <a href="mailto:contact.prismequimper@gmail.com?subject=Contact Presse">Médias & Rayonnement</a>
         </div>
@@ -657,6 +793,36 @@
                 });
             }
 
+            // GESTION DE LA MODALE D'ADHÉSION
+            const modal = document.getElementById('adhesion-modal');
+            const openModalBtns = document.querySelectorAll('.open-adhesion-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            if(modal && closeModalBtn) {
+                // Ouvrir la modale
+                openModalBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        modal.classList.add('is-open');
+                        document.body.classList.add('overflow-hidden');
+                    });
+                });
+
+                // Fermer via la croix
+                closeModalBtn.addEventListener('click', () => {
+                    modal.classList.remove('is-open');
+                    document.body.classList.remove('overflow-hidden');
+                });
+
+                // Fermer en cliquant à l'extérieur de la modale
+                window.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('is-open');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                });
+            }
+
             // EFFETS DE DÉFILEMENT (Active Links & Fade-In)
             const allMainSections = document.querySelectorAll('main > section');
             const navLinks = document.querySelectorAll('nav a');
@@ -691,11 +857,24 @@
             }
         });
 
-        // FONCTION DE CONNEXION
+        // FONCTION DE CONNEXION ESPACE ADHÉRENT
         function handleLogin(event) {
             event.preventDefault(); 
             alert("VÉRIFICATION EN COURS...\nPRISME QUIMPER validera votre accès via Google Invitations (Calendar/Drive).\n\nPour la démonstration technique, nous vous redirigeons vers l'espace public.");
             window.location.hash = '#connexion';
+        }
+
+        // FONCTION D'ENVOI DU FORMULAIRE D'ADHÉSION
+        function submitAdhesion(event) {
+            event.preventDefault();
+            // Affiche un message de succès
+            alert("Merci ! Votre demande d'adhésion a bien été envoyée.\n\nL'équipe de PRISME QUIMPER reviendra vers vous par e-mail très rapidement.");
+            
+            // Ferme la modale et réinitialise le formulaire
+            const modal = document.getElementById('adhesion-modal');
+            modal.classList.remove('is-open');
+            document.body.classList.remove('overflow-hidden');
+            event.target.reset();
         }
     </script>
 </body>
