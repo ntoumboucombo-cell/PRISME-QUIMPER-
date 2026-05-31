@@ -867,16 +867,44 @@
         }
 
         // FONCTION D'ENVOI DU FORMULAIRE D'ADHÉSION
-        function submitAdhesion(event) {
-            event.preventDefault();
-            // Affiche un message de succès
-            alert("Merci ! Votre demande d'adhésion a bien été envoyée.\n\nL'équipe de PRISME QUIMPER reviendra vers vous par e-mail très rapidement.");
-            
+        // FONCTION D'ENVOI DU FORMULAIRE D'ADHÉSION
+async function submitAdhesion(event) {
+    event.preventDefault(); // Empêche la page de se recharger
+    
+    const form = event.target;
+    const btn = document.getElementById('submit-btn');
+    btn.innerText = "Envoi en cours..."; // Fait patienter l'utilisateur
+    
+    // 👇 TA CLÉ WEB3FORMS OFFICIELLE EST ICI 👇
+    const ACCESS_KEY = "77beceb2-1c23-4c84-98ce-a8cf4482c8ce"; 
+
+    const formData = new FormData(form);
+    formData.append("access_key", ACCESS_KEY);
+    formData.append("subject", "Nouvelle candidature - PRISME QUIMPER");
+    formData.append("from_name", "Portail PRISME");
+
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("Merci ! Votre demande d'adhésion a bien été envoyée.\n\nL'équipe de PRISME QUIMPER la traitera très rapidement.");
             // Ferme la modale et réinitialise le formulaire
             const modal = document.getElementById('adhesion-modal');
             modal.classList.remove('is-open');
             document.body.classList.remove('overflow-hidden');
-            event.target.reset();
+            form.reset();
+        } else {
+            alert("Oups ! Une erreur est survenue. Veuillez vérifier le domaine ou réessayer.");
+        }
+    } catch (error) {
+        alert("Erreur de connexion. Veuillez vérifier votre réseau.");
+    } finally {
+        btn.innerText = "Soumettre ma candidature";
+    }
+}
         }
     </script>
 </body>
