@@ -662,52 +662,52 @@
                 <div class="modal-form-group">
                     <label>Civilité *</label>
                     <div class="modal-radio-group">
-                        <label><input type="radio" name="civilite" value="Mme" required> Mme</label>
-                        <label><input type="radio" name="civilite" value="M."> M.</label>
-                        <label><input type="radio" name="civilite" value="Autre"> Autre</label>
+                        <label><input type="radio" name="Civilite" value="Mme" required> Mme</label>
+                        <label><input type="radio" name="Civilite" value="M."> M.</label>
+                        <label><input type="radio" name="Civilite" value="Autre"> Autre</label>
                     </div>
                 </div>
 
                 <div class="modal-form-row">
                     <div class="modal-form-group">
                         <label for="nom">Nom *</label>
-                        <input type="text" id="nom" class="modal-input" required>
+                        <input type="text" id="nom" name="Nom" class="modal-input" required>
                     </div>
                     <div class="modal-form-group">
                         <label for="prenom">Prénom *</label>
-                        <input type="text" id="prenom" class="modal-input" required>
+                        <input type="text" id="prenom" name="Prenom" class="modal-input" required>
                     </div>
                 </div>
 
                 <div class="modal-form-row">
                     <div class="modal-form-group">
                         <label for="ddn">Date de naissance *</label>
-                        <input type="date" id="ddn" class="modal-input" required>
+                        <input type="date" id="ddn" name="Date_de_naissance" class="modal-input" required>
                     </div>
                     <div class="modal-form-group">
                         <label for="telephone">Téléphone *</label>
-                        <input type="tel" id="telephone" class="modal-input" required>
+                        <input type="tel" id="telephone" name="Telephone" class="modal-input" required>
                     </div>
                 </div>
 
                 <div class="modal-form-group">
                     <label for="email-adhesion">Adresse e-mail *</label>
-                    <input type="email" id="email-adhesion" class="modal-input" required>
+                    <input type="email" id="email-adhesion" name="Email" class="modal-input" required>
                 </div>
 
                 <div class="modal-form-group">
                     <label for="ecole">Votre Établissement / École / Profession *</label>
-                    <input type="text" id="ecole" class="modal-input" placeholder="Ex: UBO, IUT, etc." required>
+                    <input type="text" id="ecole" name="Etablissement" class="modal-input" placeholder="Ex: UBO, IUT, etc." required>
                 </div>
 
                 <div class="modal-form-group">
                     <label>Type d'adhésion souhaitée *</label>
                     <div class="modal-checkbox-group">
-                        <input type="radio" name="profil" id="profil-adherent" value="Adhérent" required>
+                        <input type="radio" name="Profil" id="profil-adherent" value="Adhérent" required>
                         <label for="profil-adherent" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin-bottom:0;"><strong>Membre Adhérent :</strong> Je souhaite participer aux événements, soutenir l'asso et recevoir la newsletter.</label>
                     </div>
                     <div class="modal-checkbox-group">
-                        <input type="radio" name="profil" id="profil-actif" value="Actif">
+                        <input type="radio" name="Profil" id="profil-actif" value="Actif">
                         <label for="profil-actif" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin-bottom:0;"><strong>Membre Actif (Bénévole) :</strong> Je souhaite m'investir concrètement et intégrer un pôle de l'association.</label>
                     </div>
                 </div>
@@ -715,27 +715,27 @@
                 <div class="modal-form-group">
                     <label>Si membre actif, quel pôle vous intéresse ?</label>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
-                        <div class="modal-checkbox-group"><input type="checkbox" id="pole1"><label for="pole1" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Communication</label></div>
-                        <div class="modal-checkbox-group"><input type="checkbox" id="pole2"><label for="pole2" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Événementiel</label></div>
-                        <div class="modal-checkbox-group"><input type="checkbox" id="pole3"><label for="pole3" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Partenariats</label></div>
-                        <div class="modal-checkbox-group"><input type="checkbox" id="pole4"><label for="pole4" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Secrétariat Général</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole1" name="Poles_Interet" value="Communication"><label for="pole1" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Communication</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole2" name="Poles_Interet" value="Événementiel"><label for="pole2" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Événementiel</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole3" name="Poles_Interet" value="Partenariats"><label for="pole3" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Partenariats</label></div>
+                        <div class="modal-checkbox-group"><input type="checkbox" id="pole4" name="Poles_Interet" value="Secrétariat Général"><label for="pole4" style="color:var(--color-text-base); text-transform:none; font-size:0.85rem; margin:0;">Secrétariat Général</label></div>
                     </div>
                 </div>
 
                 <div class="modal-form-group">
                     <label for="motivation">Votre motivation en quelques mots</label>
-                    <textarea id="motivation" class="modal-input" rows="3" style="resize: vertical;"></textarea>
+                    <textarea id="motivation" name="Motivation" class="modal-input" rows="3" style="resize: vertical;"></textarea>
                 </div>
 
                 <div class="modal-form-group">
                     <div class="modal-checkbox-group" style="margin-top: 1.5rem;">
-                        <input type="checkbox" id="rgpd" required>
+                        <input type="checkbox" id="rgpd" name="Accord_RGPD" value="Oui" required>
                         <label for="rgpd" style="color:var(--color-text-base); text-transform:none; font-size:0.75rem; margin-bottom:0; opacity: 0.7;">* En soumettant ce formulaire, j'accepte de me conformer aux statuts et au règlement intérieur de PRISME QUIMPER. J'accepte que mes données soient traitées pour la gestion de mon adhésion.</label>
                     </div>
                 </div>
 
                 <div style="text-align: center; margin-top: 2.5rem;">
-                    <button type="submit" class="btn" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat); width: 100%;">Soumettre ma candidature</button>
+                    <button type="submit" id="submit-btn" class="btn" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat); width: 100%;">Soumettre ma candidature</button>
                 </div>
             </form>
         </div>
@@ -857,7 +857,7 @@
                     }
                 });
             }
-        });
+        }); // <-- ICI C'EST LA FIN DU BLOC DOMContentLoaded, LA FONCTION EST MAINTENANT LIBÉRÉE EN DESSOUS !
 
         // FONCTION DE CONNEXION ESPACE ADHÉRENT
         function handleLogin(event) {
@@ -867,44 +867,42 @@
         }
 
         // FONCTION D'ENVOI DU FORMULAIRE D'ADHÉSION
-        // FONCTION D'ENVOI DU FORMULAIRE D'ADHÉSION
-async function submitAdhesion(event) {
-    event.preventDefault(); // Empêche la page de se recharger
-    
-    const form = event.target;
-    const btn = document.getElementById('submit-btn');
-    btn.innerText = "Envoi en cours..."; // Fait patienter l'utilisateur
-    
-    // 👇 TA CLÉ WEB3FORMS OFFICIELLE EST ICI 👇
-    const ACCESS_KEY = "77beceb2-1c23-4c84-98ce-a8cf4482c8ce"; 
+        async function submitAdhesion(event) {
+            event.preventDefault(); // Empêche la page de se recharger
+            
+            const form = event.target;
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "Envoi en cours..."; // Fait patienter l'utilisateur
+            
+            // TA CLÉ WEB3FORMS OFFICIELLE EST ICI
+            const ACCESS_KEY = "77beceb2-1c23-4c84-98ce-a8cf4482c8ce"; 
 
-    const formData = new FormData(form);
-    formData.append("access_key", ACCESS_KEY);
-    formData.append("subject", "Nouvelle candidature - PRISME QUIMPER");
-    formData.append("from_name", "Portail PRISME");
+            const formData = new FormData(form);
+            formData.append("access_key", ACCESS_KEY);
+            formData.append("subject", "Nouvelle candidature - PRISME QUIMPER");
+            formData.append("from_name", "Portail PRISME");
 
-    try {
-        const response = await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            body: formData
-        });
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
 
-        if (response.ok) {
-            alert("Merci ! Votre demande d'adhésion a bien été envoyée.\n\nL'équipe de PRISME QUIMPER la traitera très rapidement.");
-            // Ferme la modale et réinitialise le formulaire
-            const modal = document.getElementById('adhesion-modal');
-            modal.classList.remove('is-open');
-            document.body.classList.remove('overflow-hidden');
-            form.reset();
-        } else {
-            alert("Oups ! Une erreur est survenue. Veuillez vérifier le domaine ou réessayer.");
-        }
-    } catch (error) {
-        alert("Erreur de connexion. Veuillez vérifier votre réseau.");
-    } finally {
-        btn.innerText = "Soumettre ma candidature";
-    }
-}
+                if (response.ok) {
+                    alert("Merci ! Votre demande d'adhésion a bien été envoyée.\n\nL'équipe de PRISME QUIMPER la traitera très rapidement.");
+                    // Ferme la modale et réinitialise le formulaire
+                    const modal = document.getElementById('adhesion-modal');
+                    modal.classList.remove('is-open');
+                    document.body.classList.remove('overflow-hidden');
+                    form.reset();
+                } else {
+                    alert("Oups ! Une erreur est survenue. Veuillez vérifier le domaine ou réessayer.");
+                }
+            } catch (error) {
+                alert("Erreur de connexion. Veuillez vérifier votre réseau.");
+            } finally {
+                btn.innerText = "Soumettre ma candidature";
+            }
         }
     </script>
 </body>
