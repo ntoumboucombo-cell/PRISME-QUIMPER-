@@ -1,0 +1,87 @@
+name: Déploiement GitHub Pages
+
+# Construit et déploie l'ensemble du site :
+#   - le site vitrine (Jekyll) à la racine  ->  prismequimper.fr/
+#   - l'Espace Bureau (Vite/React)          ->  prismequimper.fr/bureau/
+#
+# ⚠️ Pré-requis (à faire une seule fois) :
+#   Settings → Pages → Build and deployment → Source = "GitHub Actions".
+#   (Sinon ce workflow ne prend pas effet.)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Autorisations nécessaires au déploiement Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement à la fois ; on n'annule pas celui en cours.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v5
+
+      # 1) Site vitrine (Jekyll) -> ./_site
+      - name: Construire le site vitrine (Jekyll)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: .
+          destination: ./_site
+
+      # 2) Espace Bureau (Vite) -> ./_site/bureau
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: espace-bureau/package-lock.json
+
+      - name: Installer les dépendances
+        working-directory: espace-bureau
+        run: npm ci
+
+      - name: Construire l'Espace Bureau
+        working-directory: espace-bureau
+        env:
+          BASE_PATH: /bureau/
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: npm run build
+
+      - name: Fallback SPA (rafraîchissement des routes profondes)
+        working-directory: espace-bureau
+        run: cp dist/index.html dist/404.html
+
+      - name: Placer l'Espace Bureau sous /bureau
+        run: |
+          mkdir -p _site/bureau
+          cp -r espace-bureau/dist/. _site/bureau/
+
+      - name: Téléverser l'artefact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

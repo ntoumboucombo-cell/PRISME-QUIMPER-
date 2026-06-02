@@ -43,7 +43,11 @@ export function Login() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <img src="/logo.PNG" alt="PRISME QUIMPER" className="mx-auto h-20 w-20 rounded-full" />
+          <img
+            src={`${import.meta.env.BASE_URL}logo.PNG`}
+            alt="PRISME QUIMPER"
+            className="mx-auto h-20 w-20 rounded-full"
+          />
           <h1 className="mt-4 font-serif text-2xl text-prisme-base">PRISME QUIMPER</h1>
           <p className="text-xs uppercase tracking-[0.25em] text-prisme-gold-mat">Espace Bureau</p>
         </div>

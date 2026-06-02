@@ -53,7 +53,7 @@ export function Layout() {
   const sidebar = (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-3 px-6 py-6">
-        <img src="/logo.PNG" alt="PRISME" className="h-10 w-10 rounded-full" />
+        <img src={`${import.meta.env.BASE_URL}logo.PNG`} alt="PRISME" className="h-10 w-10 rounded-full" />
         <div>
           <p className="font-serif text-lg leading-tight text-prisme-base">PRISME</p>
           <p className="text-[0.65rem] uppercase tracking-[0.2em] text-prisme-gold-mat">
@@ -134,7 +134,7 @@ export function Layout() {
             {mobileOpen ? <X /> : <Menu />}
           </button>
           <span className="font-serif text-prisme-gold-mat">Espace Bureau</span>
-          <img src="/logo.PNG" alt="" className="h-8 w-8 rounded-full" />
+          <img src={`${import.meta.env.BASE_URL}logo.PNG`} alt="" className="h-8 w-8 rounded-full" />
         </header>
 
         {AUTH_BYPASS && (

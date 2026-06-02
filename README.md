@@ -28,6 +28,30 @@ pour l'activation du backend.
 > racine est publiée par GitHub Pages ; `espace-bureau/` est une application
 > séparée qui se lance et se déploie indépendamment.
 
+## Déploiement (GitHub Pages)
+
+Le workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+construit et déploie **les deux** projets en une fois :
+
+- le **site vitrine** (Jekyll) → `prismequimper.fr/`
+- l'**Espace Bureau** (Vite) → `prismequimper.fr/bureau/`
+
+### À faire une seule fois
+
+1. **Settings → Pages → Build and deployment → Source = « GitHub Actions »**
+   (au lieu de « Deploy from a branch »). Sans ça, le workflow ne prend pas effet.
+2. Créer 2 *secrets* (**Settings → Secrets and variables → Actions**) — valeurs
+   dans Supabase → Project Settings → API :
+   - `VITE_SUPABASE_URL` — Project URL
+   - `VITE_SUPABASE_ANON_KEY` — clé **anon public**
+
+> ⚠️ Ne **jamais** mettre la clé `service_role` en secret de build : tout ce qui
+> est `VITE_*` est inclus dans le JavaScript public. La `service_role` est
+> injectée automatiquement dans l'Edge Function par Supabase (rien à faire).
+
+Le déploiement se déclenche ensuite à chaque `push` sur `main` (ou manuellement
+via l'onglet **Actions**).
+
 ## `modèles docx/`
 
 Modèles de documents de l'association (PV, attestation de bénévolat, feuille
