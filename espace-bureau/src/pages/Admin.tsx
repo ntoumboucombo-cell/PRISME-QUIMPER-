@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Plus, Trash2, RotateCcw, ShieldCheck } from 'lucide-react'
 import { insert, remove, resetDatabase, update, useTable } from '@/lib/data/store'
+import { isSupabaseConfigured } from '@/lib/supabase'
 import { useAuth } from '@/auth/AuthContext'
 import { ROLE_LABELS, type Role, type UserAccount } from '@/types'
 import { Badge, Card, Field, Modal, PageHeader } from '@/components/ui'
@@ -33,9 +34,13 @@ export function Admin() {
         title="Administration"
         subtitle="Gestion des comptes et des droits d'accès"
         action={
-          <button className="btn-primary" onClick={() => setAdding(true)}>
-            <Plus size={16} /> Nouveau compte
-          </button>
+          // En mode Supabase, la creation d'un compte passe par le tableau de bord
+          // Supabase (ou une Edge Function) : impossible avec la cle anon publique.
+          isSupabaseConfigured ? undefined : (
+            <button className="btn-primary" onClick={() => setAdding(true)}>
+              <Plus size={16} /> Nouveau compte
+            </button>
+          )
         }
       />
 
@@ -145,21 +150,33 @@ export function Admin() {
           </ul>
         </Card>
 
-        <Card>
-          <h2 className="mb-3 section-title text-lg">Données de démonstration</h2>
-          <p className="mb-4 text-sm text-prisme-base/60">
-            En mode local (sans Supabase), les données sont stockées dans ce navigateur. Vous pouvez
-            réinitialiser le jeu de démonstration à tout moment.
-          </p>
-          <button
-            className="btn-outline"
-            onClick={() => {
-              if (confirm('Réinitialiser toutes les données de démonstration ?')) resetDatabase()
-            }}
-          >
-            <RotateCcw size={15} /> Réinitialiser les données
-          </button>
-        </Card>
+        {isSupabaseConfigured ? (
+          <Card>
+            <h2 className="mb-3 section-title text-lg">Comptes (mode Supabase)</h2>
+            <p className="text-sm text-prisme-base/60">
+              Les comptes sont gérés par Supabase. Vous pouvez ici <strong>changer les rôles</strong>{' '}
+              et <strong>activer / désactiver</strong> les profils. La création d'un nouveau compte
+              se fait depuis le tableau de bord Supabase (ou une Edge Function) — voir{' '}
+              <code className="text-prisme-gold">docs/INTEGRATION-SUPABASE.md</code>.
+            </p>
+          </Card>
+        ) : (
+          <Card>
+            <h2 className="mb-3 section-title text-lg">Données de démonstration</h2>
+            <p className="mb-4 text-sm text-prisme-base/60">
+              En mode local (sans Supabase), les données sont stockées dans ce navigateur. Vous
+              pouvez réinitialiser le jeu de démonstration à tout moment.
+            </p>
+            <button
+              className="btn-outline"
+              onClick={() => {
+                if (confirm('Réinitialiser toutes les données de démonstration ?')) resetDatabase()
+              }}
+            >
+              <RotateCcw size={15} /> Réinitialiser les données
+            </button>
+          </Card>
+        )}
       </div>
 
       {adding && (

@@ -13,11 +13,12 @@ Supabase — sans aucune modification de code à faire.
 
 | Brique | État | Détail |
 |---|---|---|
-| **Authentification** | ✅ Branchée (Phase 1) | Connexion, déconnexion, session, changement de mot de passe via `supabase.auth`. Rôle lu dans la table `profiles`. |
+| **Authentification** | ✅ Branchée | Connexion, déconnexion, session, changement de mot de passe via `supabase.auth`. Rôle lu dans la table `profiles`. |
 | **Sécurité (RLS)** | ✅ Fournie | Migrations SQL prêtes (`supabase/migrations/`), à exécuter dans votre projet. |
 | **Bypass d'auth** | ✅ Sécurisé | Impossible à activer en production ou quand Supabase est configuré. |
-| **Données métier** (adhérents, cotisations, dons, projets, documents, secrétariat) | 🚧 Phase 2 | Encore servies depuis localStorage. Migration de la couche `store.ts` à faire une fois l'auth validée. |
-| **Création de comptes** depuis l'app (page Admin) | 🚧 Phase 2 | En Supabase, la création d'un utilisateur ne peut pas se faire avec la clé publique seule (voir plus bas). |
+| **Données métier** (adhérents, cotisations, dons, projets, documents, secrétariat) | ✅ Branchée | `store.ts` charge tout depuis Supabase au démarrage puis écrit en « write-through ». À **valider contre votre base** (voir plus bas). |
+| **Gestion des comptes** (page Admin) | ⚠️ Partielle | Changement de rôle + activation/désactivation : OK. **Création** d'un compte : via le dashboard Supabase (clé publique insuffisante — voir plus bas). |
+| **Stockage des justificatifs** | 🚧 À venir | Encore en IndexedDB local. À brancher sur Supabase Storage ou SharePoint. |
 
 ---
 
@@ -35,6 +36,8 @@ Dans l'éditeur **SQL** de Supabase, exécutez dans l'ordre :
 1. `supabase/migrations/0001_initial_schema.sql` — crée les tables.
 2. `supabase/migrations/0002_rls_policies.sql` — active la sécurité (RLS) + le
    trigger qui crée un `profile` à chaque nouveau compte.
+3. `supabase/migrations/0003_profiles_email.sql` — ajoute l'e-mail dans `profiles`
+   (nécessaire à l'affichage des comptes dans la page Admin).
 
 > Chaque nouveau compte Auth reçoit automatiquement un profil avec le rôle
 > `adherent` (aucun accès au bureau). Un administrateur élève ensuite le rôle.
@@ -76,39 +79,55 @@ tableau de bord Supabase :
 
 ---
 
-## Phase 2 — ce qu'il reste à brancher
+## Comment fonctionne la couche de données en mode Supabase
 
-### a) La couche de données (`src/lib/data/store.ts`)
+`src/lib/data/store.ts` garde **exactement la même API** que le mode local
+(`useTable`, `getTable`, `insert`, `update`, `remove`) — les pages n'ont pas
+changé. En mode Supabase :
 
-Aujourd'hui, `store.ts` lit/écrit dans `localStorage` de façon **synchrone**.
-Les pages consomment `useTable`, `insert`, `update`, `remove`. La migration
-recommandée garde cette même API :
+- **au démarrage**, toutes les tables sont chargées en mémoire (`select *`) puis
+  les composants sont notifiés (au tout début, les listes sont vides le temps du
+  chargement) ;
+- **`useTable`** sert ce cache mémoire (re-render à chaque mutation) ;
+- **`insert` / `update` / `remove`** mettent à jour le cache *immédiatement* (UI
+  réactive) **puis** écrivent dans Supabase. En cas d'erreur, la table est
+  resynchronisée depuis la base (et l'erreur est loggée en console).
+- les **UUID** sont générés côté navigateur (`crypto.randomUUID`) et envoyés
+  explicitement — le cache et la base restent ainsi cohérents.
 
-- au démarrage (si Supabase configuré), charger toutes les tables en mémoire
-  (`select *`) puis notifier les composants ;
-- `useTable` continue de servir le cache mémoire (re-render à chaque mutation) ;
-- `insert`/`update`/`remove` mettent à jour le cache **et** écrivent dans Supabase
-  (write-through). Les UUID sont générés par la base (`default uuid_generate_v4()`).
+La table mock `accounts` est mappée sur `profiles` (l'e-mail y est dénormalisé
+par la migration 0003 ; le mot de passe reste géré par Supabase Auth).
 
-Point d'attention : la table mock `accounts` correspond, côté Supabase, à
-`profiles` **+** `auth.users` (l'e-mail et le mot de passe sont dans `auth.users`,
-pas dans `profiles`). La page **Admin** doit donc être adaptée séparément.
+### ⚠️ À valider contre votre base (non testé sans vos identifiants)
 
-### b) La création de comptes depuis la page Admin
+Le code compile (`npm run lint`), mais le chemin Supabase n'a pas pu être exécuté
+ici. À vérifier une fois connecté :
+
+1. **Lecture** : après connexion, les listes (adhérents, cotisations, projets…)
+   se remplissent. Sinon, ouvrez la console (F12) : les erreurs RLS y
+   apparaissent (`[store] chargement …`).
+2. **Écriture** : créer/modifier/supprimer un élément le persiste bien (recharger
+   la page pour confirmer). Les erreurs éventuelles sont loggées `[store] insert/
+   update/remove …`.
+3. **Champs vides** : le store convertit déjà `""` → `null` avant l'envoi (les
+   colonnes date/numérique/enum refusent les chaînes vides).
+
+### Création de comptes depuis la page Admin
 
 Créer un utilisateur Auth nécessite la clé `service_role`, qui **ne doit jamais**
-se trouver dans le navigateur. Deux options :
+se trouver dans le navigateur. La page Admin masque donc le bouton « Nouveau
+compte » en mode Supabase. Pour créer un compte, deux options :
 
-1. **Edge Function** Supabase (recommandé) : une fonction serveur appelée par la
-   page Admin, qui utilise la clé `service_role` côté serveur pour
-   `auth.admin.createUser`.
-2. **Manuellement** via le tableau de bord Supabase (comme pour le premier admin),
-   tant que les comptes sont peu nombreux.
+1. **Manuellement** via le tableau de bord Supabase (cf. § 4), tant que les
+   comptes sont peu nombreux — **recommandé pour démarrer**.
+2. **Edge Function** Supabase : une fonction serveur appelée par la page Admin,
+   utilisant la clé `service_role` côté serveur pour `auth.admin.createUser`.
 
-En attendant, la page Admin reste fonctionnelle en mode local ; en mode Supabase
-elle servira surtout à **changer les rôles** et **activer/désactiver** les profils.
+Le changement de rôle et l'activation/désactivation fonctionnent, eux, depuis la
+page Admin. La suppression d'un compte retire le profil mais **pas** l'utilisateur
+Auth sous-jacent (cela demande la clé `service_role`).
 
-### c) Le stockage des justificatifs
+## Reste à venir : le stockage des justificatifs
 
 `src/lib/storage/` est déjà abstrait (interface `StorageProvider`). On y branchera
 soit **Supabase Storage**, soit **SharePoint** (voir `INTEGRATION-SHAREPOINT.md`).
