@@ -8,7 +8,9 @@
 // ============================================================================
 
 import type { BudgetLine, Project } from '@/types'
+import { isSupabaseConfigured } from '@/lib/supabase'
 import { mockStorage } from './mockStorage'
+import { supabaseStorage } from './supabaseStorage'
 
 export interface UploadArgs {
   project: Pick<Project, 'id' | 'nom'>
@@ -28,7 +30,7 @@ export interface UploadResult {
 }
 
 export interface StorageProvider {
-  readonly kind: 'mock' | 'sharepoint'
+  readonly kind: 'mock' | 'supabase' | 'sharepoint'
   /** Televerse un justificatif et le range dans le dossier de la ligne. */
   uploadJustificatif(args: UploadArgs): Promise<UploadResult>
   /** Ouvre/telecharge un justificatif a partir de sa reference. */
@@ -37,8 +39,10 @@ export interface StorageProvider {
   remove(ref: string): Promise<void>
 }
 
-// Selection du fournisseur. Quand l'integration SharePoint sera prete, on
-// basculera ici selon la configuration (Microsoft 365 connecte ou non).
+// Selection du fournisseur :
+//   - Supabase configure  -> Supabase Storage (bucket prive `justificatifs`)
+//   - sinon               -> mock (IndexedDB, dans le navigateur)
+// Une integration SharePoint pourra s'ajouter ici plus tard (Microsoft 365).
 export function getStorage(): StorageProvider {
-  return mockStorage
+  return isSupabaseConfigured ? supabaseStorage : mockStorage
 }

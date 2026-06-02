@@ -18,7 +18,7 @@ Supabase — sans aucune modification de code à faire.
 | **Bypass d'auth** | ✅ Sécurisé | Impossible à activer en production ou quand Supabase est configuré. |
 | **Données métier** (adhérents, cotisations, dons, projets, documents, secrétariat) | ✅ Branchée | `store.ts` charge tout depuis Supabase au démarrage puis écrit en « write-through ». À **valider contre votre base** (voir plus bas). |
 | **Gestion des comptes** (page Admin) | ⚠️ Partielle | Changement de rôle + activation/désactivation : OK. **Création** d'un compte : via le dashboard Supabase (clé publique insuffisante — voir plus bas). |
-| **Stockage des justificatifs** | 🚧 À venir | Encore en IndexedDB local. À brancher sur Supabase Storage ou SharePoint. |
+| **Stockage des justificatifs** | ✅ Branchée | Bucket privé `justificatifs` (Supabase Storage), URL signées à l'ouverture. À valider contre votre base. |
 
 ---
 
@@ -38,6 +38,8 @@ Dans l'éditeur **SQL** de Supabase, exécutez dans l'ordre :
    trigger qui crée un `profile` à chaque nouveau compte.
 3. `supabase/migrations/0003_profiles_email.sql` — ajoute l'e-mail dans `profiles`
    (nécessaire à l'affichage des comptes dans la page Admin).
+4. `supabase/migrations/0004_storage_justificatifs.sql` — crée le bucket privé
+   `justificatifs` et ses règles d'accès (pièces jointes des lignes de budget).
 
 > Chaque nouveau compte Auth reçoit automatiquement un profil avec le rôle
 > `adherent` (aucun accès au bureau). Un administrateur élève ensuite le rôle.
@@ -127,7 +129,21 @@ Le changement de rôle et l'activation/désactivation fonctionnent, eux, depuis 
 page Admin. La suppression d'un compte retire le profil mais **pas** l'utilisateur
 Auth sous-jacent (cela demande la clé `service_role`).
 
-## Reste à venir : le stockage des justificatifs
+## Stockage des justificatifs (Supabase Storage)
 
-`src/lib/storage/` est déjà abstrait (interface `StorageProvider`). On y branchera
-soit **Supabase Storage**, soit **SharePoint** (voir `INTEGRATION-SHAREPOINT.md`).
+Les pièces jointes des lignes de budget sont déposées dans un bucket **privé**
+`justificatifs` (créé par la migration 0004), rangées par
+`<projectId>/<lineId>/<fichier>`. Le bucket n'étant pas public, l'ouverture d'un
+fichier génère une **URL signée temporaire** (60 s). Le choix mock/Supabase est
+automatique (`src/lib/storage/index.ts`).
+
+À valider une fois connecté :
+
+1. **Dépôt** : joindre un fichier à une ligne de budget (page Projet) le téléverse
+   dans le bucket. En cas d'échec, le message « Le téléversement a échoué »
+   s'affiche et le détail est loggé en console.
+2. **Ouverture** : le bouton « Voir » ouvre le fichier via une URL signée.
+3. **Suppression** : retirer le justificatif supprime aussi l'objet du bucket.
+
+> Une intégration **SharePoint** reste possible à la place (l'abstraction
+> `StorageProvider` le permet) — voir `INTEGRATION-SHAREPOINT.md`.
