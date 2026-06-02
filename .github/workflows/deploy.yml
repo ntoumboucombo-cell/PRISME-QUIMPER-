@@ -10,7 +10,8 @@ name: Déploiement GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # Ajouts-Evan : pour TESTER le build sur la branche (le deploy reste limité à main).
+    branches: [main, Ajouts-Evan]
   workflow_dispatch:
 
 # Autorisations nécessaires au déploiement Pages.
@@ -30,9 +31,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Configurer Pages
-        uses: actions/configure-pages@v5
 
       # 1) Site vitrine (Jekyll) -> ./_site
       - name: Construire le site vitrine (Jekyll)
@@ -77,6 +75,8 @@ jobs:
 
   deploy:
     needs: build
+    # Déploiement en production UNIQUEMENT depuis main (jamais depuis une branche de test).
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
