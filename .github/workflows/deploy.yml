@@ -65,6 +65,9 @@ jobs:
 
       - name: Placer l'Espace Bureau sous /bureau
         run: |
+          # _site est créé par le conteneur Jekyll (root) : on en reprend la
+          # propriété pour pouvoir y écrire avec l'utilisateur du runner.
+          sudo chown -R "$(id -u):$(id -g)" _site
           mkdir -p _site/bureau
           cp -r espace-bureau/dist/. _site/bureau/
 
