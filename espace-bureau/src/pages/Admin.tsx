@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Plus, Trash2, RotateCcw, ShieldCheck } from 'lucide-react'
-import { insert, remove, resetDatabase, update, useTable } from '@/lib/data/store'
+import { createAccount, remove, resetDatabase, update, useTable } from '@/lib/data/store'
 import { isSupabaseConfigured } from '@/lib/supabase'
 import { useAuth } from '@/auth/AuthContext'
 import { ROLE_LABELS, type Role, type UserAccount } from '@/types'
@@ -34,13 +34,9 @@ export function Admin() {
         title="Administration"
         subtitle="Gestion des comptes et des droits d'accès"
         action={
-          // En mode Supabase, la creation d'un compte passe par le tableau de bord
-          // Supabase (ou une Edge Function) : impossible avec la cle anon publique.
-          isSupabaseConfigured ? undefined : (
-            <button className="btn-primary" onClick={() => setAdding(true)}>
-              <Plus size={16} /> Nouveau compte
-            </button>
-          )
+          <button className="btn-primary" onClick={() => setAdding(true)}>
+            <Plus size={16} /> Nouveau compte
+          </button>
         }
       />
 
@@ -154,9 +150,10 @@ export function Admin() {
           <Card>
             <h2 className="mb-3 section-title text-lg">Comptes (mode Supabase)</h2>
             <p className="text-sm text-prisme-base/60">
-              Les comptes sont gérés par Supabase. Vous pouvez ici <strong>changer les rôles</strong>{' '}
-              et <strong>activer / désactiver</strong> les profils. La création d'un nouveau compte
-              se fait depuis le tableau de bord Supabase (ou une Edge Function) — voir{' '}
+              Les comptes sont gérés par Supabase. Vous pouvez <strong>créer un compte</strong>,{' '}
+              <strong>changer les rôles</strong> et <strong>activer / désactiver</strong> les
+              profils. La création nécessite que l'Edge Function{' '}
+              <code className="text-prisme-gold">create-account</code> soit déployée — voir{' '}
               <code className="text-prisme-gold">docs/INTEGRATION-SUPABASE.md</code>.
             </p>
           </Card>
@@ -179,26 +176,12 @@ export function Admin() {
         )}
       </div>
 
-      {adding && (
-        <AccountForm
-          onClose={() => setAdding(false)}
-          onSave={(data) => {
-            insert('accounts', data)
-            setAdding(false)
-          }}
-        />
-      )}
+      {adding && <AccountForm onClose={() => setAdding(false)} />}
     </div>
   )
 }
 
-function AccountForm({
-  onClose,
-  onSave,
-}: {
-  onClose: () => void
-  onSave: (a: Omit<UserAccount, 'id' | 'created_at'>) => void
-}) {
+function AccountForm({ onClose }: { onClose: () => void }) {
   const members = useTable('members')
   const [form, setForm] = useState<Omit<UserAccount, 'id' | 'created_at'>>({
     email: '',
@@ -208,17 +191,29 @@ function AccountForm({
     member_id: null,
     active: true,
   })
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
   const set = (patch: Partial<typeof form>) => setForm((f) => ({ ...f, ...patch }))
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setBusy(true)
+    const res = await createAccount({
+      email: form.email,
+      password: form.password ?? '',
+      display_name: form.display_name,
+      role: form.role,
+      member_id: form.member_id ?? null,
+    })
+    setBusy(false)
+    if (res.ok) onClose()
+    else setError(res.error ?? 'Création impossible.')
+  }
 
   return (
     <Modal open onClose={onClose} title="Nouveau compte">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          onSave(form)
-        }}
-        className="space-y-4"
-      >
+      <form onSubmit={submit} className="space-y-4">
         <Field label="Nom affiché">
           <input
             className="input"
@@ -265,19 +260,24 @@ function AccountForm({
             </select>
           </Field>
         </div>
-        <Field label="Mot de passe (démo locale)">
+        <Field label={isSupabaseConfigured ? 'Mot de passe initial' : 'Mot de passe (démo locale)'}>
           <input
             className="input"
             value={form.password ?? ''}
             onChange={(e) => set({ password: e.target.value })}
+            required
+            minLength={6}
           />
         </Field>
+
+        {error && <p className="text-sm text-red-300">{error}</p>}
+
         <div className="flex justify-end gap-3 pt-2">
-          <button type="button" className="btn-ghost" onClick={onClose}>
+          <button type="button" className="btn-ghost" onClick={onClose} disabled={busy}>
             Annuler
           </button>
-          <button type="submit" className="btn-primary">
-            Créer le compte
+          <button type="submit" className="btn-primary" disabled={busy}>
+            {busy ? 'Création…' : 'Créer le compte'}
           </button>
         </div>
       </form>

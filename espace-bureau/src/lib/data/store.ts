@@ -18,6 +18,7 @@
 
 import { useSyncExternalStore } from 'react'
 import { uid } from '@/lib/format'
+import type { Role, UserAccount } from '@/types'
 import { buildSeed, type Database } from './seed'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 
@@ -252,6 +253,64 @@ export function remove<T extends TableName>(name: T, id: string): void {
         }
       })
   }
+}
+
+// --- Creation de compte (cas particulier de `accounts`) ---------------------
+//  En mode Supabase, creer un utilisateur necessite la cle service_role : on
+//  passe donc par l'Edge Function `create-account` (cote serveur). En mode mock,
+//  insertion locale directe.
+
+export interface NewAccountInput {
+  email: string
+  password: string
+  display_name: string
+  role: Role
+  member_id?: string | null
+}
+
+export async function createAccount(
+  input: NewAccountInput,
+): Promise<{ ok: boolean; error?: string }> {
+  if (!isSupabaseConfigured || !supabase) {
+    insert('accounts', {
+      email: input.email,
+      password: input.password,
+      display_name: input.display_name,
+      role: input.role,
+      member_id: input.member_id ?? null,
+      active: true,
+    })
+    return { ok: true }
+  }
+
+  const { data, error } = await supabase.functions.invoke('create-account', {
+    body: {
+      email: input.email,
+      password: input.password,
+      display_name: input.display_name,
+      role: input.role,
+      member_id: input.member_id ?? null,
+    },
+  })
+
+  if (error) {
+    // Le detail de l'erreur est dans le corps de la reponse (status non-2xx).
+    let message = error.message
+    try {
+      const ctx = (error as { context?: { json?: () => Promise<{ error?: string }> } }).context
+      const payload = await ctx?.json?.()
+      if (payload?.error) message = payload.error
+    } catch {
+      /* on garde le message generique */
+    }
+    return { ok: false, error: message }
+  }
+
+  const profile = (data as { profile?: UserAccount } | null)?.profile
+  if (!profile) return { ok: false, error: 'Réponse inattendue du serveur.' }
+
+  commit({ ...db, accounts: [...db.accounts, profile] } as Database)
+  return { ok: true }
 }
 
 /** Remet les donnees de demonstration (mock) ou recharge depuis Supabase. */

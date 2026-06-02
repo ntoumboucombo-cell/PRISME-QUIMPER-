@@ -17,7 +17,7 @@ Supabase — sans aucune modification de code à faire.
 | **Sécurité (RLS)** | ✅ Fournie | Migrations SQL prêtes (`supabase/migrations/`), à exécuter dans votre projet. |
 | **Bypass d'auth** | ✅ Sécurisé | Impossible à activer en production ou quand Supabase est configuré. |
 | **Données métier** (adhérents, cotisations, dons, projets, documents, secrétariat) | ✅ Branchée | `store.ts` charge tout depuis Supabase au démarrage puis écrit en « write-through ». À **valider contre votre base** (voir plus bas). |
-| **Gestion des comptes** (page Admin) | ⚠️ Partielle | Changement de rôle + activation/désactivation : OK. **Création** d'un compte : via le dashboard Supabase (clé publique insuffisante — voir plus bas). |
+| **Gestion des comptes** (page Admin) | ✅ Branchée | Création, changement de rôle, activation/désactivation. La **création** passe par l'Edge Function `create-account` (à déployer — voir § 5). |
 | **Stockage des justificatifs** | ✅ Branchée | Bucket privé `justificatifs` (Supabase Storage), URL signées à l'ouverture. À valider contre votre base. |
 
 ---
@@ -62,8 +62,9 @@ Au prochain `npm run dev`, l'application utilise Supabase. Le bandeau rouge de
 
 ## 4. Créer le premier administrateur
 
-L'application ne peut pas (encore) créer le premier compte. Procédez via le
-tableau de bord Supabase :
+Le **tout premier** compte ne peut pas être créé depuis l'application (il faut
+déjà un administrateur pour en autoriser la création). Procédez via le tableau de
+bord Supabase :
 
 1. **Authentication → Users → Add user** : saisissez l'e-mail et un mot de passe,
    cochez « Auto-confirm user ».
@@ -78,6 +79,39 @@ tableau de bord Supabase :
 
 3. Connectez-vous dans l'application avec cet e-mail / mot de passe. Vous avez
    désormais accès à tout.
+
+> Une fois ce premier admin en place et l'Edge Function déployée (§ 5), tous les
+> **comptes suivants** se créent directement depuis la page **Administration**.
+
+## 5. Déployer l'Edge Function de création de comptes
+
+Créer un utilisateur Auth nécessite la clé `service_role`, qui **ne doit jamais**
+se trouver dans le navigateur. La création de comptes passe donc par une fonction
+serveur : `supabase/functions/create-account/`.
+
+Cette fonction (1) vérifie que l'appelant est **président ou vice-président**,
+(2) crée l'utilisateur avec la clé `service_role`, (3) renseigne son profil
+(rôle, nom, adhérent lié). En cas d'échec à l'étape 3, le compte Auth est
+nettoyé pour ne pas laisser d'utilisateur orphelin.
+
+Déploiement avec la [CLI Supabase](https://supabase.com/docs/guides/cli) :
+
+```bash
+# une seule fois : lier le dossier au projet
+supabase link --project-ref VOTRE-REF-PROJET
+
+# deployer la fonction
+supabase functions deploy create-account
+```
+
+Les variables `SUPABASE_URL`, `SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY`
+sont **injectées automatiquement** par la plateforme : rien à configurer.
+`verify_jwt` reste activé (par défaut) — seule une personne connectée peut
+appeler la fonction, et le code revérifie en plus qu'elle est administratrice.
+
+Tant que la fonction n'est pas déployée, la création depuis la page Admin
+renverra une erreur (le reste de la gestion des comptes — rôles, activation —
+fonctionne sans elle).
 
 ---
 
@@ -116,17 +150,12 @@ ici. À vérifier une fois connecté :
 
 ### Création de comptes depuis la page Admin
 
-Créer un utilisateur Auth nécessite la clé `service_role`, qui **ne doit jamais**
-se trouver dans le navigateur. La page Admin masque donc le bouton « Nouveau
-compte » en mode Supabase. Pour créer un compte, deux options :
+La page Admin crée les comptes via l'Edge Function `create-account` (§ 5).
+Le bouton « Nouveau compte » est disponible ; tant que la fonction n'est pas
+déployée, la création renvoie une erreur.
 
-1. **Manuellement** via le tableau de bord Supabase (cf. § 4), tant que les
-   comptes sont peu nombreux — **recommandé pour démarrer**.
-2. **Edge Function** Supabase : une fonction serveur appelée par la page Admin,
-   utilisant la clé `service_role` côté serveur pour `auth.admin.createUser`.
-
-Le changement de rôle et l'activation/désactivation fonctionnent, eux, depuis la
-page Admin. La suppression d'un compte retire le profil mais **pas** l'utilisateur
+Le changement de rôle et l'activation/désactivation fonctionnent, eux, sans la
+fonction. La suppression d'un compte retire le profil mais **pas** l'utilisateur
 Auth sous-jacent (cela demande la clé `service_role`).
 
 ## Stockage des justificatifs (Supabase Storage)
