@@ -49,7 +49,9 @@ create table members (
 create table profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   display_name text not null,
-  role role_app not null default 'lecture',
+  -- Par defaut, tout nouveau compte est un simple adherent (aucun acces bureau) ;
+  -- un administrateur eleve ensuite le role. ('lecture' n'existe pas dans l'enum.)
+  role role_app not null default 'adherent',
   member_id uuid references members(id) on delete set null,
   active boolean not null default true,
   created_at timestamptz not null default now()

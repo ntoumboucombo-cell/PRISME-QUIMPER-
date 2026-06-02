@@ -1,14 +1,20 @@
 // Contexte d'authentification.
 //
-// Mode MOCK : la connexion verifie email/mot de passe dans la table `accounts`
-// (localStorage) et garde la session dans sessionStorage.
-// Le jour de la bascule Supabase, seule l'implementation de connexion change ;
-// l'API (`useAuth`, `can`, `user`) reste identique pour les composants.
+// Deux implementations derriere une API unique (useAuth / can / user) :
+//   - MOCK (localStorage)  : verifie email/mot de passe dans la table `accounts`,
+//                            session gardee dans sessionStorage. Utilise tant que
+//                            Supabase n'est pas configure.
+//   - SUPABASE             : authentification reelle (supabase.auth). Le role et le
+//                            nom affiche sont lus dans la table `profiles`.
+//
+// Le choix se fait automatiquement via `isSupabaseConfigured` : aucun composant
+// n'a besoin de savoir quel backend est actif.
 
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Role, UserAccount } from '@/types'
 import { getTable, update as updateRow } from '@/lib/data/store'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import { roleHas, type Permission } from './permissions'
 
 interface SessionUser {
@@ -19,12 +25,19 @@ interface SessionUser {
   member_id?: string | null
 }
 
+interface AuthResult {
+  ok: boolean
+  error?: string
+}
+
 interface AuthContextValue {
   user: SessionUser | null
-  login: (email: string, password: string) => { ok: boolean; error?: string }
-  logout: () => void
+  /** true tant que la session Supabase n'est pas encore restauree (evite un flash de redirection). */
+  loading: boolean
+  login: (email: string, password: string) => Promise<AuthResult>
+  logout: () => Promise<void>
   can: (permission: Permission) => boolean
-  changePassword: (current: string, next: string) => { ok: boolean; error?: string }
+  changePassword: (current: string, next: string) => Promise<AuthResult>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -36,11 +49,16 @@ const SESSION_KEY = 'prisme-bureau-session'
 //  Active avec VITE_AUTH_BYPASS=true dans .env.local : connecte automatiquement
 //  un compte President sans passer par l'ecran de connexion.
 //
-//  /!\ NE JAMAIS activer ce flag sur le site mis en ligne : cela donnerait a
-//      n'importe quel visiteur l'acces total (compta, documents, comptes).
+//  /!\ Ce flag est DESACTIVE DE FORCE :
+//        - dans toute build de production (import.meta.env.PROD), et
+//        - des que Supabase est configure (on veut alors la vraie auth).
+//      Impossible donc de l'activer par erreur sur le site mis en ligne.
 //      Une banniere rouge s'affiche tant qu'il est actif pour eviter l'oubli.
 // ----------------------------------------------------------------------------
-export const AUTH_BYPASS = import.meta.env.VITE_AUTH_BYPASS === 'true'
+export const AUTH_BYPASS =
+  !import.meta.env.PROD &&
+  !isSupabaseConfigured &&
+  import.meta.env.VITE_AUTH_BYPASS === 'true'
 
 function bypassSession(): SessionUser {
   // On reprend le compte president du jeu de donnees s'il existe, sinon un compte synthetique.
@@ -62,7 +80,8 @@ function bypassSession(): SessionUser {
       }
 }
 
-function loadSession(): SessionUser | null {
+// --- MOCK : restauration synchrone depuis sessionStorage --------------------
+function loadMockSession(): SessionUser | null {
   if (AUTH_BYPASS) return bypassSession()
   try {
     const raw = sessionStorage.getItem(SESSION_KEY)
@@ -72,14 +91,84 @@ function loadSession(): SessionUser | null {
   }
 }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<SessionUser | null>(loadSession)
+// --- SUPABASE : construit l'utilisateur de session a partir du profil --------
+//  L'email vient de auth.users ; le role / nom affiche / adherent lie viennent
+//  de la table `profiles` (voir supabase/migrations/0001_initial_schema.sql).
+async function buildSupabaseSession(
+  authUserId: string,
+  email: string | undefined,
+): Promise<SessionUser | null> {
+  if (!supabase) return null
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('display_name, role, member_id, active')
+    .eq('id', authUserId)
+    .single()
+  if (error || !data || data.active === false) return null
+  return {
+    id: authUserId,
+    email: email ?? '',
+    display_name: data.display_name,
+    role: data.role as Role,
+    member_id: data.member_id,
+  }
+}
 
-  const login = useCallback((email: string, password: string) => {
+export function AuthProvider({ children }: { children: ReactNode }) {
+  // En mode mock la session est connue immediatement ; en mode Supabase on doit
+  // d'abord interroger le serveur, d'ou l'etat de chargement initial.
+  const [user, setUser] = useState<SessionUser | null>(() =>
+    isSupabaseConfigured ? null : loadMockSession(),
+  )
+  const [loading, setLoading] = useState<boolean>(isSupabaseConfigured)
+
+  // Restauration + suivi de la session Supabase.
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) return
+    let active = true
+
+    supabase.auth.getSession().then(async ({ data }) => {
+      const sUser = data.session?.user
+      const next = sUser ? await buildSupabaseSession(sUser.id, sUser.email) : null
+      if (active) {
+        setUser(next)
+        setLoading(false)
+      }
+    })
+
+    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const sUser = session?.user
+      const next = sUser ? await buildSupabaseSession(sUser.id, sUser.email) : null
+      if (active) setUser(next)
+    })
+
+    return () => {
+      active = false
+      sub.subscription.unsubscribe()
+    }
+  }, [])
+
+  const login = useCallback(async (email: string, password: string): Promise<AuthResult> => {
+    const mail = email.trim().toLowerCase()
+
+    // --- Mode Supabase -------------------------------------------------------
+    if (isSupabaseConfigured && supabase) {
+      const { data, error } = await supabase.auth.signInWithPassword({ email: mail, password })
+      if (error || !data.user) {
+        return { ok: false, error: 'E-mail ou mot de passe incorrect.' }
+      }
+      const session = await buildSupabaseSession(data.user.id, data.user.email)
+      if (!session) {
+        await supabase.auth.signOut()
+        return { ok: false, error: 'Compte sans profil actif. Contactez un administrateur.' }
+      }
+      setUser(session)
+      return { ok: true }
+    }
+
+    // --- Mode mock (localStorage) -------------------------------------------
     const accounts = getTable('accounts')
-    const found = accounts.find(
-      (a: UserAccount) => a.email.toLowerCase() === email.trim().toLowerCase(),
-    )
+    const found = accounts.find((a: UserAccount) => a.email.toLowerCase() === mail)
     if (!found) return { ok: false, error: 'Aucun compte avec cet e-mail.' }
     if (!found.active) return { ok: false, error: 'Ce compte est désactivé.' }
     if (found.password !== password) return { ok: false, error: 'Mot de passe incorrect.' }
@@ -96,7 +185,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { ok: true }
   }, [])
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    if (isSupabaseConfigured && supabase) {
+      await supabase.auth.signOut()
+      setUser(null)
+      return
+    }
     sessionStorage.removeItem(SESSION_KEY)
     // En mode bypass, on reste connecte en admin (sinon deconnexion sans fin).
     setUser(AUTH_BYPASS ? bypassSession() : null)
@@ -112,17 +206,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 
   const changePassword = useCallback(
-    (current: string, next: string) => {
+    async (current: string, next: string): Promise<AuthResult> => {
       if (!user) return { ok: false, error: 'Vous n’êtes pas connecté.' }
+      if (next.length < 6)
+        return { ok: false, error: 'Le nouveau mot de passe est trop court (min. 6 caractères).' }
+
+      // --- Mode Supabase -----------------------------------------------------
+      if (isSupabaseConfigured && supabase) {
+        // On revalide le mot de passe actuel avant de le changer.
+        const { error: reauth } = await supabase.auth.signInWithPassword({
+          email: user.email,
+          password: current,
+        })
+        if (reauth) return { ok: false, error: 'Mot de passe actuel incorrect.' }
+        const { error } = await supabase.auth.updateUser({ password: next })
+        if (error) return { ok: false, error: 'Impossible de modifier le mot de passe.' }
+        return { ok: true }
+      }
+
+      // --- Mode mock ---------------------------------------------------------
       if (AUTH_BYPASS)
         return { ok: false, error: 'Indisponible en mode bypass (authentification désactivée).' }
       const account = getTable('accounts').find((a) => a.id === user.id)
       if (!account) return { ok: false, error: 'Compte introuvable.' }
       if (account.password !== current)
         return { ok: false, error: 'Mot de passe actuel incorrect.' }
-      if (next.length < 4)
-        return { ok: false, error: 'Le nouveau mot de passe est trop court (min. 4 caractères).' }
-      // Mode mock : on enregistre dans le store. En Supabase, on appellera supabase.auth.updateUser.
       updateRow('accounts', account.id, { password: next })
       return { ok: true }
     },
@@ -130,8 +238,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 
   const value = useMemo(
-    () => ({ user, login, logout, can, changePassword }),
-    [user, login, logout, can, changePassword],
+    () => ({ user, loading, login, logout, can, changePassword }),
+    [user, loading, login, logout, can, changePassword],
   )
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

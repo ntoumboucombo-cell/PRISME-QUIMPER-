@@ -11,14 +11,14 @@ export function Profil() {
   const [confirm, setConfirm] = useState('')
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setMsg(null)
     if (next !== confirm) {
       setMsg({ ok: false, text: 'Les deux nouveaux mots de passe ne correspondent pas.' })
       return
     }
-    const res = changePassword(current, next)
+    const res = await changePassword(current, next)
     if (res.ok) {
       setMsg({ ok: true, text: 'Mot de passe modifié avec succès.' })
       setCurrent('')

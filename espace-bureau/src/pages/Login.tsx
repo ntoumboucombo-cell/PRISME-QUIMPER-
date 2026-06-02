@@ -21,9 +21,14 @@ export function Login() {
     navigate('/', { replace: true })
   }
 
-  const submit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false)
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const res = login(email, password)
+    setSubmitting(true)
+    setError('')
+    const res = await login(email, password)
+    setSubmitting(false)
     if (res.ok) navigate('/', { replace: true })
     else setError(res.error ?? 'Connexion impossible.')
   }
@@ -66,8 +71,8 @@ export function Login() {
               />
             </Field>
             {error && <p className="text-sm text-red-300">{error}</p>}
-            <button type="submit" className="btn-primary w-full">
-              Se connecter
+            <button type="submit" className="btn-primary w-full" disabled={submitting}>
+              {submitting ? 'Connexion…' : 'Se connecter'}
             </button>
           </form>
         </div>

@@ -5,7 +5,16 @@ import type { Permission } from '@/auth/permissions'
 
 /** Bloque l'acces aux personnes non connectees. */
 export function RequireAuth({ children }: { children: ReactNode }) {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+  // En mode Supabase, on attend la restauration de la session avant de decider
+  // (sinon on redirigerait brievement vers /connexion a chaque rechargement).
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-sm text-prisme-base/50">
+        Chargement…
+      </div>
+    )
+  }
   if (!user) return <Navigate to="/connexion" replace />
   return <>{children}</>
 }
