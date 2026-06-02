@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-prisme-inner text-prisme-base font-sans antialiased;
+    margin: 0;
+    background: linear-gradient(135deg, #0f1a2c 0%, #1a2639 60%, #0a101a 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif;
+  }
+
+  /* Scrollbar dans la charte */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0f1a2c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #b89754;
+    border-radius: 5px;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg border border-prisme-gold-mat/20 bg-prisme-inner/70 backdrop-blur p-6 shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded px-4 py-2 text-sm font-medium uppercase tracking-wide
+           transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-prisme-gold-mat text-prisme-inner hover:bg-prisme-gold hover:shadow-gold;
+  }
+  .btn-outline {
+    @apply btn border border-prisme-gold text-prisme-gold hover:bg-prisme-gold hover:text-prisme-inner;
+  }
+  .btn-ghost {
+    @apply btn text-prisme-base/80 hover:text-prisme-gold hover:bg-white/5;
+  }
+  .btn-danger {
+    @apply btn border border-red-400/60 text-red-300 hover:bg-red-500/20;
+  }
+
+  .input {
+    @apply w-full rounded border border-prisme-gold-mat/20 bg-prisme-inner px-3 py-2 text-sm text-prisme-base
+           placeholder:text-prisme-base/40 focus:border-prisme-gold focus:outline-none;
+  }
+  /* Les listes deroulantes natives s'affichent sur fond clair selon l'OS :
+     on force un fond sombre + texte clair pour garder un bon contraste. */
+  .input option,
+  select.input option {
+    @apply bg-prisme-inner text-prisme-base;
+  }
+  .label {
+    @apply mb-1 block text-xs font-medium uppercase tracking-wide text-prisme-gold-mat;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .table-base {
+    @apply w-full border-collapse text-sm;
+  }
+  .table-base th {
+    @apply border-b border-prisme-gold-mat/20 px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-prisme-gold-mat;
+  }
+  .table-base td {
+    @apply border-b border-white/5 px-3 py-2.5 align-middle;
+  }
+  .table-base tbody tr:hover {
+    @apply bg-white/5;
+  }
+
+  .section-title {
+    @apply font-serif text-2xl text-prisme-gold-mat;
+  }
+}
