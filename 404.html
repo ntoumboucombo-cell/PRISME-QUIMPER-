@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PRISME QUIMPER</title>
+    <script type="text/javascript">
+      // ----------------------------------------------------------------------
+      //  Page 404 du site (racine). GitHub Pages la sert pour toute URL
+      //  inexistante, y compris les routes profondes de l'Espace Bureau (qui est
+      //  une application React mono-page servie sous /bureau/).
+      //
+      //  - /bureau/<route> (ex. /bureau/connexion) : on redirige vers
+      //    /bureau/?/<route> ; l'application restaure ensuite l'URL d'origine
+      //    (voir le script dans espace-bureau/index.html).
+      //  - toute autre URL : retour a l'accueil du site vitrine.
+      // ----------------------------------------------------------------------
+      (function () {
+        var l = window.location
+        var prefix = '/bureau/'
+        if (l.pathname.indexOf(prefix) === 0) {
+          var rest = l.pathname.slice(prefix.length).replace(/&/g, '~and~')
+          var search = l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : ''
+          l.replace(prefix + '?/' + rest + search + l.hash)
+        } else {
+          l.replace('/')
+        }
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>
