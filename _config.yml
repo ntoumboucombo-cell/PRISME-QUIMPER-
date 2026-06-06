@@ -17,3 +17,4 @@ exclude:
   - "SUPABASE-ETAPE-1-creer-tables.sql"
   - "SUPABASE-ETAPE-4-roles.sql"
   - "SUPABASE-CORRECTIF-rls.sql"
+  - "SUPABASE-CORRECTIF-trigger.sql"

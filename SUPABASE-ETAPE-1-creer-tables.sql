@@ -283,9 +283,9 @@ create policy "registre_write" on registre_entries for all
 alter table profiles add column if not exists email text;
 
 create or replace function handle_new_user()
-returns trigger language plpgsql security definer as $$
+returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  insert into profiles (id, email, display_name, role)
+  insert into public.profiles (id, email, display_name, role)
   values (
     new.id,
     new.email,
