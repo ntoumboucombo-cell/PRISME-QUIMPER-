@@ -60,28 +60,48 @@ VITE_SUPABASE_ANON_KEY=VOTRE_CLE_ANON_PUBLIC
 Au prochain `npm run dev`, l'application utilise Supabase. Le bandeau rouge de
 « bypass » disparaît, et le bypass devient impossible à réactiver.
 
-## 4. Créer le premier administrateur
+## 4. Inviter les membres du bureau (e-mail + mot de passe choisi par chacun)
 
-Le **tout premier** compte ne peut pas être créé depuis l'application (il faut
-déjà un administrateur pour en autoriser la création). Procédez via le tableau de
-bord Supabase :
+Chaque membre reçoit un **e-mail d'invitation** Supabase ; en cliquant sur le
+lien, il arrive sur l'écran « Choisir mon mot de passe » (composant
+`src/pages/SetPassword.tsx`, déclenché par `passwordSetupRequired` dans
+`AuthContext`). Une fois le mot de passe défini, il accède directement à l'espace.
 
-1. **Authentication → Users → Add user** : saisissez l'e-mail et un mot de passe,
-   cochez « Auto-confirm user ».
-2. Le trigger crée automatiquement un profil `adherent`. Élevez-le en
-   administrateur via l'éditeur SQL :
+**Pré-requis** — dans **Authentication → URL Configuration** :
+- **Site URL** = `https://prismequimper.fr/bureau/`
+- **Redirect URLs** contient `https://prismequimper.fr/bureau/**`
 
-   ```sql
-   update profiles
-   set role = 'president', display_name = 'Nayel (Président)'
-   where id = (select id from auth.users where email = 'president@prismequimper.fr');
-   ```
+(Sans ça, le lien d'invitation renvoie vers la mauvaise page.)
 
-3. Connectez-vous dans l'application avec cet e-mail / mot de passe. Vous avez
-   désormais accès à tout.
+### Option A — script automatique (recommandé)
 
-> Une fois ce premier admin en place et l'Edge Function déployée (§ 5), tous les
-> **comptes suivants** se créent directement depuis la page **Administration**.
+Invite les 6 membres **et** pose leurs rôles en une commande :
+
+```bash
+cd espace-bureau
+SUPABASE_URL="https://VOTRE-REF.supabase.co" \
+SUPABASE_SERVICE_ROLE_KEY="(Project Settings → API → service_role)" \
+node scripts/invite-bureau.mjs
+```
+
+> La clé `service_role` est **secrète** : passez-la en variable d'environnement,
+> ne la committez jamais. Le script est ré-exécutable (une personne déjà invitée
+> voit seulement son rôle remis à jour, sans nouvel e-mail).
+
+### Option B — manuel via le tableau de bord
+
+1. **Authentication → Users → Invite user** : saisir l'e-mail (à répéter pour
+   chaque personne). L'e-mail d'invitation part automatiquement.
+2. Une fois tout le monde invité, exécuter dans l'éditeur SQL le fichier
+   **`supabase/migrations/_ROLES-membres.sql`** : il attribue à chaque e-mail le
+   bon rôle et le nom affiché. (Ré-exécutable sans risque.)
+
+> Le tout premier administrateur peut aussi être créé via **Add user** (avec
+> « Auto-confirm user ») puis élevé en `president` par le SQL ci-dessus.
+
+> Une fois les admins (`president` / `vice_president`) en place et l'Edge Function
+> déployée (§ 5), tous les **comptes suivants** se créent directement depuis la
+> page **Administration**.
 
 ## 5. Déployer l'Edge Function de création de comptes
 

@@ -13,6 +13,18 @@ const forceMock = import.meta.env.VITE_USE_MOCK === 'true'
 
 export const isSupabaseConfigured = Boolean(url && anonKey) && !forceMock
 
+// Lien d'authentification ouvert par l'utilisateur (invitation ou mot de passe
+// oublie). Supabase encode le type dans le fragment d'URL `#type=invite|recovery`,
+// puis nettoie ce fragment des qu'il restaure la session : on le capture donc ICI,
+// au chargement du module, avant que le client ne l'efface. Sert a afficher
+// l'ecran « choisir mon mot de passe » a la premiere connexion (voir AuthContext).
+export const initialAuthLinkType: 'invite' | 'recovery' | null = (() => {
+  if (typeof window === 'undefined') return null
+  const params = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+  const type = params.get('type')
+  return type === 'invite' || type === 'recovery' ? type : null
+})()
+
 export const supabase: SupabaseClient | null = isSupabaseConfigured
   ? createClient(url!, anonKey!)
   : null

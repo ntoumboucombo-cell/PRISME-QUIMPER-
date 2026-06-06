@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/auth/AuthContext'
 import { Field } from '@/components/ui'
+import { isSupabaseConfigured } from '@/lib/supabase'
 
 const DEMO_ACCOUNTS = [
   { email: 'president@prismequimper.fr', role: 'Administrateur' },
@@ -81,24 +82,29 @@ export function Login() {
           </form>
         </div>
 
-        <div className="mt-6 rounded-lg border border-prisme-gold-mat/15 bg-prisme-inner/40 p-4 text-xs">
-          <p className="mb-2 font-medium text-prisme-gold-mat">
-            Comptes de démonstration (mot de passe : <code className="text-prisme-gold">prisme</code>)
-          </p>
-          <ul className="space-y-1">
-            {DEMO_ACCOUNTS.map((a) => (
-              <li key={a.email}>
-                <button
-                  onClick={() => quickFill(a.email)}
-                  className="text-prisme-base/70 underline-offset-2 hover:text-prisme-gold hover:underline"
-                >
-                  {a.email}
-                </button>
-                <span className="text-prisme-base/40"> — {a.role}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Comptes de demonstration : uniquement en mode local (mock). En production
+            avec Supabase, on n'affiche jamais d'identifiants de demo. */}
+        {!isSupabaseConfigured && (
+          <div className="mt-6 rounded-lg border border-prisme-gold-mat/15 bg-prisme-inner/40 p-4 text-xs">
+            <p className="mb-2 font-medium text-prisme-gold-mat">
+              Comptes de démonstration (mot de passe :{' '}
+              <code className="text-prisme-gold">prisme</code>)
+            </p>
+            <ul className="space-y-1">
+              {DEMO_ACCOUNTS.map((a) => (
+                <li key={a.email}>
+                  <button
+                    onClick={() => quickFill(a.email)}
+                    className="text-prisme-base/70 underline-offset-2 hover:text-prisme-gold hover:underline"
+                  >
+                    {a.email}
+                  </button>
+                  <span className="text-prisme-base/40"> — {a.role}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
