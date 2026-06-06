@@ -10,3 +10,8 @@ exclude:
   - espace-bureau
   - "modèles docx"
   - README.md
+  # Scripts SQL de mise en route Supabase (contiennent des e-mails de membres) :
+  # a garder hors du site public.
+  - "SUPABASE-ETAPE-1-creer-tables.sql"
+  - "SUPABASE-ETAPE-4-roles.sql"
+  - "SUPABASE-CORRECTIF-rls.sql"
