@@ -183,10 +183,6 @@
             line-height: 1.04; letter-spacing: 0.5px; color: #fff; margin-bottom: 1.8rem;
         }
         .hero h1 em { font-style: italic; color: var(--gold-bright); }
-        .hero-tagline {
-            font-family: var(--serif-body); font-style: italic; font-size: clamp(1.15rem, 2.2vw, 1.7rem);
-            color: var(--text-dim); max-width: 620px; margin: 0 auto 3rem;
-        }
         .hero-actions { display: flex; gap: 1.4rem; justify-content: center; align-items: center; flex-wrap: wrap; }
         .scroll-cue {
             position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
@@ -303,34 +299,33 @@
         }
         .agenda-item:hover .btn-small { border-color: var(--gold-bright); }
 
-        /* --- PARTENAIRES (sans logos : invitation au mécénat) ---------------- */
+        /* --- PARTENAIRES (cercle de partenaires à bâtir) --------------------- */
         section.light .section-eyebrow { color: #9a7d3e; }
-        .patronage {
-            display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center;
-            border: 1px solid rgba(26,38,57,0.14); border-radius: 8px; padding: 3.5rem;
-            background: linear-gradient(135deg, rgba(184,151,84,0.06), transparent);
+        .partners-lead {
+            max-width: 760px; margin: -2rem auto 3.5rem; text-align: center;
+            font-family: var(--serif-body); font-size: 1.22rem; line-height: 1.7; color: rgba(26,38,57,0.84);
         }
-        .patronage h3 { font-family: var(--serif-display); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 600; color: var(--ink); line-height: 1.15; margin-bottom: 1.2rem; }
-        .patronage p { font-family: var(--sans); font-size: 0.95rem; line-height: 1.8; color: rgba(26,38,57,0.78); margin-bottom: 1rem; }
-        .patronage-aside { display: flex; flex-direction: column; gap: 1rem; }
-        .patron-stat { border-left: 2px solid var(--gold); padding-left: 1.2rem; }
-        .patron-stat strong { font-family: var(--serif-display); font-size: 2.4rem; font-weight: 600; color: var(--ink); display: block; line-height: 1; }
-        .patron-stat span { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(26,38,57,0.6); }
-        .btn-ink { border-color: var(--ink); color: var(--ink); align-self: flex-start; margin-top: 0.6rem; }
+        .avenues { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 1.4rem; }
+        .avenue {
+            position: relative; padding: 2.5rem 2rem 2.2rem; background: #fff;
+            border: 1px solid rgba(26,38,57,0.1); border-radius: 6px; overflow: hidden;
+            transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+        }
+        .avenue::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--spectrum);
+            transform: scaleX(0); transform-origin: left; transition: transform 0.45s var(--ease);
+        }
+        .avenue:hover { transform: translateY(-8px); box-shadow: 0 24px 44px -24px rgba(26,38,57,0.4); }
+        .avenue:hover::before { transform: scaleX(1); }
+        .avenue-num { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; color: var(--gold); }
+        .avenue h3 { font-family: var(--serif-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0.8rem 0 0.6rem; }
+        .avenue p { font-family: var(--sans); font-size: 0.88rem; line-height: 1.65; color: rgba(26,38,57,0.74); }
+        .partners-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 3.6rem; }
+        .partners-cta-note { font-family: var(--sans); font-size: 0.86rem; color: rgba(26,38,57,0.62); }
+        .partners-cta-note a { color: #9a7d3e; text-decoration: none; border-bottom: 1px solid rgba(154,125,62,0.4); }
+        .btn-ink { border-color: var(--ink); color: var(--ink); }
         .btn-ink::before { background: var(--ink); }
         .btn-ink:hover { color: var(--cream); }
-
-        /* --- PORTAIL --------------------------------------------------------- */
-        .portal-card {
-            max-width: 640px; margin: 0 auto; text-align: center; padding: 4.5rem 3.5rem;
-            background: linear-gradient(160deg, rgba(26,38,57,0.7), rgba(11,20,34,0.7));
-            border: 1px solid var(--line); border-radius: 8px; position: relative; overflow: hidden;
-            box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7);
-        }
-        .portal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--spectrum); }
-        .portal-card h3 { font-family: var(--serif-display); font-size: 2.2rem; font-weight: 600; color: var(--gold-bright); margin-bottom: 1rem; }
-        .portal-card p { font-family: var(--sans); font-size: 0.92rem; line-height: 1.75; color: var(--text-dim); margin-bottom: 2.2rem; }
-        .portal-note { font-family: var(--sans); font-size: 0.78rem; color: var(--text-dim); opacity: 0.8; margin-top: 1.8rem; margin-bottom: 0; }
 
         /* --- MODALE D'ADHÉSION ----------------------------------------------- */
         .modal-overlay {
@@ -390,8 +385,7 @@
             .vision-grid { grid-template-columns: 1fr; gap: 3rem; }
             .vision-visual { order: -1; aspect-ratio: 16/10; }
             .agenda-item { grid-template-columns: 1fr; gap: 0.6rem; text-align: left; }
-            .patronage { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem; }
-            .portal-card { padding: 3rem 1.8rem; }
+            .partners-lead { margin-top: 0; font-size: 1.12rem; }
             .modal-content { padding: 2rem; }
             .modal-form-row { flex-direction: column; gap: 0; }
         }
@@ -434,8 +428,7 @@
             <div class="hero-inner">
                 <div class="hero-kicker reveal-up d1">Éloquence · Culture · Finistère</div>
                 <h1 class="reveal-up d2">Un nouveau regard<br>sur la <em>culture</em></h1>
-                <p class="hero-tagline reveal-up d3">« Maîtriser le verbe pour porter sa conviction. »</p>
-                <div class="hero-actions reveal-up d4">
+                <div class="hero-actions reveal-up d3">
                     <a href="#" class="btn btn-solid open-adhesion-modal">Rejoindre l'Association</a>
                 </div>
             </div>
@@ -496,22 +489,36 @@
         <section id="partenaires" class="light fade-in">
             <div class="light-inner">
                 <div class="section-head">
-                    <div class="section-eyebrow">Mécénat & Héritage</div>
-                    <h2 class="section-title">Construire un <em>partenariat</em></h2>
+                    <div class="section-eyebrow">Mécénat & Partenariats</div>
+                    <h2 class="section-title">Bâtir un <em>cercle d'excellence</em></h2>
                     <div class="spectrum-line"></div>
                 </div>
-                <div class="patronage">
-                    <div>
-                        <h3>Associez votre nom à l'excellence oratoire.</h3>
-                        <p>PRISME QUIMPER rassemble une nouvelle génération de talents autour du verbe, du débat et de la culture. Nous bâtissons un cercle de partenaires — institutions, cabinets, entreprises et mécènes — qui partagent cette ambition pour le Finistère.</p>
-                        <p>Vous souhaitez soutenir nos concours, accueillir un événement ou rejoindre nos partenaires fondateurs ?</p>
-                        <a href="mailto:contact@prismequimper.fr?subject=Proposition de Mécénat" class="btn btn-ink">Devenir partenaire</a>
-                    </div>
-                    <div class="patronage-aside">
-                        <div class="patron-stat"><strong>4</strong><span>Pôles d'action</span></div>
-                        <div class="patron-stat"><strong>2026</strong><span>Saison inaugurale</span></div>
-                        <div class="patron-stat"><strong>∞</strong><span>Ambition culturelle</span></div>
-                    </div>
+                <p class="partners-lead">PRISME QUIMPER s'entoure d'institutions, de professions du droit, d'entreprises et de mécènes qui partagent son ambition pour la culture et l'éloquence en Finistère. Notre cercle de partenaires se construit aujourd'hui — il reste une place pour les fondateurs.</p>
+                <div class="avenues">
+                    <article class="avenue">
+                        <span class="avenue-num">01</span>
+                        <h3>Mécénat</h3>
+                        <p>Soutenez nos concours et nos bourses d'éloquence. Votre don ouvre droit au dispositif de défiscalisation.</p>
+                    </article>
+                    <article class="avenue">
+                        <span class="avenue-num">02</span>
+                        <h3>Accueil d'événements</h3>
+                        <p>Ouvrez vos lieux — tribunaux, amphithéâtres, salons — à nos joutes oratoires et masterclass.</p>
+                    </article>
+                    <article class="avenue">
+                        <span class="avenue-num">03</span>
+                        <h3>Parrainage</h3>
+                        <p>Associez votre nom à un concours, à un pôle ou à l'ensemble de la saison culturelle.</p>
+                    </article>
+                    <article class="avenue">
+                        <span class="avenue-num">04</span>
+                        <h3>Réseau & expertise</h3>
+                        <p>Intervenez auprès de nos membres : jurys, masterclass, mentorat et conseil.</p>
+                    </article>
+                </div>
+                <div class="partners-cta">
+                    <a href="mailto:contact@prismequimper.fr?subject=Proposition de Partenariat" class="btn btn-ink">Devenir partenaire</a>
+                    <span class="partners-cta-note">ou écrivez-nous à <a href="mailto:contact@prismequimper.fr">contact@prismequimper.fr</a></span>
                 </div>
             </div>
         </section>
