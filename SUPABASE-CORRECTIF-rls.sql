@@ -2,7 +2,7 @@
 --  PRISME QUIMPER — Espace Bureau
 --  CORRECTIF : boucle infinie des regles de securite (erreur « stack depth
 --  limit exceeded » / code 54001) sur toutes les tables.
---
+--  
 --  Cause : current_role_app() et is_authenticated_member() lisent la table
 --  `profiles`, dont la securite (RLS) rappelle ces memes fonctions -> recursion.
 --  Solution : les passer en SECURITY DEFINER pour qu'elles lisent `profiles`
