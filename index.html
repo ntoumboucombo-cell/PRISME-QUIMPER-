@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRISME QUIMPER | Un nouveau regard sur la culture </title>
-    
+    <meta name="description" content="Découvrez PRISME QUIMPER, le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.">
+
     <link rel="icon" type="image/png" href="logo.PNG">
     <link rel="apple-touch-icon" href="logo.PNG">
     <meta property="og:title" content="PRISME QUIMPER | Un nouveau regard sur la culture">
     <meta property="og:description" content="Découvrez PRISME QUIMPER, le pont reliant le talent oratoire étudiant aux réseaux d'excellence professionnels, juridiques et économiques du Finistère.">
-    <meta property="og:image" content="https://ntoumboucombo-cell.github.io/PRISME-QUIMPER-/logo.PNG">
-    <meta property="og:url" content="https://ntoumboucombo-cell.github.io/PRISME-QUIMPER-/">
+    <meta property="og:image" content="https://prismequimper.fr/logo.PNG">
+    <meta property="og:url" content="https://prismequimper.fr/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -377,7 +378,7 @@
             <p>"Maîtriser le verbe pour porter sa conviction."</p>
             
             <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap;">
-                <a href="#connexion" class="btn">Accéder au Portail</a>
+                <a href="/bureau/" class="btn">Accéder au Portail</a>
                 <a href="#" class="btn open-adhesion-modal" style="background-color: var(--color-accent-gold-mat); color: var(--color-bg-inner); border-color: var(--color-accent-gold-mat);">Rejoindre l'Association</a>
             </div>
         </section>
@@ -428,7 +429,7 @@
                         <p>Pôle Universitaire Pierre-Jakez Hélias — Séance dédiée à l'art de l'exorde.</p>
                     </div>
                     <div class="agenda-action">
-                        <a href="#connexion" class="btn-small">Membres Uniquement</a>
+                        <a href="/bureau/" class="btn-small">Membres Uniquement</a>
                     </div>
                 </div>
                 <div class="agenda-item">
@@ -470,20 +471,10 @@
                 <div class="login-card">
                     <h3>Accès Adhérent</h3>
                     <p style="font-style: italic; color: var(--color-text-base); margin-bottom: 2rem;">Accédez à votre Calendrier Officiel, au Drive de l'institution et au Cahier de Suivi.</p>
-                    
-                    <form action="#" method="get" onsubmit="handleLogin(event)">
-                        <div class="form-group">
-                            <label for="email">E-mail Adhérent</label>
-                            <input type="email" id="email" class="input-field" placeholder="votrenom@domaine.fr" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Mot de passe</label>
-                            <input type="password" id="password" class="input-field" placeholder="••••••••" required>
-                        </div>
-                        <button type="submit" class="btn">Se Connecter au Portail</button>
-                    </form>
-                    
-                    <p class="login-notice">L'accès au Portail est strictement réservé aux membres de PRISME QUIMPER après validation de leur adhésion par le Bureau.</p>
+
+                    <a href="/bureau/" class="btn" style="display: inline-block;">Accéder à l'Espace Bureau</a>
+
+                    <p class="login-notice">L'accès au Portail est strictement réservé aux membres de PRISME QUIMPER après validation de leur adhésion par le Bureau. La connexion se fait directement dans l'Espace Bureau.</p>
                 </div>
             </div>
         </section>
@@ -690,13 +681,6 @@
                 });
             }
         });
-
-        // FONCTION DE CONNEXION ESPACE ADHÉRENT
-        function handleLogin(event) {
-            event.preventDefault(); 
-            alert("VÉRIFICATION EN COURS...\nPRISME QUIMPER validera votre accès via Google Invitations (Calendar/Drive).\n\nPour la démonstration technique, nous vous redirigeons vers l'espace public.");
-            window.location.hash = '#connexion';
-        }
 
         // FONCTION D'ENVOI DU FORMULAIRE D'ADHÉSION
         async function submitAdhesion(event) {
