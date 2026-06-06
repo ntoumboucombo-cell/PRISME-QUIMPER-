@@ -68,8 +68,8 @@ lien, il arrive sur l'écran « Choisir mon mot de passe » (composant
 `AuthContext`). Une fois le mot de passe défini, il accède directement à l'espace.
 
 **Pré-requis** — dans **Authentication → URL Configuration** :
-- **Site URL** = `https://prismequimper.fr/bureau/`
-- **Redirect URLs** contient `https://prismequimper.fr/bureau/**`
+- **Site URL** = `https://prismequimper.fr/portail/`
+- **Redirect URLs** contient `https://prismequimper.fr/portail/**`
 
 (Sans ça, le lien d'invitation renvoie vers la mauvaise page.)
 

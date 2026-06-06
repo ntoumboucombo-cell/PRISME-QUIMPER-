@@ -14,7 +14,7 @@ dashboard Supabase. Doc complète : `espace-bureau/docs/INTEGRATION-SUPABASE.md`
 1. **Créer les tables** : SQL Editor → coller `SUPABASE-ETAPE-1-creer-tables.sql`
    → Run. (Inclut tables, RLS, trigger de profil, bucket de stockage.)
 2. **Régler les URLs** : Authentication → URL Configuration →
-   Site URL `https://prismequimper.fr/bureau/` + Redirect URL `…/bureau/**`.
+   Site URL `https://prismequimper.fr/portail/` + Redirect URL `…/portail/**`.
 3. **Inviter les 6 membres** (envoie les e-mails de choix de mot de passe) :
    - Automatique : `cd espace-bureau && SUPABASE_URL="https://ckydbaqrepgrmgbywkpf.supabase.co" SUPABASE_SERVICE_ROLE_KEY="<clé secrète>" node scripts/invite-bureau.mjs`
    - Manuel : Authentication → Users → Invite user (×6).
@@ -28,8 +28,8 @@ dashboard Supabase. Doc complète : `espace-bureau/docs/INTEGRATION-SUPABASE.md`
 
 La clé publique `anon` est dans le bundle déployé. Pour sonder les tables :
 ```
-JS=$(curl -s https://prismequimper.fr/bureau/ | grep -oE 'assets/index-[A-Za-z0-9_-]+\.js' | head -1)
-KEY=$(curl -s "https://prismequimper.fr/bureau/$JS" | grep -oE 'sb_publishable_[A-Za-z0-9_-]+' | head -1)
+JS=$(curl -s https://prismequimper.fr/portail/ | grep -oE 'assets/index-[A-Za-z0-9_-]+\.js' | head -1)
+KEY=$(curl -s "https://prismequimper.fr/portail/$JS" | grep -oE 'sb_publishable_[A-Za-z0-9_-]+' | head -1)
 URL="https://ckydbaqrepgrmgbywkpf.supabase.co"
 curl -s -o /dev/null -w "%{http_code}\n" "$URL/rest/v1/members?select=*&limit=1" -H "apikey: $KEY" -H "Authorization: Bearer $KEY"
 ```

@@ -3,7 +3,7 @@ description: L'excellence oratoire et l'art de la rhétorique à Quimper.
 url: "https://prismequimper.fr"
 
 # L'Espace Bureau (application React) n'est PAS construit par Jekyll : il est
-# compile separement par Vite et deploye sous /bureau/ (voir
+# compile separement par Vite et deploye sous /portail/ (voir
 # .github/workflows/deploy.yml). On l'exclut donc du site vitrine, ainsi que
 # les fichiers internes.
 exclude:

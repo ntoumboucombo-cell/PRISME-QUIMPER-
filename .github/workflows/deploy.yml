@@ -2,7 +2,7 @@ name: Déploiement GitHub Pages
 
 # Construit et déploie l'ensemble du site :
 #   - le site vitrine (Jekyll) à la racine  ->  prismequimper.fr/
-#   - l'Espace Bureau (Vite/React)          ->  prismequimper.fr/bureau/
+#   - l'Espace Bureau (Vite/React)          ->  prismequimper.fr/portail/
 #
 # ⚠️ Pré-requis (à faire une seule fois) :
 #   Settings → Pages → Build and deployment → Source = "GitHub Actions".
@@ -53,7 +53,7 @@ jobs:
       - name: Construire l'Espace Bureau
         working-directory: espace-bureau
         env:
-          BASE_PATH: /bureau/
+          BASE_PATH: /portail/
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
@@ -62,13 +62,13 @@ jobs:
         working-directory: espace-bureau
         run: cp dist/index.html dist/404.html
 
-      - name: Placer l'Espace Bureau sous /bureau
+      - name: Placer l'Espace Bureau sous /portail
         run: |
           # _site est créé par le conteneur Jekyll (root) : on en reprend la
           # propriété pour pouvoir y écrire avec l'utilisateur du runner.
           sudo chown -R "$(id -u):$(id -g)" _site
-          mkdir -p _site/bureau
-          cp -r espace-bureau/dist/. _site/bureau/
+          mkdir -p _site/portail
+          cp -r espace-bureau/dist/. _site/portail/
 
       - name: Téléverser l'artefact Pages
         uses: actions/upload-pages-artifact@v3
