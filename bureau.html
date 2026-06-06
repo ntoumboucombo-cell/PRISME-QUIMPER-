@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Conseil d'Administration | PRISME QUIMPER</title>
+    
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <link rel="apple-touch-icon" href="logo.PNG">
+
+    <style>
+        :root {
+            --color-bg-dark: #1A2639; 
+            --color-bg-inner: #0F1A2C; 
+            --color-bg-light-cream: #FDF9F2; 
+            --color-text-base: #E8E5DF; 
+            --color-text-dark-subtle: #1A2639; 
+            --color-accent-gold-mat: #B89754; 
+            --color-accent-gold-bright: #E5C37A; 
+            --color-border-subtle: rgba(184, 151, 84, 0.2); 
+            
+            --font-serif-precis: "Baskerville", "Georgia", "Times New Roman", Times, serif;
+            --font-sans-luxury: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-serif-precis);
+            background: linear-gradient(135deg, var(--color-bg-inner) 0%, var(--color-bg-dark) 60%, #0a101a 100%); 
+            color: var(--color-text-base); line-height: 1.8;
+            -webkit-font-smoothing: antialiased; overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%;
+            background-color: rgba(15, 26, 44, 0.98); z-index: 1000;
+            border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(5px);
+        }
+
+        .logo-text {
+            font-size: 1.6rem; font-weight: bold; letter-spacing: 2px;
+            color: var(--color-text-base); text-decoration: none; text-transform: uppercase;
+        }
+        .logo-text span { color: var(--color-accent-gold-bright); }
+
+        .btn-back {
+            font-family: var(--font-sans-luxury);
+            font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--color-accent-gold-bright); text-decoration: none;
+            border: 1px solid var(--color-accent-gold-bright);
+            padding: 0.6rem 1.5rem; transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        .btn-back:hover {
+            background-color: var(--color-accent-gold-bright);
+            color: var(--color-bg-inner);
+            box-shadow: 0 0 15px rgba(229, 195, 122, 0.4);
+        }
+
+        /* --- PAGE CONTENT --- */
+        .container {
+            max-width: 1200px; margin: 0 auto; padding: 8rem 5% 5rem;
+        }
+
+        .page-title {
+            text-align: center; font-size: 3.2rem; font-weight: normal; margin-bottom: 1rem;
+            color: var(--color-text-base); letter-spacing: 1px;
+        }
+        .page-subtitle {
+            text-align: center; font-family: var(--font-sans-luxury); font-size: 1rem;
+            color: var(--color-accent-gold-mat); text-transform: uppercase; letter-spacing: 3px;
+            margin-bottom: 5rem;
+        }
+
+        /* --- GRID DES MEMBRES --- */
+        .bureau-deep-grid {
+            display: flex; flex-direction: column; gap: 4rem;
+        }
+
+        /* CARD PREMIUM INDIVIDUELLE */
+        .member-profile-card {
+            background-color: rgba(15, 26, 44, 0.6);
+            border: 1px solid var(--color-border-subtle);
+            border-radius: 4px; padding: 3rem;
+            display: grid; grid-template-columns: 250px 1fr; gap: 3.5rem;
+            align-items: start; transition: all 0.4s ease;
+        }
+        .member-profile-card:hover {
+            border-color: var(--color-accent-gold-mat);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        /* COLONNE PHOTO & RESEAUX */
+        .member-left-col {
+            text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+        }
+        .profile-avatar {
+            width: 180px; height: 180px; border-radius: 50%;
+            border: 2px solid var(--color-accent-gold-mat);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+        }
+        .profile-socials {
+            display: flex; gap: 1.5rem; justify-content: center; margin-top: 0.5rem;
+        }
+        .profile-socials a {
+            fill: var(--color-text-base); width: 24px; height: 24px; transition: all 0.3s ease;
+        }
+        .profile-socials a:hover {
+            fill: var(--color-accent-gold-bright); transform: scale(1.1);
+        }
+
+        /* COLONNE INFOS DETAILLEES */
+        .member-right-col {
+            display: flex; flex-direction: column; gap: 1.2rem;
+        }
+        .member-meta h2 {
+            font-size: 2.2rem; font-weight: normal; color: var(--color-text-base); margin-bottom: 0.2rem;
+        }
+        .member-meta .role-badge {
+            display: inline-block; font-family: var(--font-sans-luxury); font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 2px; color: var(--color-bg-inner);
+            background-color: var(--color-accent-gold-bright); padding: 0.2rem 1rem;
+            font-weight: bold; border-radius: 2px; margin-bottom: 0.5rem;
+        }
+        .member-meta .mission-statement {
+            font-family: var(--font-sans-luxury); font-size: 0.95rem; color: var(--color-accent-gold-mat);
+            font-style: italic; font-weight: 500;
+        }
+
+        .divider {
+            width: 100%; height: 1px; background-color: var(--color-border-subtle); margin: 0.5rem 0;
+        }
+
+        .parcours-section h3 {
+            font-family: var(--font-sans-luxury); font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--color-accent-gold-bright); margin-bottom: 0.6rem;
+        }
+        .parcours-section p {
+            font-size: 1.05rem; color: var(--color-text-base); opacity: 0.85; text-align: justify;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--color-bg-inner); color: var(--color-bg-light-cream);
+            text-align: center; padding: 4rem 5%; border-top: 1px solid var(--color-border-subtle);
+            margin-top: 5rem; font-family: var(--font-sans-luxury); font-size: 0.8rem; opacity: 0.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .container { padding-top: 6rem; }
+            .page-title { font-size: 2.2rem; }
+            .member-profile-card { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+            .member-left-col { flex-direction: row; justify-content: flex-start; text-align: left; gap: 2rem; }
+            .profile-avatar { width: 100px; height: 100px; }
+            .profile-socials { margin-top: 0; }
+        }
+        @media (max-width: 600px) {
+            .member-left-col { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-text">PRISME QUIMPER<span>.</span></a>
+        <a href="index.html" class="btn-back">Retour au site</a>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Le Conseil d
