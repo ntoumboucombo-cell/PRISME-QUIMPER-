@@ -18,3 +18,4 @@ exclude:
   - "SUPABASE-ETAPE-4-roles.sql"
   - "SUPABASE-CORRECTIF-rls.sql"
   - "SUPABASE-CORRECTIF-trigger.sql"
+  - "A-EXECUTER-MAINTENANT.sql"
