@@ -355,9 +355,9 @@ create policy "registre_write" on registre_entries for all
 --  Un admin pourra ensuite elever le role.
 -- ============================================================================
 create or replace function handle_new_user()
-returns trigger language plpgsql security definer as $$
+returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  insert into profiles (id, display_name, role)
+  insert into public.profiles (id, display_name, role)
   values (new.id, coalesce(new.raw_user_meta_data->>'display_name', new.email), 'adherent');
   return new;
 end;
@@ -387,9 +387,9 @@ where u.id = p.id and p.email is null;
 
 -- Mise a jour du trigger : renseigne aussi l'e-mail a la creation du compte.
 create or replace function handle_new_user()
-returns trigger language plpgsql security definer as $$
+returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  insert into profiles (id, email, display_name, role)
+  insert into public.profiles (id, email, display_name, role)
   values (
     new.id,
     new.email,
