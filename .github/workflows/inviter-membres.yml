@@ -1,0 +1,40 @@
+name: Inviter les membres du bureau (Supabase)
+
+# Envoie les invitations Supabase aux membres du bureau et leur attribue leur
+# rôle, en exécutant espace-bureau/scripts/invite-bureau.mjs.
+#
+# Déclenchement MANUEL uniquement (onglet Actions → ce workflow → Run workflow).
+# Ne tourne jamais tout seul. Ré-exécutable sans risque (une personne déjà
+# invitée voit seulement son rôle remis à jour, sans nouvel e-mail).
+#
+# Pré-requis : un secret de dépôt `SUPABASE_SERVICE_ROLE_KEY`
+#   (Settings → Secrets and variables → Actions → New repository secret).
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inviter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: espace-bureau/package-lock.json
+
+      - name: Installer les dépendances
+        working-directory: espace-bureau
+        run: npm ci
+
+      - name: Envoyer les invitations + poser les rôles
+        working-directory: espace-bureau
+        env:
+          SUPABASE_URL: https://ckydbaqrepgrmgbywkpf.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          INVITE_REDIRECT_TO: https://prismequimper.fr/portail/
+        run: node scripts/invite-bureau.mjs
