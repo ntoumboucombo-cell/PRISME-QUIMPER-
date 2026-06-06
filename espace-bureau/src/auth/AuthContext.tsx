@@ -14,7 +14,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import type { ReactNode } from 'react'
 import type { Role, UserAccount } from '@/types'
 import { getTable, update as updateRow } from '@/lib/data/store'
-import { supabase, isSupabaseConfigured } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured, initialAuthLinkType } from '@/lib/supabase'
 import { roleHas, type Permission } from './permissions'
 
 interface SessionUser {
@@ -34,10 +34,18 @@ interface AuthContextValue {
   user: SessionUser | null
   /** true tant que la session Supabase n'est pas encore restauree (evite un flash de redirection). */
   loading: boolean
+  /**
+   * true quand l'utilisateur arrive par un lien d'invitation ou de mot de passe
+   * oublie : il a une session valide mais doit (re)definir son mot de passe avant
+   * d'acceder a l'application. Voir `completePasswordSetup`.
+   */
+  passwordSetupRequired: boolean
   login: (email: string, password: string) => Promise<AuthResult>
   logout: () => Promise<void>
   can: (permission: Permission) => boolean
   changePassword: (current: string, next: string) => Promise<AuthResult>
+  /** Definit le mot de passe lors d'une premiere connexion (lien d'invitation). */
+  completePasswordSetup: (next: string) => Promise<AuthResult>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -121,6 +129,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isSupabaseConfigured ? null : loadMockSession(),
   )
   const [loading, setLoading] = useState<boolean>(isSupabaseConfigured)
+  // Lien d'invitation / mot de passe oublie : capture au chargement du module
+  // (le fragment d'URL est efface par Supabase juste apres). Confirme aussi par
+  // l'evenement PASSWORD_RECOVERY ci-dessous.
+  const [passwordSetupRequired, setPasswordSetupRequired] = useState<boolean>(
+    isSupabaseConfigured && initialAuthLinkType !== null,
+  )
 
   // Restauration + suivi de la session Supabase.
   useEffect(() => {
@@ -136,7 +150,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     })
 
-    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange(async (event, session) => {
+      // Lien « mot de passe oublie » : Supabase emet PASSWORD_RECOVERY.
+      if (event === 'PASSWORD_RECOVERY') setPasswordSetupRequired(true)
       const sUser = session?.user
       const next = sUser ? await buildSupabaseSession(sUser.id, sUser.email) : null
       if (active) setUser(next)
@@ -237,9 +253,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [user],
   )
 
+  const completePasswordSetup = useCallback(
+    async (next: string): Promise<AuthResult> => {
+      if (!isSupabaseConfigured || !supabase)
+        return { ok: false, error: 'Indisponible.' }
+      if (next.length < 6)
+        return { ok: false, error: 'Le mot de passe est trop court (min. 6 caractères).' }
+      // La session a deja ete etablie par le lien : il suffit de poser le mot de passe.
+      const { error } = await supabase.auth.updateUser({ password: next })
+      if (error) return { ok: false, error: 'Impossible de définir le mot de passe.' }
+      setPasswordSetupRequired(false)
+      // Recharge le profil (role/nom) maintenant que le compte est pleinement actif.
+      const { data } = await supabase.auth.getUser()
+      if (data.user) setUser(await buildSupabaseSession(data.user.id, data.user.email))
+      return { ok: true }
+    },
+    [],
+  )
+
   const value = useMemo(
-    () => ({ user, loading, login, logout, can, changePassword }),
-    [user, loading, login, logout, can, changePassword],
+    () => ({
+      user,
+      loading,
+      passwordSetupRequired,
+      login,
+      logout,
+      can,
+      changePassword,
+      completePasswordSetup,
+    }),
+    [user, loading, passwordSetupRequired, login, logout, can, changePassword, completePasswordSetup],
   )
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

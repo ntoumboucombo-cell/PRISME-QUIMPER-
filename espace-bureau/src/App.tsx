@@ -1,7 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { RequireAuth, RequirePermission } from './components/ProtectedRoute'
+import { useAuth } from './auth/AuthContext'
 import { Login } from './pages/Login'
+import { SetPassword } from './pages/SetPassword'
 import { Dashboard } from './pages/Dashboard'
 import { Comptabilite } from './pages/Comptabilite'
 import { Adherents } from './pages/Adherents'
@@ -15,6 +17,12 @@ import { Admin } from './pages/Admin'
 import { Profil } from './pages/Profil'
 
 export default function App() {
+  const { passwordSetupRequired, user } = useAuth()
+
+  // Lien d'invitation / mot de passe oublie : tant que le mot de passe n'est pas
+  // (re)defini, on court-circuite tout le routage pour forcer cet ecran.
+  if (passwordSetupRequired && user) return <SetPassword />
+
   return (
     <Routes>
       <Route path="/connexion" element={<Login />} />
