@@ -34,7 +34,7 @@ Le workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 construit et déploie **les deux** projets en une fois :
 
 - le **site vitrine** (Jekyll) → `prismequimper.fr/`
-- l'**Espace Bureau** (Vite) → `prismequimper.fr/bureau/`
+- l'**Espace Bureau** (Vite) → `prismequimper.fr/portail/`
 
 ### À faire une seule fois
 

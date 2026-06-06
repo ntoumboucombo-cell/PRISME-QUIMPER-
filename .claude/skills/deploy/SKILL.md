@@ -5,7 +5,7 @@ description: Publier le site PRISME QUIMPER (vitrine + Espace Bureau) sur GitHub
 
 # Déploiement PRISME QUIMPER
 
-Publie la vitrine (`/`) et l'Espace Bureau (`/bureau/`) via le workflow
+Publie la vitrine (`/`) et l'Espace Bureau (`/portail/`) via le workflow
 `.github/workflows/deploy.yml` (déclenché par un push sur `main`).
 
 ## Procédure
@@ -44,7 +44,7 @@ Publie la vitrine (`/`) et l'Espace Bureau (`/bureau/`) via le workflow
 6. **Vérifier en ligne** (statut HTTP + contenu attendu) :
    ```
    curl -s -o /dev/null -w "HTTP %{http_code}\n" https://prismequimper.fr/
-   curl -s -o /dev/null -w "HTTP %{http_code}\n" https://prismequimper.fr/bureau/
+   curl -s -o /dev/null -w "HTTP %{http_code}\n" https://prismequimper.fr/portail/
    ```
 
 ## Notes

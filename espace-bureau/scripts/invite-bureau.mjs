@@ -12,8 +12,8 @@
 //        SUPABASE_URL               = https://VOTRE-REF.supabase.co
 //        SUPABASE_SERVICE_ROLE_KEY  = (Project Settings -> API -> service_role)
 //    - dans Supabase : Authentication -> URL Configuration ->
-//        Site URL = https://prismequimper.fr/bureau/
-//        Redirect URLs contient https://prismequimper.fr/bureau/**
+//        Site URL = https://prismequimper.fr/portail/
+//        Redirect URLs contient https://prismequimper.fr/portail/**
 //
 //  USAGE (depuis le dossier espace-bureau/) :
 //    SUPABASE_URL="https://xxxx.supabase.co" \
@@ -28,7 +28,7 @@ import { createClient } from '@supabase/supabase-js'
 
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY
-const REDIRECT_TO = process.env.INVITE_REDIRECT_TO || 'https://prismequimper.fr/bureau/'
+const REDIRECT_TO = process.env.INVITE_REDIRECT_TO || 'https://prismequimper.fr/portail/'
 
 if (!SUPABASE_URL || !SERVICE_ROLE) {
   console.error(

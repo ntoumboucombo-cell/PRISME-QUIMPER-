@@ -6,22 +6,22 @@ Site de l'association **PRISME QUIMPER** (`prismequimper.fr`). Le dépôt contie
 | Projet | Techno | Dossier | URL en ligne |
 |---|---|---|---|
 | **Site vitrine** | Jekyll (HTML/CSS) | racine (`index.html`, `bureau.html`, `intro.html`, `_config.yml`) | `https://prismequimper.fr/` |
-| **Espace Bureau** | Vite + React + TypeScript + Tailwind + Supabase | `espace-bureau/` | `https://prismequimper.fr/bureau/` |
+| **Espace Bureau** | Vite + React + TypeScript + Tailwind + Supabase | `espace-bureau/` | `https://prismequimper.fr/portail/` |
 
-> ⚠️ Ne pas confondre `bureau.html` (page vitrine « Conseil d'Administration »,
-> à la racine) et `/bureau/` (l'application React). Ce sont deux choses
-> différentes à des adresses proches.
+> ℹ️ `bureau.html` (à la racine) est une **page vitrine** « Conseil
+> d'Administration » — à ne pas confondre avec l'**application** React, servie
+> sous `/portail/`.
 
 ## Déploiement
 
 - Workflow unique : `.github/workflows/deploy.yml`, déclenché **sur push vers `main`**.
-  Il construit la vitrine (Jekyll) → `/`, puis l'Espace Bureau (Vite) → `/bureau/`.
+  Il construit la vitrine (Jekyll) → `/`, puis l'Espace Bureau (Vite) → `/portail/`.
 - La source GitHub Pages doit rester sur **« GitHub Actions »** (pas « Deploy from a branch »).
 - Deux secrets GitHub alimentent le build de l'app : `VITE_SUPABASE_URL`,
   `VITE_SUPABASE_ANON_KEY`. La base Supabase n'est PAS synchronisée
   automatiquement (voir ci-dessous).
 - Routage SPA : un `404.html` à la racine redirige les routes profondes
-  `/bureau/*` vers l'app (technique GitHub Pages), restauré par un script dans
+  `/portail/*` vers l'app (technique GitHub Pages), restauré par un script dans
   `espace-bureau/index.html`.
 
 ## Flux de travail Git (IMPORTANT)
@@ -62,7 +62,7 @@ Le schéma de la base n'est pas déployé par GitHub. Il faut l'appliquer à la 
 
 1. **Tables** : exécuter `SUPABASE-ETAPE-1-creer-tables.sql` dans le SQL Editor.
 2. **URLs** : Authentication → URL Configuration → Site URL
-   `https://prismequimper.fr/bureau/` + Redirect URL `…/bureau/**`.
+   `https://prismequimper.fr/portail/` + Redirect URL `…/portail/**`.
 3. **Inviter les membres** : `espace-bureau/scripts/invite-bureau.mjs`
    (avec `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`) ou invitations manuelles.
 4. **Rôles** : `SUPABASE-ETAPE-4-roles.sql` (après les invitations).

@@ -8,16 +8,16 @@
       // ----------------------------------------------------------------------
       //  Page 404 du site (racine). GitHub Pages la sert pour toute URL
       //  inexistante, y compris les routes profondes de l'Espace Bureau (qui est
-      //  une application React mono-page servie sous /bureau/).
+      //  une application React mono-page servie sous /portail/).
       //
-      //  - /bureau/<route> (ex. /bureau/connexion) : on redirige vers
-      //    /bureau/?/<route> ; l'application restaure ensuite l'URL d'origine
+      //  - /portail/<route> (ex. /portail/connexion) : on redirige vers
+      //    /portail/?/<route> ; l'application restaure ensuite l'URL d'origine
       //    (voir le script dans espace-bureau/index.html).
       //  - toute autre URL : retour a l'accueil du site vitrine.
       // ----------------------------------------------------------------------
       (function () {
         var l = window.location
-        var prefix = '/bureau/'
+        var prefix = '/portail/'
         if (l.pathname.indexOf(prefix) === 0) {
           var rest = l.pathname.slice(prefix.length).replace(/&/g, '~and~')
           var search = l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : ''
