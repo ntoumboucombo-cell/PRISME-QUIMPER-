@@ -1,0 +1,5 @@
+# Skills de plugins matérialisées localement par Claude Code (cache).
+# On ne garde dans le dépôt que les skills propres au projet (deploy, supabase-setup).
+.claude/skills/*
+!.claude/skills/deploy/
+!.claude/skills/supabase-setup/
