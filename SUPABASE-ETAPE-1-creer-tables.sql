@@ -192,8 +192,10 @@ create table registre_entries (
 create index on registre_entries (date);
 
 -- ====================  SECURITE (Row Level Security)  =======================
+-- SECURITY DEFINER : lit `profiles` sans declencher sa propre RLS (evite la
+-- recursion infinie « stack depth limit exceeded »).
 create or replace function current_role_app()
-returns role_app language sql stable as $$
+returns role_app language sql stable security definer set search_path = public as $$
   select role from profiles where id = auth.uid();
 $$;
 create or replace function is_admin()
@@ -226,7 +228,7 @@ returns boolean language sql stable as $$
     ('president', 'vice_president', 'secretaire', 'secretaire_adjoint');
 $$;
 create or replace function is_authenticated_member()
-returns boolean language sql stable as $$
+returns boolean language sql stable security definer set search_path = public as $$
   select exists (select 1 from profiles where id = auth.uid() and active);
 $$;
 

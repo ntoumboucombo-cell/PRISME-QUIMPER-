@@ -14,3 +14,4 @@ exclude:
   # a garder hors du site public.
   - "SUPABASE-ETAPE-1-creer-tables.sql"
   - "SUPABASE-ETAPE-4-roles.sql"
+  - "SUPABASE-CORRECTIF-rls.sql"
