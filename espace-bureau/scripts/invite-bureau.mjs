@@ -65,12 +65,21 @@ async function findUserByEmail(email) {
   return null
 }
 
-// Pose le role + le nom affiche dans `profiles` (le trigger a deja cree la ligne).
+// Cree ou met a jour le profil (role + nom + email). Upsert : fonctionne que le
+// trigger ait cree la ligne ou non. La cle service_role contourne la RLS.
 async function setProfile(userId, member) {
   const { error } = await admin
     .from('profiles')
-    .update({ role: member.role, display_name: member.display_name })
-    .eq('id', userId)
+    .upsert(
+      {
+        id: userId,
+        email: member.email,
+        display_name: member.display_name,
+        role: member.role,
+        active: true,
+      },
+      { onConflict: 'id' },
+    )
   if (error) throw error
 }
 
