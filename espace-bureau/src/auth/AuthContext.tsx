@@ -81,7 +81,7 @@ function bypassSession(): SessionUser {
       }
     : {
         id: 'bypass-admin',
-        email: 'bypass@prismequimper.fr',
+        email: 'bypass@example.fr',
         display_name: 'Président (bypass)',
         role: 'president',
         member_id: null,

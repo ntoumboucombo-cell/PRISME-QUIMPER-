@@ -32,12 +32,12 @@ export interface Database {
 const now = '2026-05-30T10:00:00.000Z'
 
 const members: Member[] = [
-  { id: 'm-nayel', civilite: 'M.', nom: 'TOUMBOU COMBO', prenom: 'Nayel', email: 'president@prismequimper.fr', telephone: '', etablissement: 'UBO', statut: 'actif', fonction_bureau: 'Président', date_adhesion: '2026-03-23', created_at: now },
-  { id: 'm-cloe', civilite: 'Mme', nom: 'BENARD', prenom: 'Cloe', email: 'cloe@prismequimper.fr', statut: 'actif', fonction_bureau: 'Vice-Présidente', date_adhesion: '2026-03-23', created_at: now },
-  { id: 'm-romane', civilite: 'Mme', nom: 'BILIEN', prenom: 'Romane', email: 'secretariat@prismequimper.fr', statut: 'actif', fonction_bureau: 'Secrétaire Générale', date_adhesion: '2026-03-23', created_at: now },
-  { id: 'm-romain', civilite: 'M.', nom: 'BROBAND', prenom: 'Romain', email: 'romain@prismequimper.fr', statut: 'actif', fonction_bureau: 'Secrétaire Adjoint', date_adhesion: '2026-03-23', created_at: now },
-  { id: 'm-evan', civilite: 'M.', nom: 'STRUILLOU', prenom: 'Evan', email: 'tresorier@prismequimper.fr', statut: 'actif', fonction_bureau: 'Trésorier Adjoint', date_adhesion: '2026-03-23', created_at: now },
-  { id: 'm-camille', civilite: 'Mme', nom: 'BORDIER', prenom: 'Camille', email: 'communication@prismequimper.fr', statut: 'actif', fonction_bureau: 'Chargée de Communication', date_adhesion: '2026-03-23', created_at: now },
+  { id: 'm-nayel', civilite: 'M.', nom: 'TOUMBOU COMBO', prenom: 'Nayel', email: 'president@example.fr', telephone: '', etablissement: 'UBO', statut: 'actif', fonction_bureau: 'Président', date_adhesion: '2026-03-23', created_at: now },
+  { id: 'm-cloe', civilite: 'Mme', nom: 'BENARD', prenom: 'Cloe', email: 'cloe@example.fr', statut: 'actif', fonction_bureau: 'Vice-Présidente', date_adhesion: '2026-03-23', created_at: now },
+  { id: 'm-romane', civilite: 'Mme', nom: 'BILIEN', prenom: 'Romane', email: 'secretariat@example.fr', statut: 'actif', fonction_bureau: 'Secrétaire Générale', date_adhesion: '2026-03-23', created_at: now },
+  { id: 'm-romain', civilite: 'M.', nom: 'BROBAND', prenom: 'Romain', email: 'romain@example.fr', statut: 'actif', fonction_bureau: 'Secrétaire Adjoint', date_adhesion: '2026-03-23', created_at: now },
+  { id: 'm-evan', civilite: 'M.', nom: 'STRUILLOU', prenom: 'Evan', email: 'tresorier@example.fr', statut: 'actif', fonction_bureau: 'Trésorier Adjoint', date_adhesion: '2026-03-23', created_at: now },
+  { id: 'm-camille', civilite: 'Mme', nom: 'BORDIER', prenom: 'Camille', email: 'communication@example.fr', statut: 'actif', fonction_bureau: 'Chargée de Communication', date_adhesion: '2026-03-23', created_at: now },
   { id: 'm-adh1', civilite: 'M.', nom: 'LE GALL', prenom: 'Yann', email: 'yann.legall@example.fr', etablissement: 'IUT Quimper', statut: 'adherent', date_adhesion: '2026-09-15', created_at: now },
   { id: 'm-adh2', civilite: 'Mme', nom: 'MORVAN', prenom: 'Léa', email: 'lea.morvan@example.fr', etablissement: 'UBO', statut: 'adherent', date_adhesion: '2026-09-20', created_at: now },
   { id: 'm-adh3', civilite: 'M.', nom: 'KERAVEC', prenom: 'Hugo', email: 'hugo.k@example.fr', etablissement: 'Lycée Cornouaille', statut: 'adherent', date_adhesion: '2026-10-02', created_at: now },
@@ -45,12 +45,12 @@ const members: Member[] = [
 
 // Comptes applicatifs (mock). Mot de passe en clair UNIQUEMENT pour la demo locale.
 const accounts: UserAccount[] = [
-  { id: 'u-president', email: 'president@prismequimper.fr', password: 'prisme', display_name: 'Nayel (Président)', role: 'president', member_id: 'm-nayel', active: true, created_at: now },
-  { id: 'u-vp', email: 'cloe@prismequimper.fr', password: 'prisme', display_name: 'Cloe (Vice-Présidente)', role: 'vice_president', member_id: 'm-cloe', active: true, created_at: now },
-  { id: 'u-secretaire', email: 'secretariat@prismequimper.fr', password: 'prisme', display_name: 'Romane (Secrétaire Générale)', role: 'secretaire', member_id: 'm-romane', active: true, created_at: now },
-  { id: 'u-secretaire-adj', email: 'romain@prismequimper.fr', password: 'prisme', display_name: 'Romain (Secrétaire adjoint)', role: 'secretaire_adjoint', member_id: 'm-romain', active: true, created_at: now },
-  { id: 'u-tresorier', email: 'tresorier@prismequimper.fr', password: 'prisme', display_name: 'Evan (Trésorier adjoint)', role: 'tresorier_adjoint', member_id: 'm-evan', active: true, created_at: now },
-  { id: 'u-membre', email: 'communication@prismequimper.fr', password: 'prisme', display_name: 'Camille (Bureau)', role: 'membre', member_id: 'm-camille', active: true, created_at: now },
+  { id: 'u-president', email: 'president@example.fr', password: 'prisme', display_name: 'Nayel (Président)', role: 'president', member_id: 'm-nayel', active: true, created_at: now },
+  { id: 'u-vp', email: 'cloe@example.fr', password: 'prisme', display_name: 'Cloe (Vice-Présidente)', role: 'vice_president', member_id: 'm-cloe', active: true, created_at: now },
+  { id: 'u-secretaire', email: 'secretariat@example.fr', password: 'prisme', display_name: 'Romane (Secrétaire Générale)', role: 'secretaire', member_id: 'm-romane', active: true, created_at: now },
+  { id: 'u-secretaire-adj', email: 'romain@example.fr', password: 'prisme', display_name: 'Romain (Secrétaire adjoint)', role: 'secretaire_adjoint', member_id: 'm-romain', active: true, created_at: now },
+  { id: 'u-tresorier', email: 'tresorier@example.fr', password: 'prisme', display_name: 'Evan (Trésorier adjoint)', role: 'tresorier_adjoint', member_id: 'm-evan', active: true, created_at: now },
+  { id: 'u-membre', email: 'communication@example.fr', password: 'prisme', display_name: 'Camille (Bureau)', role: 'membre', member_id: 'm-camille', active: true, created_at: now },
   { id: 'u-adherent', email: 'yann.legall@example.fr', password: 'prisme', display_name: 'Yann (Adhérent)', role: 'adherent', member_id: 'm-adh1', active: true, created_at: now },
 ]
 
