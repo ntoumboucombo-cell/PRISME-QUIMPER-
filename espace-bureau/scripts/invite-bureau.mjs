@@ -94,7 +94,10 @@ for (const member of MEMBERS) {
         console.log(`↻  ${member.email} — deja invite, role mis a jour (${member.role})`)
         continue
       }
-      console.error(`✗  ${member.email} — echec : ${error.message}`)
+      const detail = [error.status && `status ${error.status}`, error.code && `code ${error.code}`]
+        .filter(Boolean)
+        .join(', ')
+      console.error(`✗  ${member.email} — echec : ${error.message}${detail ? ` (${detail})` : ''}`)
       continue
     }
 
@@ -107,3 +110,11 @@ for (const member of MEMBERS) {
 }
 
 console.log(`\nTermine : ${invited} invitation(s) envoyee(s), ${updated} role(s) mis a jour.`)
+
+// Le workflow doit passer au ROUGE si tout le monde n'a pas ete traite,
+// sinon un job "vert" masque des echecs.
+const echecs = MEMBERS.length - invited - updated
+if (echecs > 0) {
+  console.error(`\n⛔ ${echecs} membre(s) en echec (voir ci-dessus). Le job est marque en echec.`)
+  process.exitCode = 1
+}
