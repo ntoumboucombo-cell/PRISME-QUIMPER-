@@ -4,11 +4,14 @@ import { useAuth } from '@/auth/AuthContext'
 import { Field } from '@/components/ui'
 import { isSupabaseConfigured } from '@/lib/supabase'
 
+// Comptes de demonstration du mode local uniquement (adresses fictives
+// @example.fr). En production, l'authentification passe par Supabase avec les
+// vraies adresses des membres : ce bloc est masque (voir plus bas).
 const DEMO_ACCOUNTS = [
-  { email: 'president@prismequimper.fr', role: 'Administrateur' },
-  { email: 'tresorier@prismequimper.fr', role: 'Trésorier' },
-  { email: 'communication@prismequimper.fr', role: 'Membre du bureau' },
-  { email: 'romain@prismequimper.fr', role: 'Lecture seule' },
+  { email: 'president@example.fr', role: 'Administrateur' },
+  { email: 'tresorier@example.fr', role: 'Trésorier' },
+  { email: 'communication@example.fr', role: 'Membre du bureau' },
+  { email: 'romain@example.fr', role: 'Lecture seule' },
 ]
 
 export function Login() {
@@ -61,7 +64,7 @@ export function Login() {
                 className="input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="vous@prismequimper.fr"
+                placeholder="vous@example.fr"
                 required
               />
             </Field>
