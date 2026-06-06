@@ -10,8 +10,7 @@ name: Déploiement GitHub Pages
 
 on:
   push:
-    # Ajouts-Evan : pour TESTER le build sur la branche (le deploy reste limité à main).
-    branches: [main, Ajouts-Evan]
+    branches: [main]
   workflow_dispatch:
 
 # Autorisations nécessaires au déploiement Pages.
