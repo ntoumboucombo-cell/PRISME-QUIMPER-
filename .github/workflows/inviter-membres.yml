@@ -7,7 +7,7 @@ name: Inviter les membres du bureau (Supabase)
 # Ne tourne jamais tout seul. Ré-exécutable sans risque (une personne déjà
 # invitée voit seulement son rôle remis à jour, sans nouvel e-mail).
 #
-# Pré-requis : un secret de dépôt `SUPABASE_SERVICE_ROLE_KEY`
+# Pré-requis : un secret de dépôt `SERVICE_ROLE_API_KEY`
 #   (Settings → Secrets and variables → Actions → New repository secret).
 
 on:
@@ -35,6 +35,6 @@ jobs:
         working-directory: espace-bureau
         env:
           SUPABASE_URL: https://ckydbaqrepgrmgbywkpf.supabase.co
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SERVICE_ROLE_API_KEY }}
           INVITE_REDIRECT_TO: https://prismequimper.fr/portail/
         run: node scripts/invite-bureau.mjs
