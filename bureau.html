@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gouvernance & Direction | PRISME QUIMPER</title>
+    <title>Notre Organisation | PRISME QUIMPER</title>
     
     <link rel="icon" type="image/png" href="logo.PNG">
     <link rel="apple-touch-icon" href="logo.PNG">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* --- DA ORIGINALE PRISME --- */
         :root {
             --color-bg-dark: #1A2639; 
             --color-bg-inner: #0F1A2C; 
             --color-bg-light-cream: #FDF9F2; 
             --color-text-base: #E8E5DF; 
-            --color-accent-gold: #B89754; 
+            --color-accent-gold-mat: #B89754; 
             --color-accent-gold-bright: #E5C37A; 
-            --color-border-subtle: rgba(184, 151, 84, 0.15); 
+            --color-border-subtle: rgba(184, 151, 84, 0.2); 
             
             --font-serif: "Baskerville", "Georgia", serif;
             --font-sans: "Montserrat", sans-serif;
@@ -26,12 +26,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: var(--font-sans);
-            background-color: var(--color-bg-inner);
-            color: var(--color-text-base);
-            line-height: 1.6;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            font-family: var(--font-serif);
+            background: linear-gradient(135deg, var(--color-bg-inner) 0%, var(--color-bg-dark) 60%, #0a101a 100%); 
+            color: var(--color-text-base); line-height: 1.8;
+            -webkit-font-smoothing: antialiased; overflow-x: hidden;
         }
 
         /* --- NAVIGATION --- */
@@ -39,205 +37,135 @@
             padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center;
             position: fixed; top: 0; width: 100%;
             background-color: rgba(15, 26, 44, 0.98); z-index: 1000;
-            border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(5px);
         }
 
         .logo-text {
-            font-size: 1.4rem; font-weight: 700; letter-spacing: 3px;
+            font-size: 1.6rem; font-weight: bold; letter-spacing: 2px;
             color: var(--color-text-base); text-decoration: none; text-transform: uppercase;
         }
-        .logo-text span { color: var(--color-accent-gold); }
+        .logo-text span { color: var(--color-accent-gold-bright); }
 
         .btn-back {
-            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--color-accent-gold); text-decoration: none;
-            padding: 0.6rem 1.5rem; border: 1px solid var(--color-accent-gold);
-            transition: 0.4s;
+            font-family: var(--font-sans);
+            font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--color-accent-gold-bright); text-decoration: none;
+            border: 1px solid var(--color-accent-gold-bright);
+            padding: 0.6rem 1.5rem; transition: all 0.3s ease;
+            border-radius: 2px;
         }
-        .btn-back:hover { background: var(--color-accent-gold); color: var(--color-bg-inner); }
+        .btn-back:hover {
+            background-color: var(--color-accent-gold-bright);
+            color: var(--color-bg-inner);
+        }
 
-        /* --- CONTENEUR GLOBAL --- */
-        .main-container {
+        /* --- CONTENEUR PRINCIPAL --- */
+        .container {
             max-width: 1400px; margin: 0 auto; padding: 10rem 5% 5rem;
         }
 
-        /* --- TITRE DE LA PAGE & INTRODUCTION --- */
-        .governance-header {
-            text-align: center; margin-bottom: 7rem; max-width: 800px; margin-left: auto; margin-right: auto;
+        .page-title {
+            text-align: center; font-size: 3.2rem; font-weight: normal; margin-bottom: 5rem;
+            color: var(--color-accent-gold-mat); letter-spacing: 1px; position: relative;
         }
-        .governance-header h1 {
-            font-family: var(--font-serif);
-            font-size: 4rem; font-weight: 400; line-height: 1.1;
-            margin-bottom: 1.5rem; color: var(--color-text-base);
-        }
-        .governance-header .divider {
-            width: 80px; height: 2px; background-color: var(--color-accent-gold); margin: 1.5rem auto;
-        }
-        .governance-header p {
-            font-size: 1.1rem; color: var(--color-text-base); opacity: 0.8;
-            font-style: italic;
+        .page-title::after {
+            content: ''; display: block; width: 80px; height: 2px;
+            background-color: var(--color-accent-gold-mat); margin: 1.5rem auto 0;
         }
 
-        /* --- DISPOSITION HIÉRARCHIQUE (NOUVEAU) --- */
-
-        /* ÉTAPE 1 : Le Président (Asymétrique, Monumental) */
-        .president-section {
-            display: grid; grid-template-columns: 2fr 3fr; gap: 5rem;
-            align-items: center; margin-bottom: 8rem;
-            padding: 4rem; background-color: rgba(15, 26, 44, 0.5);
-            border: 1px solid var(--color-border-subtle);
+        /* --- ANNUAIRE ÉQUIPE (STYLE FIDAL) --- */
+        .directory-container {
+            display: flex; flex-direction: column; gap: 6rem;
         }
-        .pres-image {
-            width: 100%; height: 100%; border-radius: 4px;
-            background-size: cover; background-position: center top;
-            border: 1px solid var(--color-border-subtle);
+        
+        .directory-category h3 {
+            font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-text-base);
+            margin-bottom: 3.5rem; text-align: center; font-weight: normal;
         }
-        .pres-content h2 {
-            font-family: var(--font-serif);
-            font-size: 3rem; margin-bottom: 0.5rem; color: var(--color-text-base);
-        }
-        .pres-content .role {
-            font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 3px; color: var(--color-accent-gold-bright); margin-bottom: 2rem; display: block;
-        }
-        .pres-content .parcours-snippet {
-            font-size: 1.15rem; color: var(--color-text-base); opacity: 0.9; text-align: justify;
-            margin-bottom: 2.5rem; line-height: 1.9;
-        }
-        .btn-bio {
-            font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--color-accent-gold-bright); text-decoration: none; cursor: pointer;
-            border-bottom: 2px solid transparent; transition: border-color 0.3s ease; padding-bottom: 3px;
-        }
-        .btn-bio:hover { border-color: var(--color-accent-gold-bright); }
-
-        /* ÉTAPE 2 : Le Bureau & Trésorerie (Grille Propre, Épurée) */
-        .bureau-section {
-            margin-bottom: 8rem;
-        }
-        .bureau-section h3 {
-            font-family: var(--font-serif); font-size: 2rem; font-weight: 400;
-            color: var(--color-accent-gold); margin-bottom: 3.5rem; text-align: center;
-        }
-        .bureau-section .divider-center {
-            width: 50px; height: 1px; background-color: var(--color-accent-gold); margin: -2.5rem auto 3.5rem;
-        }
-        .bureau-grid {
-            display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
-        }
-        .leader-card-bureau {
-            width: calc(33.33% - 2rem); max-width: 380px; min-width: 300px;
-            background-color: rgba(15, 26, 44, 0.7);
-            border: 1px solid var(--color-border-subtle);
-            padding: 3rem; text-align: center; transition: all 0.4s ease;
-            cursor: pointer; position: relative;
-        }
-        .leader-card-bureau:hover {
-            transform: translateY(-10px);
-            border-color: var(--color-accent-gold-mat);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-        .leader-bureau-avatar {
-            width: 140px; height: 140px; border-radius: 50%;
-            margin: 0 auto 2rem;
-            border: 1px solid var(--color-accent-gold-mat);
-            background-size: cover; background-position: center;
-            filter: grayscale(100%); transition: all 0.5s ease;
-        }
-        .leader-card-bureau:hover .leader-bureau-avatar {
-            filter: grayscale(0%); transform: scale(1.05);
-        }
-        .leader-card-bureau h4 { font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-text-base); margin-bottom: 0.3rem; }
-        .leader-card-bureau .role-bureau {
-            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; color: var(--color-accent-gold-bright); margin-bottom: 1.5rem; display: block;
-        }
-        .bureau-grid-parcours-snippet {
-            font-size: 0.9rem; color: var(--color-text-base); opacity: 0.7; text-align: center; line-height: 1.7;
+        .directory-category h3 span {
+            color: var(--color-accent-gold-mat);
         }
 
-        /* --- MODAL / BIO PANEL (Héritage Interactif) --- */
+        .directory-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 4rem 2rem;
+            justify-items: center;
+        }
+
+        .profile-card {
+            text-align: center; width: 100%; max-width: 250px;
+            cursor: pointer; transition: transform 0.3s ease;
+            position: relative;
+        }
+        .profile-card:hover { transform: translateY(-8px); }
+        .profile-card::after {
+            content: 'Voir profil +'; position: absolute; bottom: -25px; left: 0; width: 100%;
+            font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase;
+            color: var(--color-accent-gold-bright); opacity: 0; transition: opacity 0.3s;
+        }
+        .profile-card:hover::after { opacity: 1; }
+
+        /* Photos rondes en couleurs (Aucun filtre) */
+        .profile-avatar {
+            width: 160px; height: 160px; border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--color-accent-gold-mat);
+            background-size: cover; background-position: center top; background-repeat: no-repeat;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            background-color: rgba(255,255,255,0.05); /* Fond par défaut si pas d'image */
+        }
+        
+        .profile-card h4 {
+            font-size: 1.4rem; margin-bottom: 0.3rem; color: var(--color-text-base); font-weight: normal;
+        }
+        .profile-card .role {
+            font-family: var(--font-sans); font-size: 0.75rem; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; color: var(--color-accent-gold-bright);
+        }
+
+        /* --- PANNEAU BIO LATÉRAL --- */
         .bio-panel {
-            position: fixed;
-            top: 0; right: -100%; width: 40%; height: 100%;
-            background-color: var(--color-bg-light-cream);
-            color: var(--color-bg-inner);
-            z-index: 2000;
-            padding: 6rem 4rem;
-            transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column;
-            overflow-y: auto;
+            position: fixed; top: 0; right: -100%; width: 400px; max-width: 100%; height: 100%;
+            background-color: var(--color-bg-light-cream); color: var(--color-bg-inner);
+            z-index: 2000; padding: 4rem 3rem; transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.5); overflow-y: auto;
         }
-
         .bio-panel.active { right: 0; }
-
+        
         .close-panel {
-            position: absolute; top: 2rem; left: 4rem;
-            background: none; border: none; font-size: 0.8rem;
-            font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; color: var(--color-bg-inner);
-            display: flex; align-items: center; gap: 1rem;
+            background: none; border: none; font-size: 0.8rem; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; 
+            color: var(--color-bg-inner); margin-bottom: 3rem;
+            border-bottom: 1px solid transparent; padding-bottom: 2px; transition: 0.3s;
         }
+        .close-panel:hover { border-color: var(--color-bg-inner); }
 
         .bio-header .role-label {
-            font-size: 0.8rem; font-weight: 700; letter-spacing: 3px;
-            text-transform: uppercase; color: var(--color-accent-gold);
-            margin-bottom: 1rem; display: block;
+            font-family: var(--font-sans); font-size: 0.8rem; font-weight: bold; 
+            text-transform: uppercase; color: var(--color-accent-gold-mat); display: block; margin-bottom: 0.5rem;
         }
-
-        .bio-header h2 {
-            font-family: var(--font-serif);
-            font-size: 3.5rem; line-height: 1.1; margin-bottom: 2rem;
-        }
-
-        .bio-content { font-size: 1.1rem; line-height: 1.8; }
-        .bio-content h3 {
-            margin-top: 2rem; margin-bottom: 1rem;
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
-            border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem;
-        }
-
-        .bio-socials {
-            margin-top: 3rem; display: flex; gap: 2rem;
-        }
-        .bio-socials a {
-            color: var(--color-bg-inner); text-decoration: none;
-            font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
-            border-bottom: 2px solid var(--color-accent-gold);
-        }
-
+        .bio-header h2 { font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.1; }
+        .bio-content p { font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; text-align: justify; }
+        
         .overlay-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 26, 44, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 1500;
-            display: none;
+            background: rgba(15, 26, 44, 0.8); backdrop-filter: blur(5px);
+            z-index: 1500; display: none;
         }
 
         /* --- FOOTER --- */
         footer {
-            padding: 5rem 5%; text-align: center;
-            border-top: 1px solid var(--color-border-subtle);
-            background-color: var(--color-bg-inner); font-family: var(--font-sans);
-            font-size: 0.8rem; opacity: 0.6;
+            background-color: var(--color-bg-inner); color: var(--color-bg-light-cream);
+            text-align: center; padding: 4rem 5%; border-top: 1px solid var(--color-border-subtle);
+            font-family: var(--font-sans); font-size: 0.8rem; opacity: 0.6; margin-top: 5rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-bureau h1 { font-size: 3rem; }
-            .president-section { grid-template-columns: 1fr; gap: 3rem; padding: 3rem; }
-            .pres-image { height: 400px; }
-            .bureau-grid { flex-direction: column; align-items: center; }
-            .leader-card-bureau { width: 100%; }
-            .bio-panel { width: 80%; }
-        }
-
-        @media (max-width: 768px) {
-            .governance-header h1 { font-size: 2.8rem; }
-            .president-section { padding: 2rem; }
-            .bio-panel { width: 100%; padding: 4rem 2rem; }
-            .pres-content h2 { font-size: 2.2rem; }
+        @media (max-width: 900px) {
+            .container { padding-top: 7rem; }
+            .page-title { font-size: 2.5rem; }
+            .profile-avatar { width: 130px; height: 130px; }
+            .bio-panel { width: 100%; padding: 3rem 2rem; }
         }
     </style>
 </head>
@@ -245,140 +173,175 @@
 
     <header>
         <a href="index.html" class="logo-text">PRISME QUIMPER<span>.</span></a>
-        <a href="index.html" class="btn-back">Quitter le Bureau</a>
+        <a href="index.html" class="btn-back">Retour au site</a>
     </header>
 
-    <div class="overlay-bg" id="overlay"></div>
-
-    <main class="main-container">
+    <div class="container">
+        <h1 class="page-title">Notre Organisation</h1>
         
-        <div class="governance-header">
-            <h1>Structure <br>Directionnelle</h1>
-            <div class="divider"></div>
-            <p>"La maîtrise de la gouvernance, fondement de notre excellence culturelle."</p>
+        <div class="directory-container">
+            
+            <div class="directory-category">
+                <h3><span>I.</span> Le Bureau Exécutif</h3>
+                <div class="directory-grid">
+                    
+                    <div class="profile-card" onclick="openBio('nayel')">
+                        <div class="profile-avatar" style="background-image: url('nayel.jpg');"></div>
+                        <h4>Nayel Toumbou Combo</h4>
+                        <span class="role">Président</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('cloe')">
+                        <div class="profile-avatar" style="background-image: url('Cloe.JPG');"></div>
+                        <h4>Cloe Benard</h4>
+                        <span class="role">Vice-Présidente</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('romane')">
+                        <div class="profile-avatar" style="background-image: url('romane.JPG');"></div>
+                        <h4>Romane Bilien</h4>
+                        <span class="role">Secrétaire Générale</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('romain')">
+                        <div class="profile-avatar" style="background-image: url('romain.JPG');"></div>
+                        <h4>Romain Broband</h4>
+                        <span class="role">Secrétaire Adjoint</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('tresorier')">
+                        <div class="profile-avatar"></div>
+                        <h4>À pourvoir</h4>
+                        <span class="role">Trésorier Général</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('evan')">
+                        <div class="profile-avatar" style="background-image: url('evan .jpg');"></div>
+                        <h4>Evan Struillou</h4>
+                        <span class="role">Trésorier Adjoint</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('camille')">
+                        <div class="profile-avatar" style="background-image: url('camille .JPG');"></div>
+                        <h4>Camille Bordier</h4>
+                        <span class="role">Chargée de Communication</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="directory-category">
+                <h3><span>II.</span> Les Directeurs de Pôle</h3>
+                <div class="directory-grid">
+                    
+                    <div class="profile-card" onclick="openBio('dir_culture')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Directeur Pôle Culture</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('dir_event')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Directrice Pôle Événementiel</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('dir_partenariat')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Directeur Pôle Partenariats</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="directory-category">
+                <h3><span>III.</span> Membres Actifs & Adhérents</h3>
+                <div class="directory-grid">
+                    
+                    <div class="profile-card" onclick="openBio('adherent1')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Membre Actif</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('adherent2')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Membre Actif</span>
+                    </div>
+
+                    <div class="profile-card" onclick="openBio('adherent3')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Membre Actif</span>
+                    </div>
+                    
+                    <div class="profile-card" onclick="openBio('adherent4')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Membre Actif</span>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-
-        <section class="president-section">
-            <div class="pres-image" style="background-image: url('nayel.jpg');"></div>
-            <div class="pres-content">
-                <span class="role">Président Fondateur</span>
-                <h2>Nayel Toumbou Combo</h2>
-                <p class="parcours-snippet">Nayel impulse la vision stratégique globale de PRISME. Fort d'une conviction profonde en la puissance du verbe comme vecteur de changement, il veille à la structuration de l'association comme un acteur incontournable du paysage culturel.</p>
-                <button class="btn-bio" onclick="openBio('nayel')">Lire la biographie complète →</button>
-            </div>
-        </section>
-
-        <section class="bureau-section">
-            <h3>Le Secrétariat Général</h3>
-            <div class="divider-center"></div>
-            <div class="bureau-grid">
-                
-                <div class="leader-card-bureau" onclick="openBio('cloe')">
-                    <div class="leader-bureau-avatar" style="background-image: url('Cloe.JPG');"></div>
-                    <h4>Chloé Bénard</h4>
-                    <span class="role-bureau">Vice-Présidente</span>
-                    <p class="bureau-grid-parcours-snippet">Bras droit stratégique, Chloé coordonne l'action des pôles opérationnels pour une exécution sans faille.</p>
-                </div>
-
-                <div class="leader-card-bureau" onclick="openBio('romane')">
-                    <div class="leader-bureau-avatar" style="background-image: url('romane.JPG');"></div>
-                    <h4>Romane Bilien</h4>
-                    <span class="role-bureau">Secrétaire Générale</span>
-                    <p class="bureau-grid-parcours-snippet">Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et juridique.</p>
-                </div>
-
-                <div class="leader-card-bureau" onclick="openBio('romain')">
-                    <div class="leader-bureau-avatar" style="background-image: url('romain.JPG');"></div>
-                    <h4>Romain Broband</h4>
-                    <span class="role-bureau">Secrétaire Adjoint</span>
-                    <p class="bureau-grid-parcours-snippet">En appui au Secrétariat, Romain modernise nos outils de gestion pour libérer le potentiel créatif.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="bureau-section">
-            <h3>Pôles d'Excellence</h3>
-            <div class="divider-center"></div>
-            <div class="bureau-grid">
-                
-                <div class="leader-card-bureau" onclick="openBio('evan')">
-                    <div class="leader-bureau-avatar" style="background-image: url('evan .jpg');"></div>
-                    <h4>Evan Struillou</h4>
-                    <span class="role-bureau">Trésorier Adjoint</span>
-                    <p class="bureau-grid-parcours-snippet">Evan gère l'intégrité financière des projets d'envergure, garantissant une gestion saine et transparente.</p>
-                </div>
-
-                <div class="leader-card-bureau" onclick="openBio('camille')">
-                    <div class="leader-bureau-avatar" style="background-image: url('camille .JPG');"></div>
-                    <h4>Camille Bordier</h4>
-                    <span class="role-bureau">Direction Com'</span>
-                    <p class="bureau-grid-parcours-snippet">Camille façonne notre image de marque, veillant à ce que le prestige de PRISME rayonne.</p>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
+    </div>
 
     <div class="bio-panel" id="bio-panel">
         <button class="close-panel" onclick="closeBio()">← Fermer le profil</button>
-        <div id="bio-content-target">
-            </div>
+        <div id="bio-content-target"></div>
     </div>
+    <div class="overlay-bg" id="overlay"></div>
 
     <footer>
-        <p>© 2026 PRISME QUIMPER ASSOCIATION. <br> Tous droits de gouvernance réservés.</p>
+        <p>© 2026 Association PRISME QUIMPER - Un Nouveau Regard Sur La Culture.</p>
     </footer>
 
     <script>
+        // Base de données locale pour les biographies
         const bios = {
             nayel: {
-                name: "Nayel Toumbou Combo",
-                role: "Président Fondateur",
-                parcours: "Nayel impulse la vision stratégique globale de PRISME. Convaincu que la maîtrise oratoire est le socle de l'influence culturelle et de l'avancement professionnel, il a structuré l'institution pour en faire le lien entre excellence académique et réseaux de prestige du Finistère.",
-                vision: "Transformer chaque prise de parole en un acte de rayonnement et de conviction pour le territoire.",
-                linkedin: "https://www.linkedin.com/in/nayel-toumbou-combo-4a2474378"
+                name: "Nayel Toumbou Combo", role: "Président",
+                parcours: "Nayel impulse la vision stratégique globale de PRISME QUIMPER. Il veille à la structuration de l'association comme un acteur incontournable du paysage culturel."
             },
             cloe: {
-                name: "Chloé Bénard",
-                role: "Vice-Présidente",
-                parcours: "Bras droit stratégique de la Présidence, Chloé coordonne l'action des différents pôles opérationnels. Son expertise en gestion de projets complexes permet à PRISME de maintenir un standard d'exécution digne des plus grandes institutions culturelles.",
-                vision: "Garantir une cohésion opérationnelle sans faille pour porter l'ambition de l'association.",
-                linkedin: "#"
+                name: "Cloe Benard", role: "Vice-Présidente",
+                parcours: "Bras droit stratégique de la Présidence, Cloe coordonne l'action des différents pôles opérationnels pour garantir l'exécution des projets."
             },
             romane: {
-                name: "Romane Bilien",
-                role: "Secrétaire Générale",
-                parcours: "Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et juridique de PRISME QUIMPER. Elle assure la liaison officielle avec les autorités et gère la mémoire juridique de l'association.",
-                vision: "Apporter la stabilité et la transparence nécessaires à une croissance pérenne et respectueuse des engagements.",
-                linkedin: "https://www.linkedin.com/in/romane-bilien-789558288"
+                name: "Romane Bilien", role: "Secrétaire Générale",
+                parcours: "Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et gère la mémoire juridique de l'association."
             },
             romain: {
-                name: "Romain Broband",
-                role: "Secrétaire Adjoint",
-                parcours: "En appui direct au Secrétariat Général, Romain assure la fluidité des communications internes. Il est le moteur de la transformation numérique de nos outils de gestion pour optimiser notre fonctionnement.",
-                vision: "Moderniser nos processus administratifs pour libérer le potentiel créatif de nos membres actifs.",
-                linkedin: "https://www.linkedin.com/in/romain-broband-b4057839a"
+                name: "Romain Broband", role: "Secrétaire Adjoint",
+                parcours: "En appui direct au Secrétariat Général, Romain assure la fluidité des communications internes et la gestion des outils."
+            },
+            tresorier: {
+                name: "À pourvoir", role: "Trésorier Général",
+                parcours: "En charge de la gestion financière globale de l'association, des budgets et de la comptabilité."
             },
             evan: {
-                name: "Evan Struillou",
-                role: "Trésorier Adjoint",
-                parcours: "Evan gère l'intégrité financière et le suivi budgétaire des projets. Sa rigueur analytique permet à PRISME d'investir sereinement dans des événements d'envergure tout en garantissant une gestion saine.",
-                vision: "Sécuriser les ressources financières pour financer durablement l'excellence culturelle.",
-                linkedin: "https://www.linkedin.com/in/evan-struillou-854b42234"
+                name: "Evan Struillou", role: "Trésorier Adjoint",
+                parcours: "Evan gère l'intégrité financière et le suivi budgétaire quotidien des projets de l'association."
             },
             camille: {
-                name: "Camille Bordier",
-                role: "Direction Communication",
-                parcours: "Camille est l'architecte de notre image de marque et de notre stratégie éditoriale. Elle définit l'identité visuelle de PRISME, veillant à ce que chaque interaction respire le prestige et le sérieux de l'institution.",
-                vision: "Faire de PRISME une marque synonyme de luxe intellectuel et culturel dans le Finistère.",
-                linkedin: "#"
-            }
+                name: "Camille Bordier", role: "Chargée de Communication",
+                parcours: "Camille définit l'identité visuelle de PRISME et veille au rayonnement de nos actions culturelles auprès du public."
+            },
+            dir_culture: { name: "Nom Prénom", role: "Directeur Pôle Culture", parcours: "En charge de la programmation intellectuelle et des concours." },
+            dir_event: { name: "Nom Prénom", role: "Directrice Pôle Événementiel", parcours: "Supervise la logistique de nos galas et masterclass." },
+            dir_partenariat: { name: "Nom Prénom", role: "Directeur Pôle Partenariats", parcours: "Gère les relations avec le tissu économique et juridique local." },
+            adherent1: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." },
+            adherent2: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." },
+            adherent3: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." },
+            adherent4: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." }
         };
 
         function openBio(id) {
             const data = bios[id];
+            if(!data) return;
             const target = document.getElementById('bio-content-target');
             
             target.innerHTML = `
@@ -387,13 +350,7 @@
                     <h2>${data.name}</h2>
                 </div>
                 <div class="bio-content">
-                    <h3>Expertise & Parcours</h3>
                     <p>${data.parcours}</p>
-                    <h3>Vision Stratégique</h3>
-                    <p>${data.vision}</p>
-                </div>
-                <div class="bio-socials">
-                    <a href="${data.linkedin}" target="_blank">LinkedIn Profile</a>
                 </div>
             `;
             
@@ -405,7 +362,7 @@
         function closeBio() {
             document.getElementById('bio-panel').classList.remove('active');
             document.getElementById('overlay').style.display = 'none';
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
 
         document.getElementById('overlay').onclick = closeBio;
