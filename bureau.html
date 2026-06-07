@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Conseil d'Administration | PRISME QUIMPER</title>
+    <title>Gouvernance & Direction | PRISME QUIMPER</title>
     
     <link rel="icon" type="image/png" href="logo.PNG">
     <link rel="apple-touch-icon" href="logo.PNG">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -14,22 +15,23 @@
             --color-bg-inner: #0F1A2C; 
             --color-bg-light-cream: #FDF9F2; 
             --color-text-base: #E8E5DF; 
-            --color-text-dark-subtle: #1A2639; 
-            --color-accent-gold-mat: #B89754; 
+            --color-accent-gold: #B89754; 
             --color-accent-gold-bright: #E5C37A; 
-            --color-border-subtle: rgba(184, 151, 84, 0.2); 
+            --color-border-subtle: rgba(184, 151, 84, 0.15); 
             
-            --font-serif-precis: "Baskerville", "Georgia", "Times New Roman", Times, serif;
-            --font-sans-luxury: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            --font-serif: "Baskerville", "Georgia", serif;
+            --font-sans: "Montserrat", sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: var(--font-serif-precis);
-            background: linear-gradient(135deg, var(--color-bg-inner) 0%, var(--color-bg-dark) 60%, #0a101a 100%); 
-            color: var(--color-text-base); line-height: 1.8;
-            -webkit-font-smoothing: antialiased; overflow-x: hidden;
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-inner);
+            color: var(--color-text-base);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* --- NAVIGATION --- */
@@ -37,132 +39,205 @@
             padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center;
             position: fixed; top: 0; width: 100%;
             background-color: rgba(15, 26, 44, 0.98); z-index: 1000;
-            border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--color-border-subtle); backdrop-filter: blur(10px);
         }
 
         .logo-text {
-            font-size: 1.6rem; font-weight: bold; letter-spacing: 2px;
+            font-size: 1.4rem; font-weight: 700; letter-spacing: 3px;
             color: var(--color-text-base); text-decoration: none; text-transform: uppercase;
         }
-        .logo-text span { color: var(--color-accent-gold-bright); }
+        .logo-text span { color: var(--color-accent-gold); }
 
         .btn-back {
-            font-family: var(--font-sans-luxury);
-            font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
-            color: var(--color-accent-gold-bright); text-decoration: none;
-            border: 1px solid var(--color-accent-gold-bright);
-            padding: 0.6rem 1.5rem; transition: all 0.3s ease;
-            border-radius: 2px;
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--color-accent-gold); text-decoration: none;
+            padding: 0.6rem 1.5rem; border: 1px solid var(--color-accent-gold);
+            transition: 0.4s;
         }
-        .btn-back:hover {
-            background-color: var(--color-accent-gold-bright);
-            color: var(--color-bg-inner);
-            box-shadow: 0 0 15px rgba(229, 195, 122, 0.4);
+        .btn-back:hover { background: var(--color-accent-gold); color: var(--color-bg-inner); }
+
+        /* --- CONTENEUR GLOBAL --- */
+        .main-container {
+            max-width: 1400px; margin: 0 auto; padding: 10rem 5% 5rem;
         }
 
-        /* --- PAGE CONTENT --- */
-        .container {
-            max-width: 1200px; margin: 0 auto; padding: 8rem 5% 5rem;
+        /* --- TITRE DE LA PAGE & INTRODUCTION --- */
+        .governance-header {
+            text-align: center; margin-bottom: 7rem; max-width: 800px; margin-left: auto; margin-right: auto;
+        }
+        .governance-header h1 {
+            font-family: var(--font-serif);
+            font-size: 4rem; font-weight: 400; line-height: 1.1;
+            margin-bottom: 1.5rem; color: var(--color-text-base);
+        }
+        .governance-header .divider {
+            width: 80px; height: 2px; background-color: var(--color-accent-gold); margin: 1.5rem auto;
+        }
+        .governance-header p {
+            font-size: 1.1rem; color: var(--color-text-base); opacity: 0.8;
+            font-style: italic;
         }
 
-        .page-title {
-            text-align: center; font-size: 3.2rem; font-weight: normal; margin-bottom: 1rem;
-            color: var(--color-text-base); letter-spacing: 1px;
-        }
-        .page-subtitle {
-            text-align: center; font-family: var(--font-sans-luxury); font-size: 1rem;
-            color: var(--color-accent-gold-mat); text-transform: uppercase; letter-spacing: 3px;
-            margin-bottom: 5rem;
-        }
+        /* --- DISPOSITION HIÉRARCHIQUE (NOUVEAU) --- */
 
-        /* --- GRID DES MEMBRES --- */
-        .bureau-deep-grid {
-            display: flex; flex-direction: column; gap: 4rem;
-        }
-
-        /* CARD PREMIUM INDIVIDUELLE */
-        .member-profile-card {
-            background-color: rgba(15, 26, 44, 0.6);
+        /* ÉTAPE 1 : Le Président (Asymétrique, Monumental) */
+        .president-section {
+            display: grid; grid-template-columns: 2fr 3fr; gap: 5rem;
+            align-items: center; margin-bottom: 8rem;
+            padding: 4rem; background-color: rgba(15, 26, 44, 0.5);
             border: 1px solid var(--color-border-subtle);
-            border-radius: 4px; padding: 3rem;
-            display: grid; grid-template-columns: 250px 1fr; gap: 3.5rem;
-            align-items: start; transition: all 0.4s ease;
         }
-        .member-profile-card:hover {
+        .pres-image {
+            width: 100%; height: 100%; border-radius: 4px;
+            background-size: cover; background-position: center top;
+            border: 1px solid var(--color-border-subtle);
+        }
+        .pres-content h2 {
+            font-family: var(--font-serif);
+            font-size: 3rem; margin-bottom: 0.5rem; color: var(--color-text-base);
+        }
+        .pres-content .role {
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 3px; color: var(--color-accent-gold-bright); margin-bottom: 2rem; display: block;
+        }
+        .pres-content .parcours-snippet {
+            font-size: 1.15rem; color: var(--color-text-base); opacity: 0.9; text-align: justify;
+            margin-bottom: 2.5rem; line-height: 1.9;
+        }
+        .btn-bio {
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--color-accent-gold-bright); text-decoration: none; cursor: pointer;
+            border-bottom: 2px solid transparent; transition: border-color 0.3s ease; padding-bottom: 3px;
+        }
+        .btn-bio:hover { border-color: var(--color-accent-gold-bright); }
+
+        /* ÉTAPE 2 : Le Bureau & Trésorerie (Grille Propre, Épurée) */
+        .bureau-section {
+            margin-bottom: 8rem;
+        }
+        .bureau-section h3 {
+            font-family: var(--font-serif); font-size: 2rem; font-weight: 400;
+            color: var(--color-accent-gold); margin-bottom: 3.5rem; text-align: center;
+        }
+        .bureau-section .divider-center {
+            width: 50px; height: 1px; background-color: var(--color-accent-gold); margin: -2.5rem auto 3.5rem;
+        }
+        .bureau-grid {
+            display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+        }
+        .leader-card-bureau {
+            width: calc(33.33% - 2rem); max-width: 380px; min-width: 300px;
+            background-color: rgba(15, 26, 44, 0.7);
+            border: 1px solid var(--color-border-subtle);
+            padding: 3rem; text-align: center; transition: all 0.4s ease;
+            cursor: pointer; position: relative;
+        }
+        .leader-card-bureau:hover {
+            transform: translateY(-10px);
             border-color: var(--color-accent-gold-mat);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        .leader-bureau-avatar {
+            width: 140px; height: 140px; border-radius: 50%;
+            margin: 0 auto 2rem;
+            border: 1px solid var(--color-accent-gold-mat);
+            background-size: cover; background-position: center;
+            filter: grayscale(100%); transition: all 0.5s ease;
+        }
+        .leader-card-bureau:hover .leader-bureau-avatar {
+            filter: grayscale(0%); transform: scale(1.05);
+        }
+        .leader-card-bureau h4 { font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-text-base); margin-bottom: 0.3rem; }
+        .leader-card-bureau .role-bureau {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--color-accent-gold-bright); margin-bottom: 1.5rem; display: block;
+        }
+        .bureau-grid-parcours-snippet {
+            font-size: 0.9rem; color: var(--color-text-base); opacity: 0.7; text-align: center; line-height: 1.7;
         }
 
-        /* COLONNE PHOTO & RESEAUX */
-        .member-left-col {
-            text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
-        }
-        .profile-avatar {
-            width: 180px; height: 180px; border-radius: 50%;
-            border: 2px solid var(--color-accent-gold-mat);
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            background-color: #eee;
-        }
-        .profile-socials {
-            display: flex; gap: 1.5rem; justify-content: center; margin-top: 0.5rem;
-        }
-        .profile-socials a {
-            fill: var(--color-text-base); width: 24px; height: 24px; transition: all 0.3s ease;
-        }
-        .profile-socials a:hover {
-            fill: var(--color-accent-gold-bright); transform: scale(1.1);
+        /* --- MODAL / BIO PANEL (Héritage Interactif) --- */
+        .bio-panel {
+            position: fixed;
+            top: 0; right: -100%; width: 40%; height: 100%;
+            background-color: var(--color-bg-light-cream);
+            color: var(--color-bg-inner);
+            z-index: 2000;
+            padding: 6rem 4rem;
+            transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column;
+            overflow-y: auto;
         }
 
-        /* COLONNE INFOS DETAILLEES */
-        .member-right-col {
-            display: flex; flex-direction: column; gap: 1.2rem;
-        }
-        .member-meta h2 {
-            font-size: 2.2rem; font-weight: normal; color: var(--color-text-base); margin-bottom: 0.2rem;
-        }
-        .member-meta .role-badge {
-            display: inline-block; font-family: var(--font-sans-luxury); font-size: 0.85rem;
-            text-transform: uppercase; letter-spacing: 2px; color: var(--color-bg-inner);
-            background-color: var(--color-accent-gold-bright); padding: 0.2rem 1rem;
-            font-weight: bold; border-radius: 2px; margin-bottom: 0.5rem;
-        }
-        .member-meta .mission-statement {
-            font-family: var(--font-sans-luxury); font-size: 0.95rem; color: var(--color-accent-gold-mat);
-            font-style: italic; font-weight: 500;
+        .bio-panel.active { right: 0; }
+
+        .close-panel {
+            position: absolute; top: 2rem; left: 4rem;
+            background: none; border: none; font-size: 0.8rem;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; color: var(--color-bg-inner);
+            display: flex; align-items: center; gap: 1rem;
         }
 
-        .divider {
-            width: 100%; height: 1px; background-color: var(--color-border-subtle); margin: 0.5rem 0;
+        .bio-header .role-label {
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--color-accent-gold);
+            margin-bottom: 1rem; display: block;
         }
 
-        .parcours-section h3 {
-            font-family: var(--font-sans-luxury); font-size: 0.9rem; text-transform: uppercase;
-            letter-spacing: 1px; color: var(--color-accent-gold-bright); margin-bottom: 0.6rem;
+        .bio-header h2 {
+            font-family: var(--font-serif);
+            font-size: 3.5rem; line-height: 1.1; margin-bottom: 2rem;
         }
-        .parcours-section p {
-            font-size: 1.05rem; color: var(--color-text-base); opacity: 0.85; text-align: justify; margin-bottom: 1rem;
+
+        .bio-content { font-size: 1.1rem; line-height: 1.8; }
+        .bio-content h3 {
+            margin-top: 2rem; margin-bottom: 1rem;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem;
+        }
+
+        .bio-socials {
+            margin-top: 3rem; display: flex; gap: 2rem;
+        }
+        .bio-socials a {
+            color: var(--color-bg-inner); text-decoration: none;
+            font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
+            border-bottom: 2px solid var(--color-accent-gold);
+        }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 26, 44, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1500;
+            display: none;
         }
 
         /* --- FOOTER --- */
         footer {
-            background-color: var(--color-bg-inner); color: var(--color-bg-light-cream);
-            text-align: center; padding: 4rem 5%; border-top: 1px solid var(--color-border-subtle);
-            margin-top: 5rem; font-family: var(--font-sans-luxury); font-size: 0.8rem; opacity: 0.6;
+            padding: 5rem 5%; text-align: center;
+            border-top: 1px solid var(--color-border-subtle);
+            background-color: var(--color-bg-inner); font-family: var(--font-sans);
+            font-size: 0.8rem; opacity: 0.6;
         }
 
         /* Responsive Design */
-        @media (max-width: 900px) {
-            .container { padding-top: 6rem; }
-            .page-title { font-size: 2.2rem; }
-            .member-profile-card { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
-            .member-left-col { flex-direction: row; justify-content: flex-start; text-align: left; gap: 2rem; }
-            .profile-avatar { width: 100px; height: 100px; }
-            .profile-socials { margin-top: 0; }
+        @media (max-width: 1024px) {
+            .hero-bureau h1 { font-size: 3rem; }
+            .president-section { grid-template-columns: 1fr; gap: 3rem; padding: 3rem; }
+            .pres-image { height: 400px; }
+            .bureau-grid { flex-direction: column; align-items: center; }
+            .leader-card-bureau { width: 100%; }
+            .bio-panel { width: 80%; }
         }
-        @media (max-width: 600px) {
-            .member-left-col { flex-direction: column; align-items: center; text-align: center; }
+
+        @media (max-width: 768px) {
+            .governance-header h1 { font-size: 2.8rem; }
+            .president-section { padding: 2rem; }
+            .bio-panel { width: 100%; padding: 4rem 2rem; }
+            .pres-content h2 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -170,181 +245,170 @@
 
     <header>
         <a href="index.html" class="logo-text">PRISME QUIMPER<span>.</span></a>
-        <a href="index.html" class="btn-back">Retour au site</a>
+        <a href="index.html" class="btn-back">Quitter le Bureau</a>
     </header>
 
-    <div class="container">
-        <h1 class="page-title">Le Conseil d'Administration</h1>
-        <p class="page-subtitle">Gouvernance & Excellence</p>
+    <div class="overlay-bg" id="overlay"></div>
 
-        <div class="bureau-deep-grid">
-            
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('nayel.jpg');"></div>
-                    <div class="profile-socials">
-                        <a href="https://www.linkedin.com/in/nayel-toumbou-combo-4a2474378" target="_blank" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Président</span>
-                        <h2>Nayel TOUMBOU COMBO</h2>
-                        <p class="mission-statement">Direction Générale & Représentation légale de l'institution.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Parcours & Vision</h3>
-                        <p>En tant que Président Fondateur, Nayel impulse la vision stratégique globale de PRISME QUIMPER. Fort d'une conviction profonde en la puissance du verbe, il veille à la structuration de l'association comme un acteur culturel incontournable du Finistère.</p>
-                        <p>Son rôle est d'assurer les relations avec les instances publiques et privées, de diriger le Conseil d'Administration et de garantir l'excellence des événements produits par les différents pôles de l'institution.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('Cloe.JPG');"></div>
-                    <div class="profile-socials">
-                        <a href="#" target="_blank" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Vice-Présidente</span>
-                        <h2>Cloe BENARD</h2>
-                        <p class="mission-statement">Suppléance & Coordination des grandes orientations.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Parcours & Vision</h3>
-                        <p>Bras droit de la Présidence, Cloe assure la cohésion interne et la bonne exécution des projets culturels. Elle garantit la continuité des opérations et représente l'institution lors des événements officiels en cas d'absence du Président.</p>
-                        <p>Dotée d'un grand sens de l'organisation et de l'écoute, elle accompagne les responsables de pôles dans la réalisation de leurs objectifs et veille à l'épanouissement des membres actifs.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('romane.JPG');"></div>
-                    <div class="profile-socials">
-                        <a href="https://www.linkedin.com/in/romane-bilien-789558288" target="_blank" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Secrétaire Générale</span>
-                        <h2>Romane BILIEN</h2>
-                        <p class="mission-statement">Administration, tenue des registres et conformité légale.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Parcours & Vision</h3>
-                        <p>Romane est la garante du bon fonctionnement juridique et administratif de PRISME QUIMPER. Elle gère avec rigueur les adhésions, les convocations aux Assemblées Générales et la rédaction des procès-verbaux.</p>
-                        <p>Véritable mémoire de l'association, son travail méticuleux permet à l'institution d'opérer avec une transparence et un professionnalisme irréprochables face aux partenaires et aux autorités préfectorales.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('romain.JPG');"></div>
-                    <div class="profile-socials">
-                        <a href="https://www.linkedin.com/in/romain-broband-b4057839a" target="_blank" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Secrétaire Adjoint</span>
-                        <h2>Romain BROBAND</h2>
-                        <p class="mission-statement">Soutien administratif et gestion du réseau des membres.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Parcours & Vision</h3>
-                        <p>En appui direct au Secrétariat Général, Romain s'assure de la fluidité des communications internes et du traitement rapide des demandes des adhérents. Il participe activement à la mise à jour de la base de données et de l'ERP de l'association.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');"></div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Trésorier Général</span>
-                        <h2>À pourvoir</h2>
-                        <p class="mission-statement">Finances, suivi comptable, budgétisation et reçus fiscaux.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Le Rôle</h3>
-                        <p>Le Trésorier Général est la clé de voûte de la solidité économique de PRISME QUIMPER. Il gère les flux financiers, établit les budgets prévisionnels des événements de prestige, et assure l'interface avec les banques et les mécènes de l'institution.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('evan .jpg');"></div>
-                    <div class="profile-socials">
-                        <a href="https://www.linkedin.com/in/evan-struillou-854b42234" target="_blank" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Trésorier Adjoint</span>
-                        <h2>Evan STRUILLOU</h2>
-                        <p class="mission-statement">Soutien financier, suivi des transactions et logistique économique.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Parcours & Vision</h3>
-                        <p>Evan travaille en étroite collaboration avec la Trésorerie Générale pour assurer le suivi quotidien des dépenses et des encaissements. Son sens de l'analyse permet à l'association de maîtriser ses coûts logistiques lors des masterclass et galas.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="member-profile-card">
-                <div class="member-left-col">
-                    <div class="profile-avatar" style="background-image: url('camille .JPG');"></div>
-                    <div class="profile-socials">
-                        <a href="#" target="_blank" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="member-right-col">
-                    <div class="member-meta">
-                        <span class="role-badge">Chargée de Communication</span>
-                        <h2>Camille BORDIER</h2>
-                        <p class="mission-statement">Stratégie éditoriale, relations publiques et rayonnement.</p>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="parcours-section">
-                        <h3>Parcours & Vision</h3>
-                        <p>Camille façonne l'image publique de PRISME QUIMPER. Elle est l'architecte de la communication institutionnelle, veillant à ce que le prestige et le sérieux de l'association soient parfaitement retranscrits sur les réseaux sociaux et auprès de la presse.</p>
-                        <p>Grâce à sa plume et son sens de l'esthétisme, elle garantit que chaque événement bénéficie de la visibilité qu'il mérite à l'échelle locale et régionale.</p>
-                    </div>
-                </div>
-            </div>
-
+    <main class="main-container">
+        
+        <div class="governance-header">
+            <h1>Structure <br>Directionnelle</h1>
+            <div class="divider"></div>
+            <p>"La maîtrise de la gouvernance, fondement de notre excellence culturelle."</p>
         </div>
+
+        <section class="president-section">
+            <div class="pres-image" style="background-image: url('nayel.jpg');"></div>
+            <div class="pres-content">
+                <span class="role">Président Fondateur</span>
+                <h2>Nayel Toumbou Combo</h2>
+                <p class="parcours-snippet">Nayel impulse la vision stratégique globale de PRISME. Fort d'une conviction profonde en la puissance du verbe comme vecteur de changement, il veille à la structuration de l'association comme un acteur incontournable du paysage culturel.</p>
+                <button class="btn-bio" onclick="openBio('nayel')">Lire la biographie complète →</button>
+            </div>
+        </section>
+
+        <section class="bureau-section">
+            <h3>Le Secrétariat Général</h3>
+            <div class="divider-center"></div>
+            <div class="bureau-grid">
+                
+                <div class="leader-card-bureau" onclick="openBio('cloe')">
+                    <div class="leader-bureau-avatar" style="background-image: url('Cloe.JPG');"></div>
+                    <h4>Chloé Bénard</h4>
+                    <span class="role-bureau">Vice-Présidente</span>
+                    <p class="bureau-grid-parcours-snippet">Bras droit stratégique, Chloé coordonne l'action des pôles opérationnels pour une exécution sans faille.</p>
+                </div>
+
+                <div class="leader-card-bureau" onclick="openBio('romane')">
+                    <div class="leader-bureau-avatar" style="background-image: url('romane.JPG');"></div>
+                    <h4>Romane Bilien</h4>
+                    <span class="role-bureau">Secrétaire Générale</span>
+                    <p class="bureau-grid-parcours-snippet">Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et juridique.</p>
+                </div>
+
+                <div class="leader-card-bureau" onclick="openBio('romain')">
+                    <div class="leader-bureau-avatar" style="background-image: url('romain.JPG');"></div>
+                    <h4>Romain Broband</h4>
+                    <span class="role-bureau">Secrétaire Adjoint</span>
+                    <p class="bureau-grid-parcours-snippet">En appui au Secrétariat, Romain modernise nos outils de gestion pour libérer le potentiel créatif.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="bureau-section">
+            <h3>Pôles d'Excellence</h3>
+            <div class="divider-center"></div>
+            <div class="bureau-grid">
+                
+                <div class="leader-card-bureau" onclick="openBio('evan')">
+                    <div class="leader-bureau-avatar" style="background-image: url('evan .jpg');"></div>
+                    <h4>Evan Struillou</h4>
+                    <span class="role-bureau">Trésorier Adjoint</span>
+                    <p class="bureau-grid-parcours-snippet">Evan gère l'intégrité financière des projets d'envergure, garantissant une gestion saine et transparente.</p>
+                </div>
+
+                <div class="leader-card-bureau" onclick="openBio('camille')">
+                    <div class="leader-bureau-avatar" style="background-image: url('camille .JPG');"></div>
+                    <h4>Camille Bordier</h4>
+                    <span class="role-bureau">Direction Com'</span>
+                    <p class="bureau-grid-parcours-snippet">Camille façonne notre image de marque, veillant à ce que le prestige de PRISME rayonne.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div class="bio-panel" id="bio-panel">
+        <button class="close-panel" onclick="closeBio()">← Fermer le profil</button>
+        <div id="bio-content-target">
+            </div>
     </div>
 
     <footer>
-        <p>© 2026 Association PRISME QUIMPER - Gouvernance et Institution.</p>
+        <p>© 2026 PRISME QUIMPER ASSOCIATION. <br> Tous droits de gouvernance réservés.</p>
     </footer>
 
+    <script>
+        const bios = {
+            nayel: {
+                name: "Nayel Toumbou Combo",
+                role: "Président Fondateur",
+                parcours: "Nayel impulse la vision stratégique globale de PRISME. Convaincu que la maîtrise oratoire est le socle de l'influence culturelle et de l'avancement professionnel, il a structuré l'institution pour en faire le lien entre excellence académique et réseaux de prestige du Finistère.",
+                vision: "Transformer chaque prise de parole en un acte de rayonnement et de conviction pour le territoire.",
+                linkedin: "https://www.linkedin.com/in/nayel-toumbou-combo-4a2474378"
+            },
+            cloe: {
+                name: "Chloé Bénard",
+                role: "Vice-Présidente",
+                parcours: "Bras droit stratégique de la Présidence, Chloé coordonne l'action des différents pôles opérationnels. Son expertise en gestion de projets complexes permet à PRISME de maintenir un standard d'exécution digne des plus grandes institutions culturelles.",
+                vision: "Garantir une cohésion opérationnelle sans faille pour porter l'ambition de l'association.",
+                linkedin: "#"
+            },
+            romane: {
+                name: "Romane Bilien",
+                role: "Secrétaire Générale",
+                parcours: "Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et juridique de PRISME QUIMPER. Elle assure la liaison officielle avec les autorités et gère la mémoire juridique de l'association.",
+                vision: "Apporter la stabilité et la transparence nécessaires à une croissance pérenne et respectueuse des engagements.",
+                linkedin: "https://www.linkedin.com/in/romane-bilien-789558288"
+            },
+            romain: {
+                name: "Romain Broband",
+                role: "Secrétaire Adjoint",
+                parcours: "En appui direct au Secrétariat Général, Romain assure la fluidité des communications internes. Il est le moteur de la transformation numérique de nos outils de gestion pour optimiser notre fonctionnement.",
+                vision: "Moderniser nos processus administratifs pour libérer le potentiel créatif de nos membres actifs.",
+                linkedin: "https://www.linkedin.com/in/romain-broband-b4057839a"
+            },
+            evan: {
+                name: "Evan Struillou",
+                role: "Trésorier Adjoint",
+                parcours: "Evan gère l'intégrité financière et le suivi budgétaire des projets. Sa rigueur analytique permet à PRISME d'investir sereinement dans des événements d'envergure tout en garantissant une gestion saine.",
+                vision: "Sécuriser les ressources financières pour financer durablement l'excellence culturelle.",
+                linkedin: "https://www.linkedin.com/in/evan-struillou-854b42234"
+            },
+            camille: {
+                name: "Camille Bordier",
+                role: "Direction Communication",
+                parcours: "Camille est l'architecte de notre image de marque et de notre stratégie éditoriale. Elle définit l'identité visuelle de PRISME, veillant à ce que chaque interaction respire le prestige et le sérieux de l'institution.",
+                vision: "Faire de PRISME une marque synonyme de luxe intellectuel et culturel dans le Finistère.",
+                linkedin: "#"
+            }
+        };
+
+        function openBio(id) {
+            const data = bios[id];
+            const target = document.getElementById('bio-content-target');
+            
+            target.innerHTML = `
+                <div class="bio-header">
+                    <span class="role-label">${data.role}</span>
+                    <h2>${data.name}</h2>
+                </div>
+                <div class="bio-content">
+                    <h3>Expertise & Parcours</h3>
+                    <p>${data.parcours}</p>
+                    <h3>Vision Stratégique</h3>
+                    <p>${data.vision}</p>
+                </div>
+                <div class="bio-socials">
+                    <a href="${data.linkedin}" target="_blank">LinkedIn Profile</a>
+                </div>
+            `;
+            
+            document.getElementById('bio-panel').classList.add('active');
+            document.getElementById('overlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBio() {
+            document.getElementById('bio-panel').classList.remove('active');
+            document.getElementById('overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('overlay').onclick = closeBio;
+    </script>
 </body>
 </html>
