@@ -82,19 +82,17 @@
             font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-text-base);
             margin-bottom: 3.5rem; text-align: center; font-weight: normal;
         }
-        .directory-category h3 span {
-            color: var(--color-accent-gold-mat);
-        }
 
+        /* Utilisation de Flexbox pour centrer parfaitement la dernière ligne */
         .directory-grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            display: flex; 
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 4rem 2rem;
-            justify-items: center;
         }
 
         .profile-card {
-            text-align: center; width: 100%; max-width: 250px;
+            text-align: center; width: calc(25% - 2rem); min-width: 200px; max-width: 250px;
             cursor: pointer; transition: transform 0.3s ease;
             position: relative;
         }
@@ -106,14 +104,13 @@
         }
         .profile-card:hover::after { opacity: 1; }
 
-        /* Photos rondes en couleurs (Aucun filtre) */
         .profile-avatar {
             width: 160px; height: 160px; border-radius: 50%;
             margin: 0 auto 1.5rem;
             border: 3px solid var(--color-accent-gold-mat);
             background-size: cover; background-position: center top; background-repeat: no-repeat;
             box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            background-color: rgba(255,255,255,0.05); /* Fond par défaut si pas d'image */
+            background-color: rgba(255,255,255,0.05);
         }
         
         .profile-card h4 {
@@ -148,6 +145,14 @@
         .bio-header h2 { font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.1; }
         .bio-content p { font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; text-align: justify; }
         
+        .linkedin-btn svg {
+            width: 35px; height: 35px; fill: var(--color-accent-gold-mat); 
+            transition: transform 0.3s ease, fill 0.3s ease;
+        }
+        .linkedin-btn:hover svg {
+            transform: scale(1.1);
+        }
+        
         .overlay-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 26, 44, 0.8); backdrop-filter: blur(5px);
@@ -165,7 +170,11 @@
             .container { padding-top: 7rem; }
             .page-title { font-size: 2.5rem; }
             .profile-avatar { width: 130px; height: 130px; }
+            .profile-card { width: calc(50% - 2rem); }
             .bio-panel { width: 100%; padding: 3rem 2rem; }
+        }
+        @media (max-width: 500px) {
+            .profile-card { width: 100%; }
         }
     </style>
 </head>
@@ -182,7 +191,7 @@
         <div class="directory-container">
             
             <div class="directory-category">
-                <h3><span>I.</span> Le Bureau Exécutif</h3>
+                <h3>Le Bureau</h3>
                 <div class="directory-grid">
                     
                     <div class="profile-card" onclick="openBio('nayel')">
@@ -231,7 +240,7 @@
             </div>
 
             <div class="directory-category">
-                <h3><span>II.</span> Les Directeurs de Pôle</h3>
+                <h3>Les Directeurs de Pôle</h3>
                 <div class="directory-grid">
                     
                     <div class="profile-card" onclick="openBio('dir_culture')">
@@ -251,12 +260,18 @@
                         <h4>Nom Prénom</h4>
                         <span class="role">Directeur Pôle Partenariats</span>
                     </div>
+                    
+                    <div class="profile-card" onclick="openBio('dir_com')">
+                        <div class="profile-avatar"></div>
+                        <h4>Nom Prénom</h4>
+                        <span class="role">Directeur Pôle Communication</span>
+                    </div>
 
                 </div>
             </div>
 
             <div class="directory-category">
-                <h3><span>III.</span> Membres Actifs & Adhérents</h3>
+                <h3>Membres Actifs & Adhérents</h3>
                 <div class="directory-grid">
                     
                     <div class="profile-card" onclick="openBio('adherent1')">
@@ -300,43 +315,51 @@
     </footer>
 
     <script>
-        // Base de données locale pour les biographies
+        // Base de données locale pour les biographies (avec les liens LinkedIn intégrés)
         const bios = {
             nayel: {
                 name: "Nayel Toumbou Combo", role: "Président",
-                parcours: "Nayel impulse la vision stratégique globale de PRISME QUIMPER. Il veille à la structuration de l'association comme un acteur incontournable du paysage culturel."
+                parcours: "Nayel impulse la vision stratégique globale de PRISME QUIMPER. Il veille à la structuration de l'association comme un acteur incontournable du paysage culturel.",
+                linkedin: "https://www.linkedin.com/in/nayel-toumbou-combo-4a2474378"
             },
             cloe: {
                 name: "Cloe Benard", role: "Vice-Présidente",
-                parcours: "Bras droit stratégique de la Présidence, Cloe coordonne l'action des différents pôles opérationnels pour garantir l'exécution des projets."
+                parcours: "Bras droit stratégique de la Présidence, Cloe coordonne l'action des différents pôles opérationnels pour garantir l'exécution des projets.",
+                linkedin: "#"
             },
             romane: {
                 name: "Romane Bilien", role: "Secrétaire Générale",
-                parcours: "Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et gère la mémoire juridique de l'association."
+                parcours: "Garante de la conformité institutionnelle, Romane veille à la rigueur administrative et gère la mémoire juridique de l'association.",
+                linkedin: "https://www.linkedin.com/in/romane-bilien-789558288"
             },
             romain: {
                 name: "Romain Broband", role: "Secrétaire Adjoint",
-                parcours: "En appui direct au Secrétariat Général, Romain assure la fluidité des communications internes et la gestion des outils."
+                parcours: "En appui direct au Secrétariat Général, Romain assure la fluidité des communications internes et la gestion des outils.",
+                linkedin: "https://www.linkedin.com/in/romain-broband-b4057839a"
             },
             tresorier: {
                 name: "À pourvoir", role: "Trésorier Général",
-                parcours: "En charge de la gestion financière globale de l'association, des budgets et de la comptabilité."
+                parcours: "En charge de la gestion financière globale de l'association, des budgets et de la comptabilité.",
+                linkedin: "#"
             },
             evan: {
                 name: "Evan Struillou", role: "Trésorier Adjoint",
-                parcours: "Evan gère l'intégrité financière et le suivi budgétaire quotidien des projets de l'association."
+                parcours: "Evan gère l'intégrité financière et le suivi budgétaire quotidien des projets de l'association.",
+                linkedin: "https://www.linkedin.com/in/evan-struillou-854b42234"
             },
             camille: {
                 name: "Camille Bordier", role: "Chargée de Communication",
-                parcours: "Camille définit l'identité visuelle de PRISME et veille au rayonnement de nos actions culturelles auprès du public."
+                parcours: "Camille définit l'identité visuelle de PRISME et veille au rayonnement de nos actions culturelles auprès du public.",
+                linkedin: "#"
             },
-            dir_culture: { name: "Nom Prénom", role: "Directeur Pôle Culture", parcours: "En charge de la programmation intellectuelle et des concours." },
-            dir_event: { name: "Nom Prénom", role: "Directrice Pôle Événementiel", parcours: "Supervise la logistique de nos galas et masterclass." },
-            dir_partenariat: { name: "Nom Prénom", role: "Directeur Pôle Partenariats", parcours: "Gère les relations avec le tissu économique et juridique local." },
-            adherent1: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." },
-            adherent2: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." },
-            adherent3: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." },
-            adherent4: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association." }
+            dir_culture: { name: "Nom Prénom", role: "Directeur Pôle Culture", parcours: "En charge de la programmation intellectuelle et des concours.", linkedin: "#" },
+            dir_event: { name: "Nom Prénom", role: "Directrice Pôle Événementiel", parcours: "Supervise la logistique de nos galas et masterclass.", linkedin: "#" },
+            dir_partenariat: { name: "Nom Prénom", role: "Directeur Pôle Partenariats", parcours: "Gère les relations avec le tissu économique et juridique local.", linkedin: "#" },
+            dir_com: { name: "Nom Prénom", role: "Directeur Pôle Communication", parcours: "Gère la stratégie éditoriale et la communication de l'association.", linkedin: "#" },
+            adherent1: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association.", linkedin: "#" },
+            adherent2: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association.", linkedin: "#" },
+            adherent3: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association.", linkedin: "#" },
+            adherent4: { name: "Nom Prénom", role: "Membre Actif", parcours: "S'investit concrètement dans la production des événements de l'association.", linkedin: "#" }
         };
 
         function openBio(id) {
@@ -344,6 +367,19 @@
             if(!data) return;
             const target = document.getElementById('bio-content-target');
             
+            let linkedinHtml = '';
+            if (data.linkedin && data.linkedin !== '#') {
+                linkedinHtml = `
+                    <div style="margin-top: 2.5rem;">
+                        <a href="${data.linkedin}" target="_blank" class="linkedin-btn" aria-label="Profil LinkedIn">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                `;
+            }
+
             target.innerHTML = `
                 <div class="bio-header">
                     <span class="role-label">${data.role}</span>
@@ -352,6 +388,7 @@
                 <div class="bio-content">
                     <p>${data.parcours}</p>
                 </div>
+                ${linkedinHtml}
             `;
             
             document.getElementById('bio-panel').classList.add('active');
